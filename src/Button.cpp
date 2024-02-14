@@ -5,9 +5,7 @@ Button::Button ()
 	m_button.setSize({ 50,100 });
 	m_button.setFillColor(sf::Color(217, 173, 242));  //set color of button
 	m_button.setOutlineThickness(5);
-	m_button.setOutlineColor(sf::Color::Black);
-
-	
+	m_button.setOutlineColor(sf::Color::Black);	
 }
 
 
