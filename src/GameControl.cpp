@@ -53,3 +53,13 @@ void GameControl::makeWindow()
         }
     }
 }
+
+GameControl* GameControl::getInstance()
+{
+    if (m_instance == nullptr)
+    {
+        m_instance = new GameControl();
+    }
+    return m_instance;
+    
+}

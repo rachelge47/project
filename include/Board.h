@@ -10,6 +10,7 @@
 #include "Key.h"
 #include "Present.h"
 #include "Cheese.h"
+#include "GameControl.h"
 
 
 const char MOUSE = '%';

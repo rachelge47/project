@@ -58,6 +58,7 @@ void Board::loadFromFile()
 			case CAT:
 			{
 				//create cat vector and get cat func. 
+				GameControl::getInstance()->addCat(position);
 
 			}
 

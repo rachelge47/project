@@ -12,14 +12,15 @@ class GameControl {
 
 public:
 
-	GameControl();
 	void run();
 	void levelRun();
-
 	void makeWindow();
+	static GameControl* getInstance();
+	~GameControl() { delete m_instance; }
 
 private:
-
+	GameControl(); // single tone
+	static GameControl* m_instance; //single tone
 	Board m_board;
 	Menu m_menu;
 	sf::RenderWindow m_window;

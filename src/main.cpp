@@ -3,8 +3,7 @@
 
 int main()
 {
-	GameControl control;
-	control.run();
+	GameControl::getInstance()->run();
 
 	return EXIT_SUCCESS;
 }

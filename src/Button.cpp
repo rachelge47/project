@@ -1,6 +1,7 @@
 #include "Button.h"
 
-Button::Button ()
+Button::Button (const sf::Text& text)
+	:m_text(text)
 {
 	m_button.setSize({ 50,100 });
 	m_button.setFillColor(sf::Color(217, 173, 242));  //set color of button
@@ -15,24 +16,40 @@ void Button::drawButton(sf::RenderWindow& window) const
 }
 
 
-void Button::getFont()
+//void Button::getFont()
+//{
+//	if (!m_font.loadFromFile("arial.ttf"))
+//	{
+//		std::cout << "error loading font";
+//		return;
+//	}
+//}
+
+
+//void Button::fillText()
+//{
+//	for (const auto& str : { "Help", "Exit", "NewGame" })
+//	{
+//		sf::Text text(str, m_font);
+//		text.setCharacterSize(24);
+//		text.setFillColor(sf::Color(72,23,100));
+//
+//		m_titles.push_back(text);  //fill the text vetor 
+//	}
+//}
+
+void HelpButton::action()
 {
-	if (!m_font.loadFromFile("arial.ttf"))
-	{
-		std::cout << "error loading font";
-		return;
-	}
+	GameControl::getInstance()->helpScreen();
 }
 
-
-void Button::fillText()
+void ExitButton::action()
 {
-	for (const auto& str : { "Help", "Exit", "NewGame" })
-	{
-		sf::Text text(str, m_font);
-		text.setCharacterSize(24);
-		text.setFillColor(sf::Color(72,23,100));
-
-		m_titles.push_back(text);  //fill the text vetor 
-	}
+	GameControl::getInstance()->exitGame();
 }
+
+void NewGameButton::action()
+{
+	GameControl::getInstance()->newGame();
+}
+
