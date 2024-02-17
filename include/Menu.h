@@ -5,9 +5,18 @@
 class Menu {
 public:
 
+	Menu();
+
 	void drawMenu( sf::RenderWindow& window)const ;
 
+
 private:
-	std::vector <Button> m_menu;
+
+	std::vector<std::unique_ptr<Button>> m_menu;
+	sf::Font m_font;
+
+	sf::Text makeButton(const std::string& str, const sf::Font& font);
+
 
 };
+

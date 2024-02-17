@@ -1,4 +1,5 @@
 #include "Board.h"
+#include "GameControl.h"
 
 Board::Board()
 	:m_level(0)
@@ -50,16 +51,17 @@ void Board::loadFromFile()
 				m_stills.push_back(std::make_unique<Door>());
 				break;
 			}
-			/*case EMPTY:
-			{
-				m_stills.push_back(std::make_unique<Empty>());
-				break;
-			}*/
-			case CAT:
-			{
-				//create cat vector and get cat func. 
-				GameControl::getInstance()->addCat(position);
+			
+			//case CAT:
+			//{
+			//	//create cat vector and get cat func. 
+			////	GameControl::getInstance()->addCat(position);
 
+			//}
+
+			case MOUSE:
+			{
+				GameControl::getInstance()->saveMouse(position);
 			}
 
 			default:

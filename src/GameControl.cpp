@@ -5,6 +5,7 @@ GameControl::GameControl()
 	:m_window(sf::VideoMode(WIDTH,LENGTH), "Mouse and Cat")
 {}
 
+GameControl* GameControl::m_instance = nullptr;
 
 void GameControl::run()
 {
@@ -12,9 +13,10 @@ void GameControl::run()
 	//{
 		//m_board.loadFromFile();
 
-		m_board.draw(m_window);
+		//m_board.draw(m_window);
 
-		m_menu.drawMenu(m_window);
+		//m_menu.drawMenu(m_window);
+
 
 		levelRun();
 	//}
@@ -54,6 +56,7 @@ void GameControl::makeWindow()
     }
 }
 
+
 GameControl* GameControl::getInstance()
 {
     if (m_instance == nullptr)
@@ -63,3 +66,23 @@ GameControl* GameControl::getInstance()
     return m_instance;
     
 }
+
+void GameControl::helpScreen()
+{
+    std::cout << "helpButton\n";
+}
+
+void GameControl::exitGame()
+{
+    std::cout << "exitButton\n";
+}
+
+void GameControl::newGame()
+{
+    std::cout << "newGameButton\n";
+}
+//
+//void GameControl::saveMouse(const sf::Vector2f position)
+//{
+//    m_mouse.setPosition(position);
+//}

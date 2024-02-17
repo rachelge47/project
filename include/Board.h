@@ -10,8 +10,8 @@
 #include "Key.h"
 #include "Present.h"
 #include "Cheese.h"
-#include "GameControl.h"
 
+class GameControl;
 
 const char MOUSE = '%';
 const char CAT = '^';
