@@ -19,6 +19,7 @@ public:
 	void helpScreen();
 	void exitGame();
 	void newGame();
+	void cover();
 	~GameControl() { delete m_instance; }
 
 private:
@@ -26,7 +27,7 @@ private:
 	static GameControl* m_instance; //single tone
 	Board m_board;
 	Menu m_menu;
-	Mouse m_mouse;
+	//Mouse m_mouse;
 	sf::RenderWindow m_window;
 //	std::vector <Cat> m_cats;
 

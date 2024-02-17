@@ -59,10 +59,10 @@ void Board::loadFromFile()
 
 			//}
 
-			case MOUSE:
+			/*case MOUSE:
 			{
 				GameControl::getInstance()->saveMouse(position);
-			}
+			}*/
 
 			default:
 				break;

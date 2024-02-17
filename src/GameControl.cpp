@@ -36,7 +36,7 @@ void GameControl::makeWindow()
     while (m_window.isOpen())
     {
         m_window.clear();
-
+        cover();
         m_board.draw(m_window);
         m_menu.drawMenu(m_window);
 
@@ -81,7 +81,18 @@ void GameControl::newGame()
 {
     std::cout << "newGameButton\n";
 }
-//
+
+void GameControl::cover()
+{
+    sf::Texture back;
+    sf::Sprite background;
+    back.loadFromFile("sky.png");
+    background.setTexture(back);
+    //m_window.clear();
+    m_window.draw(background);
+    //m_window.display();
+}
+
 //void GameControl::saveMouse(const sf::Vector2f position)
 //{
 //    m_mouse.setPosition(position);

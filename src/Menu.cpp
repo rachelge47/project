@@ -2,8 +2,9 @@
 
 Menu::Menu()
 {
-	m_font;
-	if (!m_font.loadFromFile("C:/Windows/Fonts/Arial.ttf"))
+	
+	//m_font;
+	if (!m_font.loadFromFile("C:/Windows/Fonts/lucon.ttf"))
 	{
 		std::cout << "error loading font";
 		return;

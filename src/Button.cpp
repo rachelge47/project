@@ -16,6 +16,11 @@ void Button::drawButton(sf::RenderWindow& window)
 {
 	setPosition(m_position);
 	window.draw(m_button);
+
+	//float x = (m_button.getSize().x - m_text.getLocalBounds().width) / 2;
+	//float y = (m_button.getSize().y - m_text.getLocalBounds().height) / 2;
+	//m_text.setPosition(x, y);
+	//m_text.move(30, 0);
 	window.draw(m_text);
 }
 
