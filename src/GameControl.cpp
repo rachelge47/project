@@ -57,7 +57,7 @@ void GameControl::makeWindow()
 
                 if (m_menu.isClickMenu(location))
                 {
-
+                    std::cout << "hii";
                 }
 
             }
