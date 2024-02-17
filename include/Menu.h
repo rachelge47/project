@@ -8,6 +8,7 @@ public:
 	Menu();
 
 	void drawMenu( sf::RenderWindow& window)const ;
+	virtual bool isClickMenu(const sf::Vector2f& location) const;
 
 
 private:

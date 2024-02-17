@@ -30,6 +30,14 @@ void Button::setPosition(const sf::Vector2f& position)
 	m_text.setPosition(m_button.getPosition() + sf::Vector2f(5, 5));
 }
 
+bool Button::isClick(const sf::Vector2f& location) const
+{
+	return m_button.getGlobalBounds().contains(location);
+}
+
+
+
+
 
 void HelpButton::action()
 {

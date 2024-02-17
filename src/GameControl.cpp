@@ -51,6 +51,18 @@ void GameControl::makeWindow()
                 m_window.close();
                 break;
             }
+            case sf::Event::MouseButtonReleased:
+            {
+                auto location = m_window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });    //set location
+
+                if (m_menu.isClickMenu(location))
+                {
+
+                }
+
+            }
+
+
             }
         }
     }

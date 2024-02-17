@@ -47,3 +47,15 @@ void Menu::drawMenu( sf::RenderWindow& window) const
         button->drawButton(window);
 }
 
+bool Menu::isClickMenu(const sf::Vector2f& location) const
+{
+	for (auto& button : m_menu)
+	{
+		if (button->isClick(location))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
