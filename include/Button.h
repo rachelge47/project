@@ -12,8 +12,8 @@ public:
 	void drawButton( sf::RenderWindow& window) ;
 	virtual int getSize() { return m_button.getSize().x; }
 	virtual void setPosition(const sf::Vector2f& position); ///?
-	bool isClick(const sf::Vector2f& location) const;
-	//isClick();
+	virtual bool isClick(const sf::Vector2f& location) const;
+	sf::Text getText() { return m_text; }
 
 private:
 

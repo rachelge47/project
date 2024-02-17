@@ -36,9 +36,6 @@ bool Button::isClick(const sf::Vector2f& location) const
 }
 
 
-
-
-
 void HelpButton::action()
 {
 	GameControl::getInstance()->helpScreen();

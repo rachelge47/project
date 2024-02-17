@@ -5,11 +5,7 @@
 #include "StillObject.h"
 #include <fstream>
 #include <iostream>
-#include "Wall.h"
-#include "Door.h"
-#include "Key.h"
-#include "Present.h"
-#include "Cheese.h"
+
 
 class GameControl;
 
@@ -30,7 +26,7 @@ public:
 
 	void loadFromFile();
 	int getLevel() const;
-	void draw(const sf::RenderWindow& window);
+	void draw( sf::RenderWindow& window) const;
 
 
 private:

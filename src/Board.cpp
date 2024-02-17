@@ -17,38 +17,42 @@ void Board::loadFromFile()
 	}
 
 	std::string line;
-
-	while (std::getline(boardFile, line) && !line.empty())
+	/*while (std::getline(boardFile, line) && !line.empty())
 	{
 		for (auto& ch : line)
-		{
-			//std::unique_ptr<StillObject> newObj = nullptr;
+		{*/
 
-			switch (ch)
+	for (size_t i = 0; std::getline(boardFile, line) && !line.empty(); ++i)
+	{
+		for (size_t j = 0; j < line.size(); ++j)
+		{
+			sf::Vector2f currentPosition(j * 60, i * 60);
+
+			switch (line[j])
 			{
 			case WALL:
 			{
-				m_stills.push_back(std::make_unique<Wall>());
+				m_stills.push_back(std::make_unique<Wall>(currentPosition));
 				break;
 			}
 			case CHEESE:
 			{
-				m_stills.push_back(std::make_unique<Cheese>());
+				m_stills.push_back(std::make_unique<Cheese>(currentPosition));
 				break;
 			}
 			case KEY:
 			{
-				m_stills.push_back(std::make_unique<Key>());
+				m_stills.push_back(std::make_unique<Key>(currentPosition));
 				break;
 			}
 			case PRESENT:
 			{
-				m_stills.push_back(std::make_unique<Present>());
+				m_stills.push_back(std::make_unique<Present>(currentPosition));
 				break;
 			}
 			case DOOR:
 			{
-				m_stills.push_back(std::make_unique<Door>());
+				m_stills.push_back(std::make_unique<Door>(currentPosition));
 				break;
 			}
 			
@@ -78,7 +82,8 @@ int Board::getLevel() const
 	return m_level;
 }
 
-void Board::draw(const sf::RenderWindow & window)
+void Board::draw( sf::RenderWindow & window) const
 {
-	//draws the board
+	for (auto& object : m_stills)
+		object->draw(window);
 }

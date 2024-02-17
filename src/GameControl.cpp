@@ -55,13 +55,20 @@ void GameControl::makeWindow()
             {
                 auto location = m_window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });    //set location
 
-                if (m_menu.isClickMenu(location))
+                if (m_menu.isClickMenu(location)=="help")
                 {
-                    std::cout << "hii";
+                    helpScreen();
                 }
-
+                else if (m_menu.isClickMenu(location) == "exit")
+                {
+                    exitGame();
+                }
+                else if (m_menu.isClickMenu(location) == "newGame")
+                {
+                    newGame();
+                }
+               
             }
-
 
             }
         }

@@ -13,20 +13,14 @@ Menu::Menu()
 	sf::Vector2f position = {50,80};
 	
 	sf::Text text= makeButton("Help", m_font);
-	//HelpButton helpButton(text);
-	//helpButton.setPosition(position);
 	m_menu.push_back(std::make_unique<HelpButton>(text, position));
 
 	position.y += m_menu[0]->getSize() + 50;
 	text = makeButton("Exit", m_font);
-	//ExitButton exitButton(text);
-	//exitButton.setPosition(position);
 	m_menu.push_back(std::make_unique<ExitButton>(text,position));
 
 	position.y += m_menu[0]->getSize() + 50;
 	text = makeButton("New Game", m_font);
-	//NewGameButton newGameButton(text);
-	//newGameButton.setPosition(position);
 	m_menu.push_back(std::make_unique<NewGameButton>(text,position));
 
 }
@@ -47,15 +41,26 @@ void Menu::drawMenu( sf::RenderWindow& window) const
         button->drawButton(window);
 }
 
-bool Menu::isClickMenu(const sf::Vector2f& location) const
+std::string Menu::isClickMenu(const sf::Vector2f& location) const
 {
 	for (auto& button : m_menu)
 	{
 		if (button->isClick(location))
 		{
-			return true;
+			if (button->getText().getString() == "Help")
+			{
+				return "help";
+			}
+			else if (button->getText().getString() == "Exit")
+			{
+				return "exit";
+			}
+			else if (button->getText().getString() == "New Game")
+			{
+				return "newGame";
+			}
 		}
 	}
-	return false;
+	return "not clicked";
 }
 
