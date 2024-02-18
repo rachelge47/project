@@ -114,7 +114,7 @@ void GameControl::cover()
     //m_window.display();
 }
 
-//void GameControl::saveMouse(const sf::Vector2f position)
-//{
-//    m_mouse.setPosition(position);
-//}
+void GameControl::saveMouse(const sf::Vector2f position)
+{
+    m_mouse.setPosition(position);
+}
