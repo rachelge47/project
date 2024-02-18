@@ -3,19 +3,20 @@
 
 Board::Board()
 	:m_level(0)
-{}
+{
+}
 
 
 void Board::loadFromFile()
-{
-	std::ifstream boardFile("Board.txt");
+{	
+	auto boardFile = std::ifstream("C:/Users/Cheko/source/repos/project.c/resources/Board.txt");
 
-	if (!(boardFile.is_open()))
+	if (!boardFile.is_open())
 	{
-		std::cout << "cannot open file";
+		std::cerr << "Error opening file!" << std::endl;
 		exit(EXIT_FAILURE);
 	}
-
+	
 	std::string line;
 	/*while (std::getline(boardFile, line) && !line.empty())
 	{
@@ -26,33 +27,35 @@ void Board::loadFromFile()
 	{
 		for (size_t j = 0; j < line.size(); ++j)
 		{
+			std::cout << line[j]<< std::endl;
+			
 			sf::Vector2f currentPosition(j * 60, i * 60);
 
 			switch (line[j])
 			{
 			case WALL:
 			{
-				m_stills.push_back(std::make_unique<Wall>(currentPosition));
+				m_stills.push_back(std::make_unique<Wall>(currentPosition, Manage::getTexture()[O_WALL]));
 				break;
 			}
 			case CHEESE:
 			{
-				m_stills.push_back(std::make_unique<Cheese>(currentPosition));
+				m_stills.push_back(std::make_unique<Cheese>(currentPosition, Manage::getTexture()[O_CHEESE]));
 				break;
 			}
 			case KEY:
 			{
-				m_stills.push_back(std::make_unique<Key>(currentPosition));
+				m_stills.push_back(std::make_unique<Key>(currentPosition, Manage::getTexture()[O_KEY]));
 				break;
 			}
 			case PRESENT:
 			{
-				m_stills.push_back(std::make_unique<Present>(currentPosition));
+				m_stills.push_back(std::make_unique<Present>(currentPosition, Manage::getTexture()[O_PRESENT]));
 				break;
 			}
 			case DOOR:
 			{
-				m_stills.push_back(std::make_unique<Door>(currentPosition));
+				m_stills.push_back(std::make_unique<Door>(currentPosition, Manage::getTexture()[O_DOOR]));
 				break;
 			}
 			
@@ -63,18 +66,17 @@ void Board::loadFromFile()
 
 			//}
 
-			/*case MOUSE:
+			case MOUSE:
 			{
 				GameControl::getInstance()->saveMouse(position);
-			}*/
-
+			}
+			
 			default:
 				break;
 			}	
 		}
 	}
 }
-
 
 
 int Board::getLevel() const

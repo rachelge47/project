@@ -9,9 +9,11 @@ GameControl* GameControl::m_instance = nullptr;
 
 void GameControl::run()
 {
+    Manage::fillTexturVector();
+
 	//while (m_board.getLevel() < NUMOFLEVELS)
 	//{
-		//m_board.loadFromFile();
+		m_board.loadFromFile();
 
 		//m_board.draw(m_window);
 
