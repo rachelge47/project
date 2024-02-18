@@ -12,7 +12,7 @@ void Board::loadFromFile()
 
 	if (!(boardFile.is_open()))
 	{
-		std::cout << "cannot open file";
+		std::cout << "cannot open file.";
 		exit(EXIT_FAILURE);
 	}
 
