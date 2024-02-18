@@ -3,6 +3,7 @@
 GameObject::GameObject(const sf::Vector2f& position, const sf::Texture& texture)
 	:m_position(position), m_size(50), m_texture(texture)
 {
+
 }
 
 
