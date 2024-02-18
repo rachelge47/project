@@ -5,8 +5,8 @@
 
 
 const int NUMOFLEVELS = 3;
-const int WIDTH = 1300;
-const int LENGTH = 800;
+//const int WIDTH = 1300;
+//const int LENGTH = 800;
 
 class GameControl {
 
