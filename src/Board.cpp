@@ -59,16 +59,16 @@ void Board::loadFromFile()
 				break;
 			}
 			
-			//case CAT:
-			//{
-			//	//create cat vector and get cat func. 
-			////	GameControl::getInstance()->addCat(position);
+			case CAT:
+			{
+				//create cat vector and get cat func. 
+				GameControl::getInstance()->addCat(currentPosition);
 
-			//}
+			}
 
 			case MOUSE:
 			{
-				GameControl::getInstance()->saveMouse(position);
+				GameControl::getInstance()->saveMouse(currentPosition);
 			}
 			
 			default:

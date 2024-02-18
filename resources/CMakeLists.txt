@@ -10,4 +10,5 @@ configure_file ("KEY.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("RESET.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("SAVE.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("sky.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("back.png" ${CMAKE_BINARY_DIR} COPYONLY)
 

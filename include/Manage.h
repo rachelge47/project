@@ -2,8 +2,8 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
-const int WIDTH = 1300;
-const int LENGTH = 800;
+const int WIDTH = 1700;
+const int LENGTH = 900;
 
 enum ObjectType {
     O_WALL,
