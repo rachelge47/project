@@ -18,18 +18,19 @@ void Board::loadFromFile()
 	}
 	
 	std::string line;
-	/*while (std::getline(boardFile, line) && !line.empty())
+	sf::Vector2f currentPosition(250, 20);
+	
+	for (int i = 0; std::getline(boardFile, line) && !line.empty(); ++i)
 	{
-		for (auto& ch : line)
-		{*/
-
-	for (size_t i = 0; std::getline(boardFile, line) && !line.empty(); ++i)
-	{
-		for (size_t j = 0; j < line.size(); ++j)
+		for (int j = 0; j < line.size(); ++j)
 		{
 			std::cout << line[j]<< std::endl;
 			
-			sf::Vector2f currentPosition(j * 60, i * 60);
+			//sf::Vector2f currentPosition(j * 60, i * 60);
+			//currentPosition = { (j + 1) * 60, (i + 1) * 60 };
+			currentPosition.x = 250 + (j * 60);
+			currentPosition.y = 20 + (i * 60);
+			
 
 			switch (line[j])
 			{
@@ -61,9 +62,7 @@ void Board::loadFromFile()
 			
 			case CAT:
 			{
-				//create cat vector and get cat func. 
 				GameControl::getInstance()->addCat(currentPosition);
-
 			}
 
 			case MOUSE:
@@ -74,6 +73,7 @@ void Board::loadFromFile()
 			default:
 				break;
 			}	
+			
 		}
 	}
 }

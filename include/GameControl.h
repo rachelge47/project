@@ -32,7 +32,7 @@ private:
 	static GameControl* m_instance; //single tone
 	Board m_board;
 	Menu m_menu;
-	std::unique_ptr<Mouse> m_mouse;// (std::make_unique<Mouse>(sf::Vector2f({ 0, 0 }), Manage::getTexture()[O_MOUSE]));
+	std::unique_ptr<Mouse> m_mouse;
 	sf::RenderWindow m_window;
 	std::vector <std::unique_ptr <Cat>> m_cats;
 

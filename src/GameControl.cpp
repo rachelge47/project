@@ -2,8 +2,7 @@
 
 
 GameControl::GameControl()
-	:m_window(sf::VideoMode(WIDTH,LENGTH), "Mouse and Cat")//,
-   // m_mouse (std::make_unique<Mouse>(sf::Vector2f({0, 0}), Manage::getTexture()[O_MOUSE]))
+	:m_window(sf::VideoMode(WIDTH,LENGTH), "Mouse and Cat")
 {}
 
 GameControl* GameControl::m_instance = nullptr;
