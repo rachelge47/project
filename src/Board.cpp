@@ -3,8 +3,7 @@
 
 Board::Board()
 	:m_level(0)
-{
-}
+{}
 
 
 void Board::loadFromFile()
@@ -17,20 +16,26 @@ void Board::loadFromFile()
 		exit(EXIT_FAILURE);
 	}
 	
+	getStills(boardFile);
+	
+}
+
+void Board::getStills(std::ifstream& boardFile)
+{
 	std::string line;
 	sf::Vector2f currentPosition(250, 20);
-	
+
 	for (int i = 0; std::getline(boardFile, line) && !line.empty(); ++i)
 	{
 		for (int j = 0; j < line.size(); ++j)
 		{
-			std::cout << line[j]<< std::endl;
-			
+			std::cout << line[j] << std::endl;
+
 			//sf::Vector2f currentPosition(j * 60, i * 60);
 			//currentPosition = { (j + 1) * 60, (i + 1) * 60 };
 			currentPosition.x = 250 + (j * 50);
 			currentPosition.y = 20 + (i * 50);
-			
+
 
 			switch (line[j])
 			{
@@ -59,7 +64,7 @@ void Board::loadFromFile()
 				m_stills.push_back(std::make_unique<Door>(currentPosition, Manage::getTexture(O_DOOR)));
 				break;
 			}
-			
+
 			case CAT:
 			{
 				GameControl::getInstance()->addCat(currentPosition);
@@ -69,15 +74,14 @@ void Board::loadFromFile()
 			{
 				GameControl::getInstance()->saveMouse(currentPosition);
 			}
-			
+
 			default:
 				break;
-			}	
-			
+			}
 		}
 	}
-}
 
+}
 
 int Board::getLevel() const
 {
@@ -89,6 +93,8 @@ void Board::draw( sf::RenderWindow & window) const
 	for (auto& object : m_stills)
 		object->draw(window);
 }
+
+
 
 //function to check tif the board is in bounds of window
 //Manage::setObjSize(the size that will fits)

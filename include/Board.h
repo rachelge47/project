@@ -30,7 +30,8 @@ public:
 
 
 private:
-	
+	void getStills(std::ifstream& boardFile);
+
 	std::vector <std::unique_ptr <StillObject>> m_stills;
 	int m_level;
 
