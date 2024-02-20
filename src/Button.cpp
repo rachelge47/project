@@ -7,7 +7,7 @@ Button::Button (const sf::Text& text, const sf::Vector2f &position)
 	m_button.setSize({ 150,50 });
 	m_button.setFillColor(sf::Color(217, 173, 242));  //set color of button
 	m_button.setOutlineThickness(5);
-	m_button.setOutlineColor(sf::Color::Red);
+	m_button.setOutlineColor(sf::Color::Black);
 
 }
 
@@ -51,3 +51,7 @@ void NewGameButton::action()
 	GameControl::getInstance()->newGame();
 }
 
+void StartButton::action()
+{
+	GameControl::getInstance()->startGame();
+}

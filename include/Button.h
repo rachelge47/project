@@ -14,6 +14,7 @@ public:
 	virtual void setPosition(const sf::Vector2f& position); ///?
 	virtual bool isClick(const sf::Vector2f& location) const;
 	sf::Text getText() { return m_text; }
+	virtual~Button()= default;
 
 private:
 
@@ -25,20 +26,30 @@ private:
 class HelpButton : public Button
 {
 public:
-	HelpButton(const sf::Text& text, const sf::Vector2f& position) :Button(text,position) {}
+	using Button::Button;
+	//HelpButton(const sf::Text& text, const sf::Vector2f& position) :Button(text,position) {}
 	virtual void action () override;
 };
 
 class ExitButton : public Button
 {
 public:
-	ExitButton(const sf::Text& text, const sf::Vector2f& position) :Button(text,position) {}
+	using Button::Button;
+	//ExitButton(const sf::Text& text, const sf::Vector2f& position) :Button(text,position) {}
 	virtual void action() override;
 };
 
 class NewGameButton : public Button
 {
 public:
-	NewGameButton(const sf::Text& text, const sf::Vector2f& position) :Button(text,position) {}
+	using Button::Button;
+	//NewGameButton(const sf::Text& text, const sf::Vector2f& position) :Button(text,position) {}
+	virtual void action() override;
+};
+
+class StartButton : public Button
+{
+public:
+	using Button::Button;
 	virtual void action() override;
 };

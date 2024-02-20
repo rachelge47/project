@@ -3,16 +3,19 @@
 Menu::Menu()
 {
 	
-	//m_font;
 	if (!m_font.loadFromFile("C:/Windows/Fonts/lucon.ttf"))
 	{
 		std::cout << "error loading font";
 		return;
 	}
 	
-	sf::Vector2f position = {50,80};
+	sf::Vector2f position = {800,50};
 	
-	sf::Text text= makeButton("Help", m_font);
+	sf::Text text= makeButton("Start", m_font);
+	m_menu.push_back(std::make_unique<StartButton>(text, position));
+
+	position.y += m_menu[0]->getSize() + 50;
+	text = makeButton("Help", m_font);
 	m_menu.push_back(std::make_unique<HelpButton>(text, position));
 
 	position.y += m_menu[0]->getSize() + 50;
@@ -58,6 +61,10 @@ std::string Menu::isClickMenu(const sf::Vector2f& location) const
 			else if (button->getText().getString() == "New Game")
 			{
 				return "newGame";
+			}
+			else if (button->getText().getString() == "Start")
+			{
+				return "start";
 			}
 		}
 	}

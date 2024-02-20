@@ -35,19 +35,32 @@ void GameControl::makeWindow()
 {
     m_window.setFramerateLimit(60);
     sf::Clock clock;
+    bool gameStarted = false;
 
     while (m_window.isOpen())
     {
         const auto deltaTime = clock.restart();
 
-        m_window.clear();
+       // m_window.clear();
         cover();
-        m_board.draw(m_window);
-        m_mouse->draw(m_window);
-        drawCats();
-        m_menu.drawMenu(m_window);
+       // m_board.draw(m_window);
+        //m_mouse->draw(m_window);
+        //drawCats();
+       // m_menu.drawMenu(m_window);
 
-        m_window.display();
+      //  m_window.display();
+        if (!gameStarted)
+        {
+            m_menu.drawMenu(m_window);
+            m_window.display(); 
+        }
+        else
+        {
+            startGame();
+
+           // cover();
+
+        }
 
         for (auto event = sf::Event{}; m_window.pollEvent(event);)
         {
@@ -74,6 +87,12 @@ void GameControl::makeWindow()
                 {
                     newGame();
                 }
+                else if (m_menu.isClickMenu(location) == "start")
+                {
+                    gameStarted = true;
+
+                }
+
                 break;
             }
             case sf::Event::KeyPressed:
@@ -142,6 +161,29 @@ GameControl* GameControl::getInstance()
 void GameControl::helpScreen()
 {
     std::cout << "helpButton\n";
+
+    sf::RenderWindow helpWindow(sf::VideoMode(1063, 597), "Help Screen");
+    helpWindow.setFramerateLimit(60);
+
+    while (helpWindow.isOpen())
+    {
+        //m_window.clear();
+        helpcover( helpWindow);
+        helpWindow.display();
+
+        const auto deltaTime = sf::seconds(1.0f / 60.0f);
+
+        sf::Event event;
+        while (helpWindow.pollEvent(event))
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+                helpWindow.close();
+                break;
+            }
+        }
+    }
 }
 
 void GameControl::exitGame()
@@ -154,6 +196,17 @@ void GameControl::newGame()
     std::cout << "newGameButton\n";
 }
 
+void GameControl::startGame()
+{
+    std::cout << "startGameButton\n";
+    m_window.clear();
+    m_board.draw(m_window);
+    m_mouse->draw(m_window);
+    drawCats();
+    m_window.display();
+
+}
+
 void GameControl::cover()
 {
     sf::Texture back;
@@ -163,6 +216,17 @@ void GameControl::cover()
     //m_window.clear();
     m_window.draw(background);
     //m_window.display();
+}
+
+void GameControl::helpcover( sf::RenderWindow &helpWindow)
+{
+    sf::Texture back;
+    sf::Sprite background;
+    back.loadFromFile("HELP.png");
+    background.setTexture(back);
+    //m_window.clear();
+    helpWindow.draw(background);
+  //  helpWindow.display();
 }
 
 void GameControl::addCat(const sf::Vector2f& position)
