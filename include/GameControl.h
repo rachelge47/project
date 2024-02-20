@@ -6,16 +6,12 @@
 
 
 const int NUMOFLEVELS = 3;
-//const int WIDTH = 1300;
-//const int LENGTH = 800;
 
 class GameControl {
 
 public:
 
 	void run();
-	void levelRun();
-	void makeWindow();
 	static GameControl* getInstance();
 	void helpScreen();
 	void exitGame();
@@ -27,7 +23,10 @@ public:
 
 private:
 	GameControl(); // single tone
+	void levelRun();
+	void makeWindow();
 	void drawCats();
+	void move(const sf::Keyboard::Key& key, const sf::Time& deltaTime);
 
 	static GameControl* m_instance; //single tone
 	Board m_board;

@@ -28,35 +28,35 @@ void Board::loadFromFile()
 			
 			//sf::Vector2f currentPosition(j * 60, i * 60);
 			//currentPosition = { (j + 1) * 60, (i + 1) * 60 };
-			currentPosition.x = 250 + (j * 60);
-			currentPosition.y = 20 + (i * 60);
+			currentPosition.x = 250 + (j * 50);
+			currentPosition.y = 20 + (i * 50);
 			
 
 			switch (line[j])
 			{
 			case WALL:
 			{
-				m_stills.push_back(std::make_unique<Wall>(currentPosition, Manage::getTexture()[O_WALL]));
+				m_stills.push_back(std::make_unique<Wall>(currentPosition, Manage::getTexture(O_WALL)));
 				break;
 			}
 			case CHEESE:
 			{
-				m_stills.push_back(std::make_unique<Cheese>(currentPosition, Manage::getTexture()[O_CHEESE]));
+				m_stills.push_back(std::make_unique<Cheese>(currentPosition, Manage::getTexture(O_CHEESE)));
 				break;
 			}
 			case KEY:
 			{
-				m_stills.push_back(std::make_unique<Key>(currentPosition, Manage::getTexture()[O_KEY]));
+				m_stills.push_back(std::make_unique<Key>(currentPosition, Manage::getTexture(O_KEY)));
 				break;
 			}
 			case PRESENT:
 			{
-				m_stills.push_back(std::make_unique<Present>(currentPosition, Manage::getTexture()[O_PRESENT]));
+				m_stills.push_back(std::make_unique<Present>(currentPosition, Manage::getTexture(O_PRESENT)));
 				break;
 			}
 			case DOOR:
 			{
-				m_stills.push_back(std::make_unique<Door>(currentPosition, Manage::getTexture()[O_DOOR]));
+				m_stills.push_back(std::make_unique<Door>(currentPosition, Manage::getTexture(O_DOOR)));
 				break;
 			}
 			
@@ -89,3 +89,6 @@ void Board::draw( sf::RenderWindow & window) const
 	for (auto& object : m_stills)
 		object->draw(window);
 }
+
+//function to check tif the board is in bounds of window
+//Manage::setObjSize(the size that will fits)

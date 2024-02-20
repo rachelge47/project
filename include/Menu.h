@@ -9,7 +9,7 @@ public:
 
 	void drawMenu( sf::RenderWindow& window)const ;
 	virtual std::string isClickMenu(const sf::Vector2f& location) const;
-
+	virtual ~Menu()=default;
 
 private:
 

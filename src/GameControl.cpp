@@ -34,9 +34,12 @@ void GameControl::levelRun()
 void GameControl::makeWindow()
 {
     m_window.setFramerateLimit(60);
+    sf::Clock clock;
 
     while (m_window.isOpen())
     {
+        const auto deltaTime = clock.restart();
+
         m_window.clear();
         cover();
         m_board.draw(m_window);
@@ -71,12 +74,58 @@ void GameControl::makeWindow()
                 {
                     newGame();
                 }
-               
+                break;
             }
+            case sf::Event::KeyPressed:
+            {               
+                move(event.key.code, deltaTime);
+                break;
+            }
+            default:
+                break;
 
             }
         }
+        //the cats play (for)
     }
+}
+
+void GameControl::move(const sf::Keyboard::Key& key, const sf::Time &deltaTime)
+{
+    sf::Vector2f direction;
+
+    switch (key)
+    {
+    case sf::Keyboard::Key::Space:
+    {
+        direction= sf::Vector2f(0, 0);
+        break;
+    }
+    case sf::Keyboard::Key::Left:
+    {
+        direction = sf::Vector2f(-1, 0);
+        break;
+    }
+    case sf::Keyboard::Key::Down:
+    {
+        direction = sf::Vector2f(0, 1);
+        break;
+    }
+    case sf::Keyboard::Key::Up:
+    {
+        direction = sf::Vector2f(0, -1);
+        break;
+    }
+    case sf::Keyboard::Key::Right:
+    {
+        direction = sf::Vector2f(1, 0);
+        break;
+    }
+    }
+
+    m_mouse->setDirection(direction);
+    m_mouse->move(deltaTime);
+       
 }
 
 
@@ -118,12 +167,12 @@ void GameControl::cover()
 
 void GameControl::addCat(const sf::Vector2f& position)
 {
-    m_cats.push_back(std::make_unique<Cat>(position, Manage::getTexture()[O_CAT]));
+    m_cats.push_back(std::make_unique<Cat>(position, Manage::getTexture(O_CAT)));
 }
 
 void GameControl::saveMouse(const sf::Vector2f& position)
 {
-    m_mouse = std::make_unique<Mouse>(position, Manage::getTexture()[O_MOUSE]);
+    m_mouse = std::make_unique<Mouse>(position, Manage::getTexture(O_MOUSE));
 }
 
 void GameControl::drawCats()

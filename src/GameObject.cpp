@@ -1,19 +1,18 @@
 #include "GameObject.h"
 
-GameObject::GameObject(const sf::Vector2f& position, const sf::Texture& texture)
-	:m_position(position), m_size(50), m_texture(texture)
+GameObject::GameObject(const sf::Vector2f& position, const sf::Texture *texture)
+	:m_size(50)
 {
+	m_object.setTexture(texture);
+	m_object.setPosition(position);
+	m_object.setSize({ 50,50 });
+	//Manage::getObjSize();
 
 }
 
 
 	
-void GameObject::draw(sf::RenderWindow& window) const
+void GameObject::draw(sf::RenderWindow& window) 
 {
-	sf::RectangleShape shape;
-	shape.setTexture(&m_texture);
-	shape.setPosition(m_position);
-	shape.setSize({50,50});
-	window.draw(shape);
-	//window.display();
+	window.draw(m_object);
 }

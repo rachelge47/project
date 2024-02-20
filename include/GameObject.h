@@ -4,17 +4,20 @@
 
 class GameObject {
 public:
-	GameObject(const sf::Vector2f & position, const sf::Texture& texture);
-	virtual void draw(sf::RenderWindow& window) const ;
-	int getSize() {return m_size;}
-	sf::Vector2f getPosition() const { return m_position; }
-	void setPosition(const sf::Vector2f& position) { m_position = position; }
-
+	GameObject(const sf::Vector2f & position, const sf::Texture *texture);
+	void draw(sf::RenderWindow& window);
+	int getSize() {return m_size;}  //change
+	sf::Vector2f getPosition() const { return m_object.getPosition(); }
+	void setPosition(const sf::Vector2f& position) { m_object.setPosition(position); }
+	virtual ~GameObject()= default;
 
 private:
-	sf::Vector2f m_position;
+	//sf::Vector2f m_position;
 	int m_size;
-	sf::Texture m_texture;
+	//sf::Texture m_texture;
+
+protected:
+	sf::RectangleShape m_object;
 
 };
 
