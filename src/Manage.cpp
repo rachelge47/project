@@ -15,3 +15,12 @@ void Manage::fillTexturVector()
         m_textures.push_back(texture);
     }
 }
+
+ void Manage::cover(sf::RenderWindow &window, const std ::string& backName)
+{
+    sf::Texture back;
+    sf::Sprite background;
+    back.loadFromFile(backName + ".png");
+    background.setTexture(back);
+    window.draw(background);
+}

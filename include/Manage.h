@@ -18,6 +18,7 @@ enum ObjectType {
 class Manage {
 public:
     static void fillTexturVector();
+    static void cover( sf::RenderWindow& window, const std::string& backName);
     static sf::Texture *getTexture(int index) { return &m_textures[index]; }
     static const std::string m_names[7];
 private:

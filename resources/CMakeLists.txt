@@ -1,5 +1,6 @@
 ﻿#configure_file ("Wall.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("WALL.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("backCatMouse.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CAT.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("MOUSE.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("DOOR.png" ${CMAKE_BINARY_DIR} COPYONLY)
@@ -12,4 +13,5 @@ configure_file ("SAVE.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("sky.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("back.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("HELP.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("garssBack.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
