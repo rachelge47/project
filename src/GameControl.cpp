@@ -36,6 +36,7 @@ void GameControl::makeWindow()
     m_window.setFramerateLimit(60);
     sf::Clock clock;
     bool gameStarted = false;
+    Manage::load();
 
     while (m_window.isOpen())
     {
@@ -160,7 +161,7 @@ void GameControl::helpScreen()
 
     while (helpWindow.isOpen())
     {
-        Manage::cover(m_window, "HELP");
+        Manage::cover(helpWindow, "HELP");
         helpWindow.display();
 
         const auto deltaTime = sf::seconds(1.0f / 60.0f);

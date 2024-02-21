@@ -4,6 +4,9 @@
 
 const std::string Manage::m_names[7] = { "Wall", "Door", "Key", "Present", "Cheese", "Mouse", "Cat" };
 std::vector<sf::Texture> Manage::m_textures;
+sf::Texture Manage::m_menuBack;
+sf::Texture Manage::m_gameBack;
+sf::Texture Manage::m_helpBack;
 
 
 void Manage::fillTexturVector()
@@ -16,11 +19,42 @@ void Manage::fillTexturVector()
     }
 }
 
+
+//sf::Texture back;
+//sf::Sprite background;
+//back.loadFromFile(backName + ".png");
+//background.setTexture(back);
+//window.draw(background);
+
+
  void Manage::cover(sf::RenderWindow &window, const std ::string& backName)
-{
-    sf::Texture back;
+{    
     sf::Sprite background;
-    back.loadFromFile(backName + ".png");
-    background.setTexture(back);
+    
+    if (backName == "backCatMouse")
+    {
+        background.setTexture(m_menuBack);
+
+    }
+
+    else if (backName == "garssBack")
+    {
+        background.setTexture(m_gameBack);
+
+    }
+    else if (backName == "HELP")
+    {
+        background.setTexture(m_helpBack);
+
+    }
+
     window.draw(background);
+   // window.display();
 }
+
+ void Manage::load()
+ {
+     m_menuBack.loadFromFile( "backCatMouse.png");
+     m_gameBack.loadFromFile( "garssBack.png");
+     m_helpBack.loadFromFile( "HELP.png");
+ }
