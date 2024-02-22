@@ -199,7 +199,7 @@ void GameControl::startGame()
 }
 
 
-void GameControl::addCat(const sf::Vector2f& position)
+void GameControl::addCat( const sf::Vector2f& position)
 {
     m_cats.push_back(std::make_unique<Cat>(position, Manage::getTexture(O_CAT)));
 }

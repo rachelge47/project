@@ -1,4 +1,4 @@
-﻿#configure_file ("Wall.png" ${CMAKE_BINARY_DIR} COPYONLY)
+﻿configure_file ("Board.txt" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("WALL.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("backCatMouse.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("CAT.png" ${CMAKE_BINARY_DIR} COPYONLY)

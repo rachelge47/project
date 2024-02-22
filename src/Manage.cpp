@@ -20,13 +20,6 @@ void Manage::fillTexturVector()
 }
 
 
-//sf::Texture back;
-//sf::Sprite background;
-//back.loadFromFile(backName + ".png");
-//background.setTexture(back);
-//window.draw(background);
-
-
  void Manage::cover(sf::RenderWindow &window, const std ::string& backName)
 {    
     sf::Sprite background;

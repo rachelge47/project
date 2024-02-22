@@ -8,7 +8,7 @@ Board::Board()
 
 void Board::loadFromFile()
 {	
-	auto boardFile = std::ifstream("C:/Users/Cheko/source/repos/project.c/resources/Board.txt");
+	auto boardFile = std::ifstream("Board.txt");
 
 	if (!boardFile.is_open())
 	{
@@ -23,7 +23,7 @@ void Board::loadFromFile()
 void Board::getStills(std::ifstream& boardFile)
 {
 	std::string line;
-	sf::Vector2f currentPosition(250, 20);
+	sf::Vector2f currentPosition(20, 20);
 
 	for (int i = 0; std::getline(boardFile, line) && !line.empty(); ++i)
 	{
@@ -31,11 +31,9 @@ void Board::getStills(std::ifstream& boardFile)
 		{
 			std::cout << line[j] << std::endl;
 
-			//sf::Vector2f currentPosition(j * 60, i * 60);
-			//currentPosition = { (j + 1) * 60, (i + 1) * 60 };
+		
 			currentPosition.x = 250 + (j * 50);
 			currentPosition.y = 20 + (i * 50);
-
 
 			switch (line[j])
 			{
