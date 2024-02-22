@@ -182,6 +182,7 @@ void GameControl::helpScreen()
 void GameControl::exitGame()
 {
     std::cout << "exitButton\n";
+    m_window.close();
 }
 
 void GameControl::newGame()
@@ -199,14 +200,14 @@ void GameControl::startGame()
 }
 
 
-void GameControl::addCat( const sf::Vector2f& position)
+void GameControl::addCat(const sf::Vector2f& tileSize, const sf::Vector2f& position)
 {
-    m_cats.push_back(std::make_unique<Cat>(position, Manage::getTexture(O_CAT)));
+    m_cats.push_back(std::make_unique<Cat>(tileSize, position, Manage::getTexture(O_CAT)));
 }
 
-void GameControl::saveMouse(const sf::Vector2f& position)
+void GameControl::saveMouse(const sf::Vector2f& tileSize,const sf::Vector2f& position)
 {
-    m_mouse = std::make_unique<Mouse>(position, Manage::getTexture(O_MOUSE));
+    m_mouse = std::make_unique<Mouse>(tileSize, position, Manage::getTexture(O_MOUSE));
 }
 
 void GameControl::drawCats()

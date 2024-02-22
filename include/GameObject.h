@@ -4,7 +4,7 @@
 
 class GameObject {
 public:
-	GameObject(const sf::Vector2f & position, const sf::Texture *texture);
+	GameObject(const sf::Vector2f& tileSize, const sf::Vector2f & position, const sf::Texture *texture);
 	void draw(sf::RenderWindow& window);
 	int getSize() {return m_size;}  //change
 	sf::Vector2f getPosition() const { return m_object.getPosition(); }

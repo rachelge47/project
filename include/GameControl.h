@@ -20,8 +20,8 @@ public:
 	void cover(const sf::RenderWindow& window);
 	void coverStart();
 	void helpcover( sf::RenderWindow& helpWindow);
-	void saveMouse(const sf::Vector2f &position);
-	void addCat(const sf::Vector2f& position);
+	void saveMouse(const sf::Vector2f& tileSize,const sf::Vector2f &position);
+	void addCat(const sf::Vector2f& tileSize,const sf::Vector2f& position);
 	~GameControl() { delete m_instance; }
 
 private:
