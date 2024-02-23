@@ -19,9 +19,6 @@ public:
 	void newGame();
 	void startGame();
 	static int getLevel() { return m_level; }
-	//void cover(const sf::RenderWindow& window);
-	//void coverStart();
-	//void helpcover( sf::RenderWindow& helpWindow);
 	void saveMouse(const sf::Vector2f& tileSize,const sf::Vector2f &position);
 	void addCat(const sf::Vector2f& tileSize,const sf::Vector2f& position);
 	~GameControl() { delete m_instance; }
@@ -30,6 +27,7 @@ private:
 	GameControl(); // single tone
 	void levelRun();
 	void makeWindow();
+	void catsTurn(bool mouseMoved,const sf::Time& deltaTime);
 	void drawCats();
 	void move(const sf::Keyboard::Key& key, const sf::Time& deltaTime);
 

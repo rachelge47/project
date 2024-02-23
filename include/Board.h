@@ -5,6 +5,9 @@
 #include "StillObject.h"
 #include <fstream>
 #include <iostream>
+#include "Mouse.h"
+#include "Cat.h"
+#include "collisions.h"
 
 
 class GameControl;
@@ -30,12 +33,16 @@ public:
 	static int getCheeseCount() { return m_cheeseCount; }
 	static int getKeyCount() { return m_keyCount; }
 	static int getPresentCount() { return m_presentCount; }
-	
 	void printData();
+	void checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vector<std::unique_ptr<Cat>>& cats, const sf::Time& deltaTime);
+
 
 
 private:
 	void getStills(std::ifstream& boardFile);
+
+
+	
 
 	std::vector <std::unique_ptr <StillObject>> m_stills;
 	int m_level;

@@ -117,6 +117,28 @@ void Board::getStills(std::ifstream& boardFile)
 
 }
 
+void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vector <std::unique_ptr <Cat>>& cats , const sf::Time& deltaTime)
+{
+	for (auto& obj : m_stills)
+	{
+		if (mouse->getGlobalBounds().intersects(obj->getGlobalBounds()))
+		{
+			processCollision(*mouse, *obj, deltaTime);
+		}
+	}
+
+	for (auto& cat : cats)
+	{
+		for (auto& obj : m_stills)
+		{
+			if (cat->getGlobalBounds().intersects(obj->getGlobalBounds()))
+			{
+				processCollision(*cat, *obj, deltaTime);
+			}
+		}
+	}
+}
+
 int Board::getLevel() const
 {
 	return m_level;

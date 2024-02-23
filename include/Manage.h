@@ -5,6 +5,15 @@
 const int WIDTH = 1700;
 const int LENGTH = 900;
 
+const sf::Vector2f UP = { 0 , -1 };
+
+const sf::Vector2f DOWN = { 0 , 1 };
+
+const sf::Vector2f RIGHT = { 1 , 0 };
+
+const sf::Vector2f LEFT = { -1 , 0 };
+
+
 enum ObjectType {
     O_WALL,
     O_DOOR,

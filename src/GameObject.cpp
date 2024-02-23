@@ -18,3 +18,8 @@ void GameObject::draw(sf::RenderWindow& window)
 {
 	window.draw(m_object);
 }
+
+sf::FloatRect GameObject::getGlobalBounds() const
+{
+	return m_object.getGlobalBounds();
+}

@@ -102,18 +102,23 @@ void GameControl::makeWindow()
 
             }
         }
-       // std:: cout << "tt";
-        //the cats play (for)
-        if (mouseMoved)
+        catsTurn(mouseMoved, deltaTime);
+        m_board.checkCollisions(m_mouse, m_cats, deltaTime);
+    }
+}
+
+void GameControl::catsTurn(bool mouseMoved,const sf::Time& deltaTime)
+{
+    if (mouseMoved)
+    {
+        for (auto& cat : m_cats)
         {
-            for (auto& cat : m_cats)
-            {
-                cat->setDirection(cat->catMovment(m_mouse->getPosition()));
-                cat->move(deltaTime);
-            }
+            cat->setDirection(cat->catMovment(m_mouse->getPosition()));
+            cat->move(deltaTime);
         }
     }
 }
+
 
 void GameControl::move(const sf::Keyboard::Key& key, const sf::Time &deltaTime)
 {
