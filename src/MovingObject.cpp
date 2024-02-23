@@ -7,6 +7,17 @@ void MovingObject::setDirection(const sf::Vector2f& direction)
 
 void MovingObject::move(const sf::Time& deltaTime)
 {
-	const auto speedPerSecond =80.f;
+	float speedPerSecond;
+
+	if (m_object.getTexture() == Manage::getTexture(O_MOUSE))
+	{
+		speedPerSecond = 200.f;
+	}
+
+	else
+	{
+		speedPerSecond = 90.f;
+	}
+
 	m_object.move(m_direction * speedPerSecond * deltaTime.asSeconds());
 }

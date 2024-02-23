@@ -6,6 +6,7 @@ GameControl::GameControl()
 {}
 
 GameControl* GameControl::m_instance = nullptr;
+int GameControl::m_level;
 
 void GameControl::run()
 {
@@ -36,6 +37,7 @@ void GameControl::makeWindow()
     m_window.setFramerateLimit(60);
     sf::Clock clock;
     bool gameStarted = false;
+    bool mouseMoved = false;
     Manage::load();
 
     while (m_window.isOpen())
@@ -90,7 +92,8 @@ void GameControl::makeWindow()
                 break;
             }
             case sf::Event::KeyPressed:
-            {               
+            {            
+                mouseMoved = true;
                 move(event.key.code, deltaTime);
                 break;
             }
@@ -99,7 +102,16 @@ void GameControl::makeWindow()
 
             }
         }
+       // std:: cout << "tt";
         //the cats play (for)
+        if (mouseMoved)
+        {
+            for (auto& cat : m_cats)
+            {
+                cat->setDirection(cat->catMovment(m_mouse->getPosition()));
+                cat->move(deltaTime);
+            }
+        }
     }
 }
 
@@ -196,7 +208,10 @@ void GameControl::startGame()
     m_board.draw(m_window);
     m_mouse->draw(m_window);
     drawCats();
+    m_data.printData();
 
+   // m_board.printData();
+   // m_mouse->printData();
 }
 
 

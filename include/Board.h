@@ -27,6 +27,11 @@ public:
 	void loadFromFile();
 	int getLevel() const;
 	void draw( sf::RenderWindow& window) const;
+	static int getCheeseCount() { return m_cheeseCount; }
+	static int getKeyCount() { return m_keyCount; }
+	static int getPresentCount() { return m_presentCount; }
+	
+	void printData();
 
 
 private:
@@ -34,5 +39,8 @@ private:
 
 	std::vector <std::unique_ptr <StillObject>> m_stills;
 	int m_level;
+	static int m_cheeseCount;
+	static int m_presentCount;
+	static int m_keyCount;
 
 };

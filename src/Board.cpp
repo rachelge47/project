@@ -6,6 +6,11 @@ Board::Board()
 {}
 
 
+int Board::m_cheeseCount;
+int Board::m_keyCount;
+int Board::m_presentCount;
+
+
 void Board::loadFromFile()
 {	
 	auto boardFile = std::ifstream("Board.txt");
@@ -22,6 +27,7 @@ void Board::loadFromFile()
 	
 	
 }
+
 
 void Board::getStills(std::ifstream& boardFile)
 {
@@ -69,16 +75,19 @@ void Board::getStills(std::ifstream& boardFile)
 			}
 			case CHEESE:
 			{
+				m_cheeseCount++;
 				m_stills.push_back(std::make_unique<Cheese>(tileSize,currentPosition, Manage::getTexture(O_CHEESE)));
 				break;
 			}
 			case KEY:
 			{
+				m_keyCount++;
 				m_stills.push_back(std::make_unique<Key>(tileSize,currentPosition, Manage::getTexture(O_KEY)));
 				break;
 			}
 			case PRESENT:
 			{
+				m_presentCount++;
 				m_stills.push_back(std::make_unique<Present>(tileSize,currentPosition, Manage::getTexture(O_PRESENT)));
 				break;
 			}
