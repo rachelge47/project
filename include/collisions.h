@@ -11,6 +11,7 @@
 #include "StillObject.h"
 #include "Board.h"
 
+
 //this namespace handles all collisions creating double v-table
 namespace {
    
@@ -85,7 +86,6 @@ namespace {
 
         c_present.gotEaten();
         c_mouse.addPoints(5);
-
     }
 
     void CatWithWall(GameObject& cat, GameObject& wall, const sf::Time& deltaTime)

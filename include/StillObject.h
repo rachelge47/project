@@ -8,23 +8,10 @@ public:
 	void gotEaten() { m_beenEaten = true; }
 	bool beenEaten() { return m_beenEaten; }
 
-	//int getInitKeyCount() { return m_initKeyCount; }
-	//void setInitKeyCount(int count) { m_initKeyCount = count; }
-	//void setKeyCount(int toAdd) { m_keyCount += toAdd; }
-	//int getKeyCount() { return m_keyCount; }
-
-	//int getInitCheeseCount() { return m_initCheeseCount; }
-	//void setInitCheeseCount(int count) { m_initCheeseCount = count; }
-	//void setCheeseCount(int toAdd) { m_cheeseCount += toAdd; }
-	//int getCheeseCount() { return m_cheeseCount; }
-
 
 private:
 	bool m_beenEaten=false;
-	/*int m_initKeyCount=0;
-	int m_keyCount=0;
-	int m_initCheeseCount=0;
-	int m_cheeseCount=0;*/
+
 
 };
 

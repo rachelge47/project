@@ -134,7 +134,6 @@ void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vect
 {
 	for (auto& obj : m_stills)   //handle mouse collision
 	{
-		//std::cout << "Object type: " << typeid(*obj).name() << std::endl;
 		if (mouse->getGlobalBounds().intersects(obj->getGlobalBounds()))
 		{
 			processCollision(*mouse, *obj, deltaTime);
@@ -152,7 +151,6 @@ void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vect
 		}
 	}
 	
-	//for (auto& obj : m_stills)
 	m_stills.erase( std::remove_if(m_stills.begin(), m_stills.end(),    //erase object that has been eaten
 			[](const auto& obj) { return obj->beenEaten(); }),	m_stills.end());
 }
