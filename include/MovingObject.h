@@ -8,10 +8,12 @@ public:
 	void setDirection(const sf::Vector2f& direction);
 	sf::Vector2f getDirection() { return m_direction; }
 	virtual void move(const sf::Time& deltaTime);
+	void setInitPos(sf::Vector2f position) { m_initPos = position; }
 
 private:
 
 protected:
 	sf::Vector2f m_direction;
+	sf::Vector2f m_initPos;
 
 };

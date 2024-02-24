@@ -1,5 +1,7 @@
 #include "Board.h"
 #include "GameControl.h"
+#include "collisions.h"
+
 
 Board::Board()
 	:m_level(0)
@@ -9,6 +11,8 @@ Board::Board()
 int Board::m_cheeseCount;
 int Board::m_keyCount;
 int Board::m_presentCount;
+int Board::m_initKeyCount;
+int Board::m_initCheeseCount;
 
 
 void Board::loadFromFile()
@@ -75,13 +79,13 @@ void Board::getStills(std::ifstream& boardFile)
 			}
 			case CHEESE:
 			{
-				m_cheeseCount++;
+				m_initCheeseCount++;
 				m_stills.push_back(std::make_unique<Cheese>(tileSize,currentPosition, Manage::getTexture(O_CHEESE)));
 				break;
 			}
 			case KEY:
 			{
-				m_keyCount++;
+				m_initKeyCount++;
 				m_stills.push_back(std::make_unique<Key>(tileSize,currentPosition, Manage::getTexture(O_KEY)));
 				break;
 			}
@@ -99,13 +103,21 @@ void Board::getStills(std::ifstream& boardFile)
 
 			case CAT:
 			{
-				GameControl::getInstance()->addCat(tileSize,currentPosition);
+				sf::Vector2f tempSize;   //make cats size a bit smaller so can pass in narrow spaces
+				tempSize.x = tileSize.x / 1.2;
+				tempSize.y = tileSize.y / 1.2;
+
+				GameControl::getInstance()->addCat(tempSize,currentPosition);
 				break;
 			}
 
 			case MOUSE:
 			{
-				GameControl::getInstance()->saveMouse(tileSize,currentPosition);
+				sf::Vector2f tempSize;     //make mouse size a bit smaller so can pass in narrow spaces
+				tempSize.x= tileSize.x / 1.2;
+				tempSize.y= tileSize.y / 1.2;
+
+				GameControl::getInstance()->saveMouse(tempSize,currentPosition);
 				break;
 			}
 
@@ -113,21 +125,23 @@ void Board::getStills(std::ifstream& boardFile)
 				break;
 			}
 		}
-	}
-
+	}	
 }
+
+
 
 void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vector <std::unique_ptr <Cat>>& cats , const sf::Time& deltaTime)
 {
-	for (auto& obj : m_stills)
+	for (auto& obj : m_stills)   //handle mouse collision
 	{
+		//std::cout << "Object type: " << typeid(*obj).name() << std::endl;
 		if (mouse->getGlobalBounds().intersects(obj->getGlobalBounds()))
 		{
 			processCollision(*mouse, *obj, deltaTime);
 		}
 	}
 
-	for (auto& cat : cats)
+	for (auto& cat : cats)   //handle cats collision
 	{
 		for (auto& obj : m_stills)
 		{
@@ -137,7 +151,13 @@ void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vect
 			}
 		}
 	}
+	
+	//for (auto& obj : m_stills)
+	m_stills.erase( std::remove_if(m_stills.begin(), m_stills.end(),    //erase object that has been eaten
+			[](const auto& obj) { return obj->beenEaten(); }),	m_stills.end());
 }
+
+
 
 int Board::getLevel() const
 {

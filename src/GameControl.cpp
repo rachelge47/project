@@ -228,6 +228,7 @@ void GameControl::addCat(const sf::Vector2f& tileSize, const sf::Vector2f& posit
 void GameControl::saveMouse(const sf::Vector2f& tileSize,const sf::Vector2f& position)
 {
     m_mouse = std::make_unique<Mouse>(tileSize, position, Manage::getTexture(O_MOUSE));
+    m_mouse->setInitPos(position);
 }
 
 void GameControl::drawCats()

@@ -12,7 +12,6 @@ GameObject::GameObject(const sf::Vector2f& tileSize, const sf::Vector2f& positio
 
 }
 
-
 	
 void GameObject::draw(sf::RenderWindow& window) 
 {
