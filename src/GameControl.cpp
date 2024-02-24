@@ -213,11 +213,25 @@ void GameControl::startGame()
     m_board.draw(m_window);
     m_mouse->draw(m_window);
     drawCats();
+    m_board.drawPresents(m_window);
     m_data.printData();
+
 
    // m_board.printData();
    // m_mouse->printData();
 }
+
+void GameControl::removeCat()
+{
+    
+    if (Cat::isCatDead())
+    {
+        m_cats.pop_back();
+        Cat::setDead();
+    }
+}
+
+
 
 
 void GameControl::addCat(const sf::Vector2f& tileSize, const sf::Vector2f& position)

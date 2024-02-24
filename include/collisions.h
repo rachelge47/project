@@ -10,6 +10,7 @@
 #include "Cat.h"
 #include "StillObject.h"
 #include "Board.h"
+#include "Present.h"
 
 
 //this namespace handles all collisions creating double v-table
@@ -79,14 +80,47 @@ namespace {
         
     }
 
-    void MouseWithPresent(GameObject& mouse, GameObject& present, const sf::Time& deltaTime)
+    void MouseWithMoreLifePresent(GameObject& mouse, GameObject& present, const sf::Time& deltaTime)
     {
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
-        Present& c_present = dynamic_cast <Present&> (present);
+        MoreLifePresent& c_present = dynamic_cast <MoreLifePresent&> (present);
+
+        c_present.gotEaten();
+        c_mouse.addPoints(5);
+        c_mouse.addLife(1);
+    }
+
+    void MouseWithKillCatPresent(GameObject& mouse, GameObject& present, const sf::Time& deltaTime)
+    {
+        Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
+        KillCatPresent& c_present = dynamic_cast <KillCatPresent&> (present);
+
+        c_present.gotEaten();
+        c_mouse.addPoints(5);
+        Cat::catNeedToDie();
+    }
+
+   /* void MouseWithTimePresent(GameObject& mouse, GameObject& present, const sf::Time& deltaTime)
+    {
+        Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
+        IncreaseTimePresent& c_present = dynamic_cast <IncreaseTimePresent&> (present);
+
+        c_present.gotEaten();
+        c_mouse.addPoints(5);
+    }*/
+
+    void MouseWithFreezePresent(GameObject& mouse, GameObject& present, const sf::Time& deltaTime)
+    {
+        Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
+        FreezePresent& c_present = dynamic_cast <FreezePresent&> (present);
 
         c_present.gotEaten();
         c_mouse.addPoints(5);
     }
+    
+
+
+
 
     void CatWithWall(GameObject& cat, GameObject& wall, const sf::Time& deltaTime)
     {
@@ -131,7 +165,10 @@ namespace {
        // (*cm)[std::string(typeid(MovingObject).name()) + std::string(typeid(Wall).name())] = MovingObjectWithWall;
         (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(Door).name())] = MouseWithDoor;
         (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(Key).name())] = MouseWithKey;
-        (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(Present).name())] = MouseWithPresent;
+       // (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(IncreaseTimePresent).name())] = MouseWithTimePresent;
+        (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(KillCatPresent).name())] = MouseWithKillCatPresent;
+       // (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(FreezePresent).name())] = MouseWithFreezePresent;
+        (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(MoreLifePresent).name())] = MouseWithMoreLifePresent;
         (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(Cheese).name())] = MouseWithCheese;
 
         //(*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(Cat).name())] = MouseWithCat;

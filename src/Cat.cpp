@@ -1,5 +1,7 @@
 #include "Cat.h"
 
+bool Cat::m_catDead = false;
+
 sf::Vector2f Cat::catMovment(const sf::Vector2f& mouseLoc)
 {
 	sf::Vector2f catLoc= m_object.getPosition();
@@ -27,6 +29,11 @@ sf::Vector2f Cat::catMovment(const sf::Vector2f& mouseLoc)
 		{
 			mini_dist = distance(mouseLoc, { catLoc.x, catLoc.y + 1 });
 			newPos = { 0,1 };
+		}
+
+		if (m_canMove)
+		{
+			return { 0,0 };
 		}
 	
 	return newPos;

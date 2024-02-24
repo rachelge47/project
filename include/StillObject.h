@@ -29,12 +29,6 @@ public:
 
 };
 
-class Present : public StillObject {
-public:
-	using StillObject::StillObject;
-	//Present(const sf::Vector2f& position, const sf::Texture& texture) : StillObject(position, texture) {};
-
-};
 
 class Key : public StillObject {
 public:

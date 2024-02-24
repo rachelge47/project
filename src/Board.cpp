@@ -2,9 +2,12 @@
 #include "GameControl.h"
 #include "collisions.h"
 
+const int BOARD_WIDTH = 1300;
+const int BOARD_HEIGHT = 800;
+
 
 Board::Board()
-	:m_level(0)
+	:m_level(0), m_firstPresent(false)
 {}
 
 
@@ -49,10 +52,12 @@ void Board::getStills(std::ifstream& boardFile)
 	int cols= fileContent[0].size();
 	
 	//calculate the tiles size Depends on the size of window
-	float tileWidth = (WIDTH - 200 )/ cols;
-	float tileHeight = (LENGTH - 100) / rows;
+	float tileWidth = (/*WIDTH - 200*/BOARD_WIDTH)/ cols;
+	float tileHeight = (/*LENGTH - 100*/BOARD_HEIGHT) / rows;
 	
 	sf::Vector2f tileSize = { tileWidth,tileHeight };
+	m_boardSize = { tileWidth * cols,tileHeight * rows };
+
 	//
 
 	sf::Vector2f currentPosition(20, 20);
@@ -92,7 +97,11 @@ void Board::getStills(std::ifstream& boardFile)
 			case PRESENT:
 			{
 				m_presentCount++;
-				m_stills.push_back(std::make_unique<Present>(tileSize,currentPosition, Manage::getTexture(O_PRESENT)));
+				//m_stills.push_back(std::make_unique<Present>(tileSize,currentPosition, Manage::getTexture(O_PRESENT)));
+
+				fillPresents(tileSize, currentPosition);
+
+
 				break;
 			}
 			case DOOR:
@@ -129,7 +138,6 @@ void Board::getStills(std::ifstream& boardFile)
 }
 
 
-
 void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vector <std::unique_ptr <Cat>>& cats , const sf::Time& deltaTime)
 {
 	for (auto& obj : m_stills)   //handle mouse collision
@@ -150,9 +158,59 @@ void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vect
 			}
 		}
 	}
+
+	for (auto& present : m_presents)   //handle present collision
+	{
+		if (mouse->getGlobalBounds().intersects(present->getGlobalBounds()))
+		{
+			processCollision(*mouse, *present, deltaTime);
+		}
+	}
+
 	
 	m_stills.erase( std::remove_if(m_stills.begin(), m_stills.end(),    //erase object that has been eaten
 			[](const auto& obj) { return obj->beenEaten(); }),	m_stills.end());
+
+	m_presents.erase(std::remove_if(m_presents.begin(), m_presents.end(),    //erase object that has been eaten
+		[](const auto& present) { return present->beenEaten(); }), m_presents.end());
+
+	GameControl::getInstance()->removeCat();
+
+}
+
+
+void Board::fillPresents(const sf::Vector2f &tileSize, const sf::Vector2f &currentPosition)
+{
+	if (!m_firstPresent)
+	{
+		m_presents.push_back(std::make_unique<KillCatPresent>(tileSize, currentPosition, Manage::getTexture(O_PRESENT)));
+		m_firstPresent = true;
+	}
+	else
+	{
+		switch (m_presents.size() % 3)
+		{
+		case 0:
+		{
+			m_presents.push_back(std::make_unique<MoreLifePresent>(tileSize, currentPosition, Manage::getTexture(O_PRESENT)));
+			break;
+		}
+		case 1:
+		{
+			m_presents.push_back(std::make_unique<FreezePresent>(tileSize, currentPosition, Manage::getTexture(O_PRESENT)));
+			break;
+		}
+		case 2:
+		{
+			m_presents.push_back(std::make_unique<IncreaseTimePresent>(tileSize, currentPosition, Manage::getTexture(O_PRESENT)));
+			break;
+		}
+
+		default:
+			break;
+
+		}
+	}
 }
 
 
@@ -168,6 +226,11 @@ void Board::draw( sf::RenderWindow & window) const
 		object->draw(window);
 }
 
+void Board::drawPresents(sf::RenderWindow& window) const
+{
+	for (auto& present : m_presents)
+		present->draw(window);
+}
 
 
 //function to check tif the board is in bounds of window

@@ -18,6 +18,7 @@ public:
 	void exitGame();
 	void newGame();
 	void startGame();
+	void removeCat();
 	static int getLevel() { return m_level; }
 	void saveMouse(const sf::Vector2f& tileSize,const sf::Vector2f &position);
 	void addCat(const sf::Vector2f& tileSize,const sf::Vector2f& position);

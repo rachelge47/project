@@ -7,6 +7,7 @@
 #include <iostream>
 #include "Mouse.h"
 #include "Cat.h"
+#include "Present.h"
 
 class collisions;
 
@@ -30,8 +31,11 @@ public:
 	void loadFromFile();
 	int getLevel() const;
 	void draw( sf::RenderWindow& window) const;
+	void drawPresents(sf::RenderWindow& window) const;
 	void printData();
 	void checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vector<std::unique_ptr<Cat>>& cats, const sf::Time& deltaTime);
+
+	void fillPresents(const sf::Vector2f& tileSize, const sf::Vector2f& currentPosition);
 	
 	static int getInitKeyCount() { return m_initKeyCount; }
 	//static void setInitKeyCount(int count) { m_initKeyCount = count; }
@@ -49,11 +53,14 @@ private:
 	void findInitCount();
 
 	std::vector <std::unique_ptr <StillObject>> m_stills;
+	std::vector <std::unique_ptr <Present>> m_presents;
 	int m_level;
 	static int m_initCheeseCount;
 	static int m_cheeseCount;
 	static int m_presentCount;
 	static int m_keyCount;
 	static int m_initKeyCount;
+	sf::Vector2f m_boardSize;
+	bool m_firstPresent;
 
 };
