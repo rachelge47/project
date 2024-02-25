@@ -30,11 +30,15 @@ public:
     static void cover( sf::RenderWindow& window, const std::string& backName);
     static sf::Texture *getTexture(int index) { return &m_textures[index]; }
     static void load();
+    static sf::Texture* buttonTexture();
+    static sf::Font* getFont();
     static const std::string m_names[7];
 private:
     static std::vector<sf::Texture> m_textures;
     static sf::Texture m_menuBack;
     static sf::Texture m_gameBack;
     static sf::Texture m_helpBack;
-
+    static sf::Texture m_buttonBack;
+    //static sf::Texture m_infoBack;
+    static sf::Font m_font;
 };

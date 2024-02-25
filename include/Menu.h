@@ -1,6 +1,7 @@
 #pragma once
 #include "Button.h"
 #include <vector>
+#include "Manage.h"
 
 class Menu {
 public:
@@ -16,7 +17,7 @@ private:
 	std::vector<std::unique_ptr<Button>> m_menu;
 	sf::Font m_font;
 
-	sf::Text makeButton(const std::string& str, const sf::Font& font);
+	sf::Text makeButton(const std::string& str, const sf::Font* font);
 
 
 };

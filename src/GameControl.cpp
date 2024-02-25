@@ -81,10 +81,6 @@ void GameControl::makeWindow()
                 }
                 else if (m_menu.isClickMenu(location) == "newGame")
                 {
-                    newGame();
-                }
-                else if (m_menu.isClickMenu(location) == "start")
-                {
                     gameStarted = true;
 
                 }
