@@ -23,6 +23,8 @@ public:
 	void saveMouse(const sf::Vector2f& tileSize,const sf::Vector2f &position);
 	void addCat(const sf::Vector2f& tileSize,const sf::Vector2f& position);
 	~GameControl() { delete m_instance; }
+	void resetMovingPos();
+
 
 private:
 	GameControl(); // single tone

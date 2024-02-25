@@ -119,6 +119,16 @@ namespace {
     }
     
 
+    void CatWithMouse(GameObject& cat, GameObject& mouse, const sf::Time& deltaTime)
+    {
+     Cat& c_cat = dynamic_cast <Cat&> (cat);
+     Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
+
+     c_mouse.addLife(-1);
+
+     c_mouse.mouseGotEaten(true);
+     
+    }
 
 
 
@@ -172,7 +182,7 @@ namespace {
         (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(Cheese).name())] = MouseWithCheese;
 
         //(*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(Cat).name())] = MouseWithCat;
-        //(*cm)[std::string(typeid(Cat).name()) + std::string(typeid(Mouse).name())] = CatWithMouse; //?
+        (*cm)[std::string(typeid(Cat).name()) + std::string(typeid(Mouse).name())] = CatWithMouse; //?
 
         (*cm)[std::string(typeid(Cat).name()) + std::string(typeid(Wall).name())] = CatWithWall;
         (*cm)[std::string(typeid(Cat).name()) + std::string(typeid(Door).name())] = CatWithDoor;

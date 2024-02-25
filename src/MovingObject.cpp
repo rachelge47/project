@@ -1,5 +1,10 @@
 #include "MovingObject.h"
 
+
+MovingObject::MovingObject(const sf::Vector2f& tileSize, const sf::Vector2f& position, const sf::Texture* texture)
+	: GameObject(tileSize, position, texture) , m_initPos (position), m_resetLoc(false)
+{}
+
 void MovingObject::setDirection(const sf::Vector2f& direction)
 {
 	m_direction = direction;

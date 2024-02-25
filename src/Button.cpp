@@ -8,7 +8,6 @@ Button::Button (const sf::Text& text, const sf::Vector2f &position)
 	m_button.setFillColor(sf::Color(244, 218, 84));  //set color of button
 	m_button.setOutlineThickness(5);
 	m_button.setOutlineColor(sf::Color(249, 172,0));
-
 }
 
 

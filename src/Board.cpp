@@ -159,6 +159,14 @@ void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vect
 		}
 	}
 
+	for (auto& cat : cats)
+	{
+		if (cat->getGlobalBounds().intersects(mouse->getGlobalBounds()))
+		{
+			processCollision(*cat, *mouse, deltaTime);
+		}
+	}
+
 	for (auto& present : m_presents)   //handle present collision
 	{
 		if (mouse->getGlobalBounds().intersects(present->getGlobalBounds()))
@@ -166,6 +174,8 @@ void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vect
 			processCollision(*mouse, *present, deltaTime);
 		}
 	}
+
+
 
 	
 	m_stills.erase( std::remove_if(m_stills.begin(), m_stills.end(),    //erase object that has been eaten
@@ -175,6 +185,9 @@ void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vect
 		[](const auto& present) { return present->beenEaten(); }), m_presents.end());
 
 	GameControl::getInstance()->removeCat();
+	GameControl::getInstance()->resetMovingPos();
+
+
 
 }
 
