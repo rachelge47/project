@@ -8,7 +8,7 @@ sf::Texture Manage::m_menuBack;
 sf::Texture Manage::m_gameBack;
 sf::Texture Manage::m_helpBack;
 sf::Texture Manage::m_buttonBack;
-//sf::Texture Manage::m_infoBack;
+sf::Texture Manage::m_infoBack;
 sf::Font Manage::m_font;
 
 
@@ -54,8 +54,14 @@ void Manage::fillTexturVector()
      m_gameBack.loadFromFile("garssBack.png");
      m_helpBack.loadFromFile("HELP.png");
      m_buttonBack.loadFromFile("cheesebutton.png");
-    // m_infoBack.loadFromFile("info.png");
  }
+
+ void Manage::load1()
+ {
+     
+     m_infoBack.loadFromFile("bar.png");
+ }
+
 
  sf::Texture* Manage::buttonTexture()
  {
@@ -71,9 +77,9 @@ void Manage::fillTexturVector()
      return &m_font;
  }
 
- //sf::Texture* Manage::infoTexture()
- //{
- //    return &m_infoBack;
- //}
+ sf::Texture* Manage::infoTexture()
+ {
+     return &m_infoBack;
+ }
 
 

@@ -16,4 +16,5 @@ configure_file ("HELP.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("garssBack.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("cheeseButton.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Font.otf" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("bar.png" ${CMAKE_BINARY_DIR} COPYONLY)
 

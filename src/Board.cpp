@@ -137,9 +137,22 @@ void Board::getStills(std::ifstream& boardFile)
 	}	
 }
 
-
 void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vector <std::unique_ptr <Cat>>& cats , const sf::Time& deltaTime)
 {
+
+	//if (!inBounds(mouse->getGlobalBounds()))	//hendle mouse and board collision
+		//mouseWithBoard(*mouse, *this, deltaTime);
+
+	for (size_t i = 0; i < cats.size(); i++)	//cats and borad bounds collisions
+	{
+		if (!inBounds(cats[i]->getGlobalBounds()))
+			catWithBoard(*cats[i], *this, deltaTime);
+	}		
+
+		
+
+
+
 	for (auto& obj : m_stills)   //handle mouse collision
 	{
 		if (mouse->getGlobalBounds().intersects(obj->getGlobalBounds()))
@@ -248,3 +261,22 @@ void Board::drawPresents(sf::RenderWindow& window) const
 
 //function to check tif the board is in bounds of window
 //Manage::setObjSize(the size that will fits)
+
+sf::FloatRect Board::getGlobalBounds() const
+{
+	//sf::Vector2f boardStartPoint = { m_position.x - float(0.5) * m_width,
+								//	m_position.y - float(0.5) * m_height };
+
+	return sf::FloatRect(1.f * 20, 1.f *20, BOARD_WIDTH, BOARD_HEIGHT);
+}
+
+bool Board::inBounds(sf::FloatRect rect) const
+{
+	auto bounds = this->getGlobalBounds();
+	bool topLeft = bounds.contains(rect.left, rect.top);
+	bool bottomLeft = bounds.contains(rect.left, rect.top + rect.height);
+	bool topRight = bounds.contains(rect.left + rect.width, rect.top);
+	bool bottomRight = bounds.contains(rect.left + rect.width, rect.top + rect.height);
+
+	return (topLeft && topRight && bottomLeft && bottomRight);
+}

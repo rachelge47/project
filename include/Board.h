@@ -46,6 +46,9 @@ public:
 	//static void setInitCheeseCount(int count) { m_initCheeseCount = count; }
 	static void setCheeseCount(int toAdd) { m_cheeseCount += toAdd; }
 	static int getCheeseCount() { return m_cheeseCount; }
+	bool inBounds(sf::FloatRect rect) const;
+	sf::FloatRect getGlobalBounds() const;
+
 
 private:
 	void getStills(std::ifstream& boardFile);
@@ -62,5 +65,7 @@ private:
 	static int m_initKeyCount;
 	sf::Vector2f m_boardSize;
 	bool m_firstPresent;
+
+
 
 };

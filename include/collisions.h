@@ -34,6 +34,34 @@ namespace {
         }  
     }
 
+    void mouseWithBoard(GameObject& mouse, const Board& board, const sf::Time& deltaTime)
+    {
+        Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
+
+        auto reverseDirection = c_mouse.getDirection() * -1.f;
+
+        //moves back till gets out of wall bounds
+        while (!board.inBounds(c_mouse.getGlobalBounds()))
+        {
+            c_mouse.setDirection(reverseDirection * 0.1f);
+            c_mouse.move(deltaTime);
+        }
+    }
+
+    void catWithBoard(GameObject& cat, const Board& board, const sf::Time& deltaTime)
+    {
+        Cat& c_cat = dynamic_cast <Cat&> (cat);
+
+        auto reverseDirection = c_cat.getDirection() * -1.f;
+
+        //moves back till gets out of wall bounds
+        while (!board.inBounds(c_cat.getGlobalBounds()))
+        {
+            c_cat.setDirection(reverseDirection * 0.1f);
+            c_cat.move(deltaTime);
+        }
+    }
+
 
     void MouseWithDoor(GameObject& mouse, GameObject& door, const sf::Time& deltaTime)
     {

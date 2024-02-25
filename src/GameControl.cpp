@@ -207,10 +207,10 @@ void GameControl::startGame()
 {
     Manage::cover(m_window, "garssBack");
     m_board.draw(m_window);
+    m_data.printData(m_window);
     m_mouse->draw(m_window);
     drawCats();
     m_board.drawPresents(m_window);
-    m_data.printData();
 
 
    // m_board.printData();
