@@ -131,7 +131,7 @@ bool GameControl::levelRun()
 
         catsTurn(mouseMoved, deltaTime);
 
-        m_board.checkCollisions(m_mouse, m_cats, deltaTime);
+        m_board.checkCollisions(m_mouse, m_cats);
 
         if (Board::getCheeseCount() == 0 || m_mouse->getLife() == 0)
         {
@@ -149,7 +149,8 @@ void GameControl::catsTurn(bool mouseMoved,const sf::Time& deltaTime)
         for (auto& cat : m_cats)
         {
             cat->setDirection(cat->catMovment(m_mouse->getPosition()));
-            cat->move(deltaTime);
+           // cat->move(deltaTime);
+            cat->move(deltaTime.asSeconds());
         }
     }
 }
@@ -189,7 +190,8 @@ void GameControl::move(const sf::Keyboard::Key& key, const sf::Time &deltaTime)
     }
 
     m_mouse->setDirection(direction);
-    m_mouse->move(deltaTime);
+  //  m_mouse->move(deltaTime);
+    m_mouse-> move(deltaTime.asSeconds());
     //move (deltaTime.asSeconds()); 
        //uts float
 }

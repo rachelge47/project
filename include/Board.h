@@ -35,7 +35,7 @@ public:
 	void draw( sf::RenderWindow& window) const;
 	void drawPresents(sf::RenderWindow& window) const;
 	void printData();
-	void checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vector<std::unique_ptr<Cat>>& cats, const sf::Time& deltaTime);
+	void checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vector<std::unique_ptr<Cat>>& cats);
 	void setController( GameControl* controller) { m_controller = controller; }
 	void fillPresents(const sf::Vector2f& tileSize, const sf::Vector2f& currentPosition);
 	

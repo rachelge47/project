@@ -19,7 +19,7 @@ namespace {
     int keysCount = 0;
     //Board board;
     
-    void MouseWithWall(GameObject& mouse, GameObject& wall, const sf::Time& deltaTime)
+    void MouseWithWall(GameObject& mouse, GameObject& wall)
     {
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         Wall& c_wall= dynamic_cast <Wall&> (wall);
@@ -33,11 +33,11 @@ namespace {
 
         while (c_mouse.getGlobalBounds().intersects(c_wall.getGlobalBounds()))
         {          
-            c_mouse.move(sf::Time(sf::milliseconds(20)));
+            c_mouse.move(0.00001);
         }
     }
 
-    void mouseWithBoard(GameObject& mouse, const Board& board, const sf::Time& deltaTime)
+    void mouseWithBoard(GameObject& mouse, const Board& board)
     {
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
 
@@ -48,11 +48,12 @@ namespace {
         //moves back till gets out of wall bounds
         while (!board.inBounds(c_mouse.getGlobalBounds()))
         {
-            c_mouse.move(sf::Time(sf::milliseconds(20)));
+            //c_mouse.move(sf::Time(sf::milliseconds(20)));
+            c_mouse.move(0.00001);
         }
     }
 
-    void catWithBoard(GameObject& cat, const Board& board, const sf::Time& deltaTime)
+    void catWithBoard(GameObject& cat, const Board& board)
     {
         Cat& c_cat = dynamic_cast <Cat&> (cat);
 
@@ -62,12 +63,12 @@ namespace {
         //moves back till gets out of wall bounds
         while (!board.inBounds(c_cat.getGlobalBounds()))
         {
-            c_cat.move(sf::Time(sf::milliseconds(20)));
+            c_cat.move(0.00001);
         }
     }
 
 
-    void MouseWithDoor(GameObject& mouse, GameObject& door, const sf::Time& deltaTime)
+    void MouseWithDoor(GameObject& mouse, GameObject& door)
     {
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         Door& c_door = dynamic_cast <Door&> (door);
@@ -88,11 +89,11 @@ namespace {
 
             auto wall = Wall(wallSize, c_door.getPosition(), Manage::getTexture(O_WALL));
 
-            MouseWithWall(mouse, wall, deltaTime);
+            MouseWithWall(mouse, wall);
         }
     }
 
-    void MouseWithKey(GameObject& mouse, GameObject& key, const sf::Time& deltaTime)
+    void MouseWithKey(GameObject& mouse, GameObject& key)
     {
         Key& c_key = dynamic_cast <Key&> (key);
 
@@ -101,7 +102,7 @@ namespace {
         c_key.gotEaten();
     }
 
-    void MouseWithCheese(GameObject& mouse, GameObject& cheese, const sf::Time& deltaTime)
+    void MouseWithCheese(GameObject& mouse, GameObject& cheese)
     {
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         Cheese& c_cheese = dynamic_cast <Cheese&> (cheese);
@@ -112,7 +113,7 @@ namespace {
         
     }
 
-    void MouseWithMoreLifePresent(GameObject& mouse, GameObject& present, const sf::Time& deltaTime)
+    void MouseWithMoreLifePresent(GameObject& mouse, GameObject& present)
     {
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         MoreLifePresent& c_present = dynamic_cast <MoreLifePresent&> (present);
@@ -122,7 +123,7 @@ namespace {
         c_mouse.addLife(1);
     }
 
-    void MouseWithKillCatPresent(GameObject& mouse, GameObject& present, const sf::Time& deltaTime)
+    void MouseWithKillCatPresent(GameObject& mouse, GameObject& present)
     {
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         KillCatPresent& c_present = dynamic_cast <KillCatPresent&> (present);
@@ -141,7 +142,7 @@ namespace {
         c_mouse.addPoints(5);
     }*/
 
-    void MouseWithFreezePresent(GameObject& mouse, GameObject& present, const sf::Time& deltaTime)
+    void MouseWithFreezePresent(GameObject& mouse, GameObject& present)
     {
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         FreezePresent& c_present = dynamic_cast <FreezePresent&> (present);
@@ -153,7 +154,7 @@ namespace {
     }
     
 
-    void CatWithMouse(GameObject& cat, GameObject& mouse, const sf::Time& deltaTime)
+    void CatWithMouse(GameObject& cat, GameObject& mouse)
     {
      Cat& c_cat = dynamic_cast <Cat&> (cat);
      Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
@@ -166,7 +167,7 @@ namespace {
 
 
 
-    void CatWithWall(GameObject& cat, GameObject& wall, const sf::Time& deltaTime)
+    void CatWithWall(GameObject& cat, GameObject& wall)
     {
         Cat& c_cat = dynamic_cast <Cat&> (cat);
         Wall& c_wall = dynamic_cast <Wall&> (wall);
@@ -176,15 +177,15 @@ namespace {
 
         auto reverseDirection = c_cat.getDirection() * -1.f;
         c_cat.setDirection(reverseDirection );
+
         //moves back till gets out of wall bounds
         while (c_cat.getGlobalBounds().intersects(c_wall.getGlobalBounds()))
-        {
-            
-            c_cat.move(sf::Time(sf::milliseconds(20)));  //float 0.0001
+        {    
+            c_cat.move(0.00005);  //float 0.0001
         }
     }
   
-    void CatWithDoor(GameObject& cat, GameObject& door, const sf::Time& deltaTime)
+    void CatWithDoor(GameObject& cat, GameObject& door)
     {
         Door& c_door = dynamic_cast <Door&> (door);
      
@@ -193,12 +194,12 @@ namespace {
 
         auto wall = Wall(wallSize, c_door.getPosition(), Manage::getTexture(O_WALL));
 
-        CatWithWall(cat, wall, deltaTime);
+        CatWithWall(cat, wall);
     }
 
     
 
-    using collisionFunc = void (*) (GameObject& object1, GameObject& object2, const sf::Time& deltaTime);
+    using collisionFunc = void (*) (GameObject& object1, GameObject& object2);
     using CollisionMap = std::unordered_map<std::string, collisionFunc>;
 
 
@@ -236,11 +237,11 @@ namespace {
     }
 
 
-    void processCollision(GameObject& object1, GameObject& object2, const sf::Time& deltaTime)
+    void processCollision(GameObject& object1, GameObject& object2)
     {
         collisionFunc p2f = lookup(typeid(object1).name(),
             typeid(object2).name());
         if (p2f)
-            p2f(object1, object2, deltaTime);
+            p2f(object1, object2);
     }
 }

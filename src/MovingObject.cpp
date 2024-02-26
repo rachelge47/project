@@ -10,7 +10,13 @@ void MovingObject::setDirection(const sf::Vector2f& direction)
 	m_direction = direction;
 }
 
-void MovingObject::move(const sf::Time& deltaTime)
+//void MovingObject::move(const sf::Time& deltaTime)
+//{
+//	m_object.move(m_direction * m_speedPerSecond * deltaTime.asSeconds());  //speed*float
+//}
+
+
+void MovingObject::move(float time)
 {
-	m_object.move(m_direction * m_speedPerSecond * deltaTime.asSeconds());  //speed*float
+	m_object.move(m_direction * m_speedPerSecond * time);  //speed*float
 }

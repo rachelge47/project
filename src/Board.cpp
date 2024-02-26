@@ -153,23 +153,23 @@ void Board::getStills(std::ifstream& boardFile)
 	}	
 }
 
-void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vector <std::unique_ptr <Cat>>& cats , const sf::Time& deltaTime)
+void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vector <std::unique_ptr <Cat>>& cats)
 {
 	if (!inBounds(mouse->getGlobalBounds()))	//hendle mouse and board collision
-		mouseWithBoard(*mouse, *this, deltaTime);
+		mouseWithBoard(*mouse, *this);
 
 
 	for (size_t i = 0; i < cats.size(); i++)	//cats and borad bounds collisions
 	{
 		if (!inBounds(cats[i]->getGlobalBounds()))
-			catWithBoard(*cats[i], *this, deltaTime);
+			catWithBoard(*cats[i], *this);
 	}		
 
 	for (auto& obj : m_stills)   //handle mouse collision
 	{
 		if (mouse->getGlobalBounds().intersects(obj->getGlobalBounds()))
 		{
-			processCollision(*mouse, *obj, deltaTime);
+			processCollision(*mouse, *obj);
 		}
 	}
 
@@ -179,7 +179,7 @@ void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vect
 		{
 			if (cat->getGlobalBounds().intersects(obj->getGlobalBounds()))
 			{
-				processCollision(*cat, *obj, deltaTime);
+				processCollision(*cat, *obj);
 			}
 		}
 	}
@@ -188,7 +188,7 @@ void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vect
 	{
 		if (cat->getGlobalBounds().intersects(mouse->getGlobalBounds()))
 		{
-			processCollision(*cat, *mouse, deltaTime);
+			processCollision(*cat, *mouse);
 		}
 	}
 
@@ -196,7 +196,7 @@ void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vect
 	{
 		if (mouse->getGlobalBounds().intersects(present->getGlobalBounds()))
 		{
-			processCollision(*mouse, *present, deltaTime);
+			processCollision(*mouse, *present);
 
 			if (Cat::isFrozen())
 			{
