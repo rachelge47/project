@@ -1,6 +1,9 @@
 #include "Cat.h"
 
 bool Cat::m_catDead = false;
+bool Cat::m_cantMove = false;
+
+
 
 sf::Vector2f Cat::catMovment(const sf::Vector2f& mouseLoc)
 {
@@ -31,7 +34,7 @@ sf::Vector2f Cat::catMovment(const sf::Vector2f& mouseLoc)
 			newPos = { 0,1 };
 		}
 
-		if (m_canMove)
+		if (m_cantMove)
 		{
 			return { 0,0 };
 		}
@@ -44,3 +47,5 @@ double Cat::distance(const sf::Vector2f& v1, const sf::Vector2f& v2)
 {
 	return std::hypot(v1.x - v2.x, v1.y - v2.y);
 }
+
+

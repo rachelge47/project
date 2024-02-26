@@ -3,7 +3,10 @@
 
 int main()
 {
-	GameControl::getInstance()->run();
+	GameControl controller;
+
+	controller.run();
+
 
 	//rachel
 	return EXIT_SUCCESS;

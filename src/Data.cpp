@@ -3,7 +3,7 @@
 
 void Data::printData(sf::RenderWindow& window)
 {
-	GameControl::getLevel();
+	//GameControl::getLevel();
 
 	Manage::load1();
 

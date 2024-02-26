@@ -5,59 +5,29 @@ GameControl::GameControl()
 	:m_window(sf::VideoMode(WIDTH,LENGTH), "Mouse and Cat")
 {}
 
-GameControl* GameControl::m_instance = nullptr;
-int GameControl::m_level;
+//GameControl* GameControl::m_instance = nullptr;
+//int GameControl::m_level;
 
 void GameControl::run()
 {
+    bool startOver = false;
+   
     Manage::fillTexturVector();
-
-	//while (m_board.getLevel() < NUMOFLEVELS)
-	//{
-		m_board.loadFromFile();
-
-		//m_board.draw(m_window);
-
-		//m_menu.drawMenu(m_window);
-
-
-		levelRun();
-	//}
-}
-
-
-void GameControl::levelRun()
-{
-	makeWindow();
-}
-
-
-void GameControl::makeWindow()
-{
-    m_window.setFramerateLimit(60);
-    sf::Clock clock;
-    bool gameStarted = false;
-    bool mouseMoved = false;
     Manage::load();
+    m_board.setController(this);
+    mainMenu();
+}
 
+void GameControl::mainMenu()
+{
     while (m_window.isOpen())
     {
-       const auto deltaTime = clock.restart();
-
-       Manage:: cover(m_window, "backCatMouse");
-       
-        if (!gameStarted)
-        {
-            m_menu.drawMenu(m_window);
-            m_window.display(); 
-        }
-        else
-        {
-            startGame();
-            m_window.display();
-        }
-       
-
+        m_window.clear();
+        Manage::cover(m_window, "backCatMouse");
+        
+        m_menu.drawMenu(m_window);
+        m_window.display();
+        
         for (auto event = sf::Event{}; m_window.pollEvent(event);)
         {
             switch (event.type)
@@ -71,7 +41,7 @@ void GameControl::makeWindow()
             {
                 auto location = m_window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });    //set location
 
-                if (m_menu.isClickMenu(location)=="help")
+                if (m_menu.isClickMenu(location) == "help")
                 {
                     helpScreen();
                 }
@@ -81,14 +51,73 @@ void GameControl::makeWindow()
                 }
                 else if (m_menu.isClickMenu(location) == "newGame")
                 {
-                    gameStarted = true;
-
+                    startGame();
                 }
 
                 break;
             }
+          
+            default:
+                break;
+
+            }
+
+        }
+       
+    }
+}
+
+void GameControl::startGame()
+{
+    auto boardFile = std::ifstream("Board.txt");
+    m_board.loadFromFile(boardFile);
+
+    while (m_board.getLevel() < NUMOFLEVELS || (m_mouse && m_mouse->getLife() > 0))
+    {
+        m_board.setLevel(m_board.getLevel()+1);
+        m_cats.clear();
+        m_board.clearBoard();
+        m_board.getStills(boardFile);
+
+        if (!levelRun())
+        {
+            break;
+        }
+
+    }
+    m_mouse.reset();
+    m_board.setLevel(0);
+}
+
+
+bool GameControl::levelRun()
+{
+
+    m_window.setFramerateLimit(60);
+    sf::Clock clock;
+
+    bool mouseMoved = false;
+   
+    while (m_window.isOpen())//timer
+
+
+    {
+        const auto deltaTime = clock.restart();
+
+        drawGame();
+
+        for (auto event = sf::Event{}; m_window.pollEvent(event);)
+        {
+            switch (event.type)
+            {
+            case sf::Event::Closed:
+            {
+                m_window.close();
+                return false;
+            }
+
             case sf::Event::KeyPressed:
-            {            
+            {
                 mouseMoved = true;
                 move(event.key.code, deltaTime);
                 break;
@@ -97,11 +126,21 @@ void GameControl::makeWindow()
                 break;
 
             }
+
         }
+
         catsTurn(mouseMoved, deltaTime);
+
         m_board.checkCollisions(m_mouse, m_cats, deltaTime);
+
+        if (Board::getCheeseCount() == 0 || m_mouse->getLife() == 0)
+        {
+            return true;
+        }
     }
+    return true;
 }
+
 
 void GameControl::catsTurn(bool mouseMoved,const sf::Time& deltaTime)
 {
@@ -151,19 +190,10 @@ void GameControl::move(const sf::Keyboard::Key& key, const sf::Time &deltaTime)
 
     m_mouse->setDirection(direction);
     m_mouse->move(deltaTime);
-       
+    //move (deltaTime.asSeconds()); 
+       //uts float
 }
 
-
-GameControl* GameControl::getInstance()
-{
-    if (m_instance == nullptr)
-    {
-        m_instance = new GameControl();
-    }
-    return m_instance;
-    
-}
 
 void GameControl::helpScreen()
 {
@@ -198,23 +228,24 @@ void GameControl::exitGame()
     m_window.close();
 }
 
-void GameControl::newGame()
-{
-    std::cout << "newGameButton\n";
-}
+//void GameControl::newGame()
+//{
+//    std::cout << "newGameButton\n";
+//}
 
-void GameControl::startGame()
+void GameControl::drawGame()
 {
+    m_window.clear();
     Manage::cover(m_window, "garssBack");
     m_board.draw(m_window);
     m_data.printData(m_window);
+    m_board.printBoardData(m_window);
+    m_mouse->printMouseData(m_window);
     m_mouse->draw(m_window);
     drawCats();
     m_board.drawPresents(m_window);
+    m_window.display();
 
-
-   // m_board.printData();
-   // m_mouse->printData();
 }
 
 void GameControl::removeCat()
@@ -227,7 +258,14 @@ void GameControl::removeCat()
     }
 }
 
-
+//void GameControl::freezeCat()
+//{
+//    for (auto& cat : m_cats)
+//    {
+//        cat->setDirection({0,0});
+//        cat->move(deltaTime);
+//    }
+//}
 
 
 void GameControl::addCat(const sf::Vector2f& tileSize, const sf::Vector2f& position)
@@ -237,7 +275,15 @@ void GameControl::addCat(const sf::Vector2f& tileSize, const sf::Vector2f& posit
 
 void GameControl::saveMouse(const sf::Vector2f& tileSize,const sf::Vector2f& position)
 {
-    m_mouse = std::make_unique<Mouse>(tileSize, position, Manage::getTexture(O_MOUSE));
+    if (!m_mouse)
+    {
+        m_mouse = std::make_unique<Mouse>(tileSize, position, Manage::getTexture(O_MOUSE));
+    }
+    else
+    {
+        m_mouse->setPosition(position);
+        m_mouse->setSize(tileSize);
+    }
 }
 
 void GameControl::drawCats()
@@ -248,7 +294,6 @@ void GameControl::drawCats()
 
 void GameControl::resetMovingPos()
 {
-    // std::cout << "racke";
     if (m_mouse->isMouseEaten())
     {
         m_mouse->setPosition(m_mouse->getInitPos());

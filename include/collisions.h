@@ -26,12 +26,15 @@ namespace {
 
         auto reverseDirection = c_mouse.getDirection() * -1.f;
 
+         
+
         //moves back till gets out of wall bounds
+        c_mouse.setDirection(reverseDirection);
+
         while (c_mouse.getGlobalBounds().intersects(c_wall.getGlobalBounds()))
-        {
-            c_mouse.setDirection(reverseDirection * 0.1f);
-            c_mouse.move(deltaTime);
-        }  
+        {          
+            c_mouse.move(sf::Time(sf::milliseconds(20)));
+        }
     }
 
     void mouseWithBoard(GameObject& mouse, const Board& board, const sf::Time& deltaTime)
@@ -39,12 +42,13 @@ namespace {
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
 
         auto reverseDirection = c_mouse.getDirection() * -1.f;
+            c_mouse.setDirection(reverseDirection );
+
 
         //moves back till gets out of wall bounds
         while (!board.inBounds(c_mouse.getGlobalBounds()))
         {
-            c_mouse.setDirection(reverseDirection * 0.1f);
-            c_mouse.move(deltaTime);
+            c_mouse.move(sf::Time(sf::milliseconds(20)));
         }
     }
 
@@ -53,12 +57,12 @@ namespace {
         Cat& c_cat = dynamic_cast <Cat&> (cat);
 
         auto reverseDirection = c_cat.getDirection() * -1.f;
+            c_cat.setDirection(reverseDirection );
 
         //moves back till gets out of wall bounds
         while (!board.inBounds(c_cat.getGlobalBounds()))
         {
-            c_cat.setDirection(reverseDirection * 0.1f);
-            c_cat.move(deltaTime);
+            c_cat.move(sf::Time(sf::milliseconds(20)));
         }
     }
 
@@ -103,7 +107,7 @@ namespace {
         Cheese& c_cheese = dynamic_cast <Cheese&> (cheese);
        
         c_cheese.gotEaten();
-        Board::setCheeseCount(1);
+        Board::setCheeseCount(-1);
         c_mouse.addPoints(10);
         
     }
@@ -144,6 +148,8 @@ namespace {
 
         c_present.gotEaten();
         c_mouse.addPoints(5);
+
+        Cat::needFreeze(true);
     }
     
 
@@ -169,12 +175,12 @@ namespace {
         auto WallBounds = c_wall.getGlobalBounds();
 
         auto reverseDirection = c_cat.getDirection() * -1.f;
-
+        c_cat.setDirection(reverseDirection );
         //moves back till gets out of wall bounds
         while (c_cat.getGlobalBounds().intersects(c_wall.getGlobalBounds()))
         {
-            c_cat.setDirection(reverseDirection * 0.1f);
-            c_cat.move(deltaTime);
+            
+            c_cat.move(sf::Time(sf::milliseconds(20)));  //float 0.0001
         }
     }
   
@@ -205,7 +211,7 @@ namespace {
         (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(Key).name())] = MouseWithKey;
        // (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(IncreaseTimePresent).name())] = MouseWithTimePresent;
         (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(KillCatPresent).name())] = MouseWithKillCatPresent;
-       // (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(FreezePresent).name())] = MouseWithFreezePresent;
+        (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(FreezePresent).name())] = MouseWithFreezePresent;
         (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(MoreLifePresent).name())] = MouseWithMoreLifePresent;
         (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(Cheese).name())] = MouseWithCheese;
 

@@ -8,7 +8,7 @@ class Button {
 public:
 
 	Button(const sf::Text &text, const sf::Vector2f& position);
-	virtual void action() = 0;
+	//virtual void action() = 0;
 	void drawButton( sf::RenderWindow& window) ;
 	virtual int getSize() { return m_button.getSize().x; }
 	virtual void setPosition(const sf::Vector2f& position); ///?
@@ -28,7 +28,7 @@ class HelpButton : public Button
 public:
 	using Button::Button;
 	//HelpButton(const sf::Text& text, const sf::Vector2f& position) :Button(text,position) {}
-	virtual void action () override;
+	//virtual void action () override;
 };
 
 class ExitButton : public Button
@@ -36,7 +36,7 @@ class ExitButton : public Button
 public:
 	using Button::Button;
 	//ExitButton(const sf::Text& text, const sf::Vector2f& position) :Button(text,position) {}
-	virtual void action() override;
+	//virtual void action() override;
 };
 
 class NewGameButton : public Button
@@ -44,12 +44,12 @@ class NewGameButton : public Button
 public:
 	using Button::Button;
 	//NewGameButton(const sf::Text& text, const sf::Vector2f& position) :Button(text,position) {}
-	virtual void action() override;
+	//virtual void action() override;
 };
 
 class StartButton : public Button
 {
 public:
 	using Button::Button;
-	virtual void action() override;
+	//virtual void action() override;
 };

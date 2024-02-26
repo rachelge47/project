@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <string>
 #include <memory>
 #include "StillObject.h"
 #include <fstream>
@@ -28,13 +29,14 @@ public:
 
 	Board();
 
-	void loadFromFile();
+	void loadFromFile(std::ifstream& boardFile);
 	int getLevel() const;
+	void setLevel(int toAdd) { m_level =toAdd; }
 	void draw( sf::RenderWindow& window) const;
 	void drawPresents(sf::RenderWindow& window) const;
 	void printData();
 	void checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vector<std::unique_ptr<Cat>>& cats, const sf::Time& deltaTime);
-
+	void setController( GameControl* controller) { m_controller = controller; }
 	void fillPresents(const sf::Vector2f& tileSize, const sf::Vector2f& currentPosition);
 	
 	static int getInitKeyCount() { return m_initKeyCount; }
@@ -48,10 +50,14 @@ public:
 	static int getCheeseCount() { return m_cheeseCount; }
 	bool inBounds(sf::FloatRect rect) const;
 	sf::FloatRect getGlobalBounds() const;
+	void getStills(std::ifstream& boardFile);
+	void clearBoard();
+
+	void printBoardData(sf::RenderWindow& window);
 
 
 private:
-	void getStills(std::ifstream& boardFile);
+	sf::Text make(const std::string& str, const sf::Font* font, int down);
 
 	void findInitCount();
 
@@ -65,7 +71,10 @@ private:
 	static int m_initKeyCount;
 	sf::Vector2f m_boardSize;
 	bool m_firstPresent;
+	 sf::Clock m_freezeTimer;
+	 GameControl * m_controller;
 
 
 
 };
+

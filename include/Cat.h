@@ -4,23 +4,22 @@
 
 class Cat :public MovingObject {
 public:
-	using MovingObject::MovingObject;
-	//Cat(const sf::Vector2f& position, const sf::Texture& texture) : MovingObject(position, texture) {}
+	//using MovingObject::MovingObject;
+	Cat(const sf::Vector2f& tileSize, const sf::Vector2f& position, const sf::Texture * texture) : MovingObject(tileSize, position, texture, 90.f) {}
 	//virtual void move(const sf::Time& deltaTime) {}
 
 	sf::Vector2f catMovment(const sf::Vector2f& mouseLoc);
 	static void catNeedToDie() { m_catDead = true; }
 	static bool isCatDead() { return m_catDead; }
 	static void setDead() { m_catDead = false; }
-	bool isFrozen() const { return m_isFrozen; }
-
+	static bool isFrozen()  { return m_cantMove; }
+	static void needFreeze(bool toFreeze) { m_cantMove = toFreeze; }
 
 
 private:
 	double distance(const sf::Vector2f& v1, const sf::Vector2f& v2);
-	bool m_canMove = false;
+	static bool m_cantMove;
 	static bool m_catDead;
-	sf::Clock freezeTimer;
-	bool m_isFrozen;
+	//bool m_isFrozen;
 
 };

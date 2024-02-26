@@ -37,22 +37,22 @@ bool Button::isClick(const sf::Vector2f& location) const
 }
 
 
-void HelpButton::action()
-{
-	GameControl::getInstance()->helpScreen();
-}
-
-void ExitButton::action()
-{
-	GameControl::getInstance()->exitGame();
-}
-
-void NewGameButton::action()
-{
-	GameControl::getInstance()->newGame();
-}
-
-void StartButton::action()
-{
-	GameControl::getInstance()->startGame();
-}
+//void HelpButton::action()
+//{
+//	GameControl::getInstance()->helpScreen();
+//}
+//
+//void ExitButton::action()
+//{
+//	GameControl::getInstance()->exitGame();
+//}
+//
+//void NewGameButton::action()
+//{
+//	GameControl::getInstance()->newGame();
+//}
+//
+//void StartButton::action()
+//{
+//	//GameControl::getInstance()->startGame();
+//}

@@ -10,34 +10,49 @@ Board::Board()
 	:m_level(0), m_firstPresent(false)
 {}
 
-
-int Board::m_cheeseCount;
+int Board::m_initCheeseCount;
+int Board::m_cheeseCount;// m_initCheeseCount;
 int Board::m_keyCount;
 int Board::m_presentCount;
 int Board::m_initKeyCount;
-int Board::m_initCheeseCount;
 
 
-void Board::loadFromFile()
+
+void Board::loadFromFile(std::ifstream& boardFile)
 {	
-	auto boardFile = std::ifstream("Board.txt");
-
 	if (!boardFile.is_open())
 	{
 		std::cerr << "Error opening file!" << std::endl;
 		exit(EXIT_FAILURE);
 	}
 	
-	getStills(boardFile);
+	//getStills(boardFile);
 
 	//boardFile.clear();  // Clear any error flags
-	
-	
+}
+
+void Board::clearBoard()
+{
+	m_stills.clear();
+	m_presents.clear();
+	m_firstPresent = false;
+	m_cheeseCount = 0;
+	m_initCheeseCount = 0;
+	m_initKeyCount = 0;
+	m_keyCount = 0;
+
 }
 
 
 void Board::getStills(std::ifstream& boardFile)
 {
+	//clearBoard();
+	/*if (startOver)
+	{
+		boardFile.seekg(0, std::ios::beg);
+
+	}*/
+
 	std::string line;
 
 	std::vector<std::string> fileContent;
@@ -85,6 +100,7 @@ void Board::getStills(std::ifstream& boardFile)
 			case CHEESE:
 			{
 				m_initCheeseCount++;
+				m_cheeseCount++;
 				m_stills.push_back(std::make_unique<Cheese>(tileSize,currentPosition, Manage::getTexture(O_CHEESE)));
 				break;
 			}
@@ -98,7 +114,7 @@ void Board::getStills(std::ifstream& boardFile)
 			{
 				m_presentCount++;
 				//m_stills.push_back(std::make_unique<Present>(tileSize,currentPosition, Manage::getTexture(O_PRESENT)));
-
+				//m_firstPresent = false;
 				fillPresents(tileSize, currentPosition);
 
 
@@ -116,7 +132,7 @@ void Board::getStills(std::ifstream& boardFile)
 				tempSize.x = tileSize.x / 1.2;
 				tempSize.y = tileSize.y / 1.2;
 
-				GameControl::getInstance()->addCat(tempSize,currentPosition);
+				m_controller->addCat(tempSize,currentPosition);
 				break;
 			}
 
@@ -126,7 +142,7 @@ void Board::getStills(std::ifstream& boardFile)
 				tempSize.x= tileSize.x / 1.2;
 				tempSize.y= tileSize.y / 1.2;
 
-				GameControl::getInstance()->saveMouse(tempSize,currentPosition);
+				m_controller->saveMouse(tempSize,currentPosition);
 				break;
 			}
 
@@ -139,19 +155,15 @@ void Board::getStills(std::ifstream& boardFile)
 
 void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vector <std::unique_ptr <Cat>>& cats , const sf::Time& deltaTime)
 {
+	if (!inBounds(mouse->getGlobalBounds()))	//hendle mouse and board collision
+		mouseWithBoard(*mouse, *this, deltaTime);
 
-	//if (!inBounds(mouse->getGlobalBounds()))	//hendle mouse and board collision
-		//mouseWithBoard(*mouse, *this, deltaTime);
 
 	for (size_t i = 0; i < cats.size(); i++)	//cats and borad bounds collisions
 	{
 		if (!inBounds(cats[i]->getGlobalBounds()))
 			catWithBoard(*cats[i], *this, deltaTime);
 	}		
-
-		
-
-
 
 	for (auto& obj : m_stills)   //handle mouse collision
 	{
@@ -185,22 +197,29 @@ void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vect
 		if (mouse->getGlobalBounds().intersects(present->getGlobalBounds()))
 		{
 			processCollision(*mouse, *present, deltaTime);
+
+			if (Cat::isFrozen())
+			{
+				m_freezeTimer.restart();
+			}
 		}
 	}
 
-
-
-	
 	m_stills.erase( std::remove_if(m_stills.begin(), m_stills.end(),    //erase object that has been eaten
 			[](const auto& obj) { return obj->beenEaten(); }),	m_stills.end());
 
 	m_presents.erase(std::remove_if(m_presents.begin(), m_presents.end(),    //erase object that has been eaten
 		[](const auto& present) { return present->beenEaten(); }), m_presents.end());
 
-	GameControl::getInstance()->removeCat();
-	GameControl::getInstance()->resetMovingPos();
+	m_controller->removeCat();
 
+	m_controller->resetMovingPos();
+	//m_controller->freezeCat();
 
+	if (m_freezeTimer.getElapsedTime().asSeconds()>=5.0f)
+	{
+		Cat::needFreeze(false);
+	}
 
 }
 
@@ -279,4 +298,33 @@ bool Board::inBounds(sf::FloatRect rect) const
 	bool bottomRight = bounds.contains(rect.left + rect.width, rect.top + rect.height);
 
 	return (topLeft && topRight && bottomLeft && bottomRight);
+}
+
+void Board:: printBoardData(sf::RenderWindow& window)
+{
+	sf::Text text;
+	int down = 140;
+
+	std::string str= std::to_string(m_level);
+	text = make(str, Manage::getFont(), down);
+	
+	window.draw(text);
+
+	str = std::to_string(m_keyCount);
+	down += 280;
+	text= make(str, Manage::getFont(), down);
+	window.draw(text);
+
+}
+
+
+
+sf::Text Board::make(const std::string& str, const sf::Font* font, int down)
+{
+	sf::Text text(str, *font);
+	text.setPosition({ 1550, down*1.f });
+	text.setFillColor(sf::Color::Black);
+	text.setCharacterSize(80);
+
+	return text;
 }
