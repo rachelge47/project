@@ -11,6 +11,7 @@ void GameControl::run()
     bool startOver = false;
    
     Manage::fillTexturVector();
+    Manage::fillSoundVector();
     Manage::load();
     m_board.setController(this);
     mainMenu();
@@ -92,6 +93,7 @@ void GameControl::startGame()
 
         m_board.getStills(boardFile);
 
+
         if (!levelRun())
         {
             break;
@@ -150,10 +152,10 @@ bool GameControl::levelRun()
             return true;
         }
 
-        /*if (m_data.timeOut())
+       /* if (m_data.timeOut())
         {
             return true;
-        }*/
+        } */  
     }
     return true;
 }

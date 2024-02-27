@@ -50,6 +50,12 @@ void Board::getStills(std::ifstream& boardFile)
 
 	std::vector<std::string> fileContent;
 
+	/*if (m_startOver)
+	{
+		boardFile.seekg(0, std::ios::beg);
+
+	}*/
+
 	//contain the board to know num of rows and cols
 	//for (auto line = std::string(); std::getline(boardFile, line) && !line.empty();)
 	//{

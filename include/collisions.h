@@ -104,6 +104,12 @@ namespace {
 
     void MouseWithCheese(GameObject& mouse, GameObject& cheese)
     {
+        //Manage::getSound(O_EATCHEESE).play();
+
+        //int soundIndex = O_EATCHEESE; // Replace with the appropriate index
+        //sf::Sound *sound = Manage::getSound(soundIndex);
+        //sound->play();
+
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         Cheese& c_cheese = dynamic_cast <Cheese&> (cheese);
        

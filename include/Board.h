@@ -48,6 +48,8 @@ public:
 	void printBoardData(sf::RenderWindow& window);
 	float getInitLevelTime() { return std::stof(m_initLevelTime); }
 
+	//void toStartOver() { m_startOver = true; }
+
 private:
 	sf::Text make(const std::string& str, const sf::Font* font, int down);
 
@@ -56,6 +58,7 @@ private:
 	std::vector <std::unique_ptr <StillObject>> m_stills;
 	std::vector <std::unique_ptr <Present>> m_presents;
 	int m_level;
+	bool m_startOver = false;
 	static int m_initCheeseCount;
 	static int m_cheeseCount;
 	static int m_presentCount;
