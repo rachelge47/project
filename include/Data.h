@@ -16,6 +16,7 @@ public:
 	void draw(sf::RenderWindow& window);
 	sf::Text make(const std::string& str, const sf::Font* font);
 	void setTime();
+	//
 	static void needAddTime() { m_toAddTime = true; }
 
 
