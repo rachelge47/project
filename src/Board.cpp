@@ -56,6 +56,9 @@ void Board::getStills(std::ifstream& boardFile)
 	//	fileContent.push_back(line);
 	//}
 
+	//std::string time;
+	std::getline(boardFile, m_initLevelTime);
+	//std::cout << initLevelTime;
 	
 
 	while (std::getline(boardFile, line))
@@ -64,6 +67,7 @@ void Board::getStills(std::ifstream& boardFile)
 		{
 			break;
 		}
+
 
 		fileContent.push_back(line);
 	}
@@ -308,6 +312,8 @@ void Board:: printBoardData(sf::RenderWindow& window)
 	down += 280;
 	text= make(str, Manage::getFont(), down);
 	window.draw(text);
+
+	
 }
 
 

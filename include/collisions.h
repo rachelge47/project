@@ -133,14 +133,17 @@ namespace {
         Cat::catNeedToDie();
     }
 
-   /* void MouseWithTimePresent(GameObject& mouse, GameObject& present, const sf::Time& deltaTime)
+    void MouseWithTimePresent(GameObject& mouse, GameObject& present)
     {
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         IncreaseTimePresent& c_present = dynamic_cast <IncreaseTimePresent&> (present);
 
         c_present.gotEaten();
         c_mouse.addPoints(5);
-    }*/
+
+        Data::needAddTime();
+               
+    }
 
     void MouseWithFreezePresent(GameObject& mouse, GameObject& present)
     {
@@ -210,7 +213,7 @@ namespace {
        // (*cm)[std::string(typeid(MovingObject).name()) + std::string(typeid(Wall).name())] = MovingObjectWithWall;
         (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(Door).name())] = MouseWithDoor;
         (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(Key).name())] = MouseWithKey;
-       // (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(IncreaseTimePresent).name())] = MouseWithTimePresent;
+        (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(IncreaseTimePresent).name())] = MouseWithTimePresent;
         (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(KillCatPresent).name())] = MouseWithKillCatPresent;
         (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(FreezePresent).name())] = MouseWithFreezePresent;
         (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(MoreLifePresent).name())] = MouseWithMoreLifePresent;

@@ -13,15 +13,17 @@ void MovingObject::setDirection(const sf::Vector2f& direction)
 
 void MovingObject:: setScale()
 {
+	//m_object.setOrigin(m_object.getLocalBounds().width / 2.0f, m_object.getLocalBounds().height / 2.0f);
+	//m_object.setOrigin(m_object.getSize() / 2.f);
 
-	if (m_direction == LEFT)
+	/*if (m_direction == LEFT)
 	{
 		m_object.setScale(-1, 1);
 	}
 	else if (m_direction == RIGHT)
 	{
 		m_object.setScale(1, 1);
-	}
+	}*/
 }
 
 void MovingObject::move(float time)

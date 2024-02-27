@@ -10,6 +10,7 @@
 #include "Cat.h"
 #include "Present.h"
 #include "Manage.h"
+#include "Data.h"
 
 class collisions;
 
@@ -45,7 +46,7 @@ public:
 	void clearBoard();
 
 	void printBoardData(sf::RenderWindow& window);
-
+	float getInitLevelTime() { return std::stof(m_initLevelTime); }
 
 private:
 	sf::Text make(const std::string& str, const sf::Font* font, int down);
@@ -64,6 +65,8 @@ private:
 	bool m_firstPresent;
 	 sf::Clock m_freezeTimer;
 	 GameControl * m_controller;
+	 std::string m_initLevelTime;
+	 Data m_data;
 
 
 

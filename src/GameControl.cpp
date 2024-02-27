@@ -76,9 +76,11 @@ void GameControl::startGame()
     auto boardFile = std::ifstream("Board.txt");
     m_board.loadFromFile(boardFile);
 
+
+
     while (m_board.getLevel() < NUMOFLEVELS || (m_mouse && m_mouse->getLife() > 0))
     {
-        if (m_board.getLevel()>= NUMOFLEVELS)
+        if (m_board.getLevel()>= NUMOFLEVELS || (m_mouse && m_mouse->getLife() == 0))
         {
             break;
         }
@@ -86,6 +88,8 @@ void GameControl::startGame()
         m_board.setLevel(m_board.getLevel()+1);
         m_cats.clear();
         m_board.clearBoard();
+        m_data.restartTime();
+
         m_board.getStills(boardFile);
 
         if (!levelRun())
@@ -93,6 +97,8 @@ void GameControl::startGame()
             break;
         }
     }
+    
+
     m_mouse.reset();
     m_board.setLevel(0);
 }
@@ -104,11 +110,13 @@ bool GameControl::levelRun()
     sf::Clock clock;
 
     bool mouseMoved = false;
-   
-    while (m_window.isOpen())//timer
+
+    while (m_window.isOpen())
+        //timer
     {
         const auto deltaTime = clock.restart();
 
+        m_data.updateTime(m_board.getInitLevelTime());
         drawGame();
 
         for (auto event = sf::Event{}; m_window.pollEvent(event);)
@@ -141,6 +149,11 @@ bool GameControl::levelRun()
         {
             return true;
         }
+
+        /*if (m_data.timeOut())
+        {
+            return true;
+        }*/
     }
     return true;
 }
@@ -196,7 +209,6 @@ void GameControl::move(const sf::Keyboard::Key& key, const sf::Time &deltaTime)
 
 void GameControl::helpScreen()
 {
-    std::cout << "helpButton\n";
 
     sf::RenderWindow helpWindow(sf::VideoMode(1063, 597), "Help Screen");
     helpWindow.setFramerateLimit(60);
@@ -236,6 +248,7 @@ void GameControl::drawGame()
     m_data.printData(m_window);
     m_board.printBoardData(m_window);
     m_mouse->printMouseData(m_window);
+    m_data.draw(m_window);
     m_mouse->draw(m_window);
     drawCats();
     m_board.drawPresents(m_window);
@@ -292,3 +305,4 @@ void GameControl::resetMovingPos()
 
     }
 }
+
