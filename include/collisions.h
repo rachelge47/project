@@ -30,11 +30,14 @@ namespace {
 
         //moves back till gets out of wall bounds
         c_mouse.setDirection(reverseDirection);
+        c_mouse.setScale();
 
         while (c_mouse.getGlobalBounds().intersects(c_wall.getGlobalBounds()))
-        {          
-            c_mouse.move(0.00001);
+        {
+            c_mouse.isIntersects(true);
+            c_mouse.move(0.0001);
         }
+        //c_mouse.isIntersects(false);
     }
 
     void mouseWithBoard(GameObject& mouse, const Board& board)

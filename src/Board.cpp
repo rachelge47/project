@@ -43,6 +43,14 @@ void Board::clearBoard()
 
 }
 
+void Board::startOver(bool toDo)
+{
+	m_startOver = toDo;
+	//boardFile.clear();
+	//boardFile.seekg(m_filePos);
+	//getStills(boardFile);
+}
+
 
 void Board::getStills(std::ifstream& boardFile)
 {
@@ -50,12 +58,14 @@ void Board::getStills(std::ifstream& boardFile)
 
 	std::vector<std::string> fileContent;
 
-	/*if (m_startOver)
+	
+	if (m_startOver)
 	{
-		boardFile.seekg(0, std::ios::beg);
-
-	}*/
-
+		boardFile.clear();
+		fileContent.clear();
+		line.clear();
+		boardFile.seekg(m_filePos);
+	}
 	//contain the board to know num of rows and cols
 	//for (auto line = std::string(); std::getline(boardFile, line) && !line.empty();)
 	//{
@@ -73,7 +83,10 @@ void Board::getStills(std::ifstream& boardFile)
 		{
 			break;
 		}
-
+		if (boardFile.tellg() == m_filePos)
+		{
+			m_filePos = boardFile.tellg();
+		}
 
 		fileContent.push_back(line);
 	}
@@ -87,14 +100,14 @@ void Board::getStills(std::ifstream& boardFile)
 	sf::Vector2f tileSize = { tileWidth,tileHeight };
 	m_boardSize = { tileWidth * cols,tileHeight * rows };
 
-	sf::Vector2f currentPosition(20, 20);
+	sf::Vector2f currentPosition(70, 70);
 
 	for (int i = 0; i < fileContent.size(); i++)
 	{
 		for (int j = 0; j < fileContent[i].size(); j++)
 		{
-			currentPosition.x = 20 + (j * tileWidth);
-			currentPosition.y = 20 + (i * tileHeight);
+			currentPosition.x = 70 + (j * tileWidth);
+			currentPosition.y = 70 + (i * tileHeight);
 			
 			switch (fileContent[i][j])
 			{
@@ -282,15 +295,12 @@ void Board::drawPresents(sf::RenderWindow& window) const
 }
 
 
-//function to check tif the board is in bounds of window
-//Manage::setObjSize(the size that will fits)
-
 sf::FloatRect Board::getGlobalBounds() const
 {
 	//sf::Vector2f boardStartPoint = { m_position.x - float(0.5) * m_width,
 								//	m_position.y - float(0.5) * m_height };
 
-	return sf::FloatRect(1.f * 20, 1.f *20, BOARD_WIDTH, BOARD_HEIGHT);
+	return sf::FloatRect(1.f * 20, 1.f * 20, BOARD_WIDTH, BOARD_HEIGHT);
 }
 
 bool Board::inBounds(sf::FloatRect rect) const
