@@ -16,6 +16,10 @@ Menu::Menu()
 	text = makeButton("Exit", Manage::getFont());
 	m_menu.push_back(std::make_unique<ExitButton>(text, position));
 
+	position = { 20,20 };
+	text = makeButton("Music", Manage::getFont());
+	m_menu.push_back(std::make_unique<ExitButton>(text, position));
+
 }
 
 sf::Text Menu::makeButton(const std::string& str, const sf::Font* font)
@@ -52,6 +56,11 @@ std::string Menu::isClickMenu(const sf::Vector2f& location) const
 			{
 				return "newGame";
 			}
+			else if (button->getText().getString() == "Music")
+			{
+				return "Music";
+			}
+
 		}
 	}
 	return "not clicked";

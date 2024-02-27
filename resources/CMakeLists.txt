@@ -25,4 +25,6 @@ configure_file ("loseLevel.wav" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("openDoor.wav" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("present.wav" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("win.wav" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("music.wav" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("mute.png" ${CMAKE_BINARY_DIR} COPYONLY)
 

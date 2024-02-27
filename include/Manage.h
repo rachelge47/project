@@ -50,12 +50,18 @@ enum soundType {
 
 class Manage {
 public:
+    Manage();
+    static void playMusic();
     static void fillSoundVector();
     static void fillTexturVector();
     static void cover( sf::RenderWindow& window, const std::string& backName);
     static sf::Texture *getTexture(int index) { return &m_textures[index]; }
     //static sf::Sound *getSound(int index) { return &m_sounds[index]; }
-    static sf::Sound* getSound(int index);
+    static sf::Sound getSound(int index);
+    static sf::Music& getMusic() { return m_music; }
+    static void stopMusic() { m_music.pause(); }
+    static void startMusic() { m_music.play(); }
+    static sf::SoundBuffer* getSoundBuffer(int index);
 
     static void load();
     static void load1();
@@ -75,6 +81,8 @@ private:
     static sf::Texture m_helpBack;
     static sf::Texture m_buttonBack;
     static sf::Texture m_infoBack;
+    static sf::Texture m_muteButton;
     static sf::Font m_font;
+    static sf::Music m_music;
     
 };

@@ -70,11 +70,14 @@ namespace {
 
     void MouseWithDoor(GameObject& mouse, GameObject& door)
     {
+
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         Door& c_door = dynamic_cast <Door&> (door);
 
         if (Board::getKeyCount() > 0)
         {
+            sf::Sound sound = Manage::getSound(O_OPENDOOR);
+
             c_door.gotEaten();
 
             Board::setKeyCount(-1);
@@ -95,20 +98,19 @@ namespace {
 
     void MouseWithKey(GameObject& mouse, GameObject& key)
     {
+
         Key& c_key = dynamic_cast <Key&> (key);
 
         Board::setKeyCount(1);
        //keysCout+=1;
         c_key.gotEaten();
+        sf::Sound sound = Manage::getSound(O_EATCHEESE);
+
     }
 
     void MouseWithCheese(GameObject& mouse, GameObject& cheese)
     {
-        //Manage::getSound(O_EATCHEESE).play();
-
-        //int soundIndex = O_EATCHEESE; // Replace with the appropriate index
-        //sf::Sound *sound = Manage::getSound(soundIndex);
-        //sound->play();
+        sf::Sound sound = Manage::getSound(O_EATCHEESE);
 
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         Cheese& c_cheese = dynamic_cast <Cheese&> (cheese);
@@ -121,6 +123,8 @@ namespace {
 
     void MouseWithMoreLifePresent(GameObject& mouse, GameObject& present)
     {
+        sf::Sound sound = Manage::getSound(O_PRESENT);
+
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         MoreLifePresent& c_present = dynamic_cast <MoreLifePresent&> (present);
 
@@ -131,6 +135,8 @@ namespace {
 
     void MouseWithKillCatPresent(GameObject& mouse, GameObject& present)
     {
+        sf::Sound sound = Manage::getSound(O_PRESENT);
+
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         KillCatPresent& c_present = dynamic_cast <KillCatPresent&> (present);
 
@@ -141,6 +147,8 @@ namespace {
 
     void MouseWithTimePresent(GameObject& mouse, GameObject& present)
     {
+        sf::Sound sound = Manage::getSound(O_PRESENT);
+
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         IncreaseTimePresent& c_present = dynamic_cast <IncreaseTimePresent&> (present);
 
@@ -153,6 +161,8 @@ namespace {
 
     void MouseWithFreezePresent(GameObject& mouse, GameObject& present)
     {
+        sf::Sound sound = Manage::getSound(O_PRESENT);
+
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         FreezePresent& c_present = dynamic_cast <FreezePresent&> (present);
 
@@ -165,12 +175,25 @@ namespace {
 
     void CatWithMouse(GameObject& cat, GameObject& mouse)
     {
-     Cat& c_cat = dynamic_cast <Cat&> (cat);
-     Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
 
-     c_mouse.addLife(-1);
+         Cat& c_cat = dynamic_cast <Cat&> (cat);
+         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
+         if (c_mouse.getLife() == 1)
+         {
+             sf::Sound sound = Manage::getSound(O_GAMEOVER);
+             sf::sleep(sf::milliseconds(1500)); // Adjust the delay time as needed
 
-     c_mouse.mouseGotEaten(true);
+         }
+         else
+         {
+             sf::Sound sound = Manage::getSound(O_CATMOUSE);
+             //sf::sleep(sf::milliseconds(1000)); // Adjust the delay time as needed
+
+         }
+
+         c_mouse.addLife(-1);
+
+         c_mouse.mouseGotEaten(true);
      
     }
 

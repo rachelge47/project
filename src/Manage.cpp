@@ -11,7 +11,9 @@ sf::Texture Manage::m_gameBack;
 sf::Texture Manage::m_helpBack;
 sf::Texture Manage::m_buttonBack;
 sf::Texture Manage::m_infoBack;
+sf::Texture Manage::m_muteButton;
 sf::Font Manage::m_font;
+sf::Music Manage::m_music;
 
 //void Manage::fillSoundVector()
 //{
@@ -30,34 +32,61 @@ sf::Font Manage::m_font;
 //    }
 //}
 
+Manage::Manage()
+{
+}
+
+void Manage::playMusic()
+{
+    m_music.openFromFile("music.wav");
+    m_music.setVolume(50);
+    m_music.setLoop(true);
+    m_music.play();
+}
+
 void Manage::fillSoundVector()
 {
-
+    m_soundBuffers.resize(8);
+    m_sounds.resize(8);
     for (int i = 0; i < 8; i++)
     {
-        sf::SoundBuffer soundBuff;
+        if (!m_soundBuffers[i].loadFromFile(m_soundNames[i] + ".wav"))
+            exit(EXIT_FAILURE);
 
-        if (!soundBuff.loadFromFile(m_soundNames[i] + ".wav"))
-        {
-            // Handle loading failure, e.g., print an error message
-            std::cerr << "Failed to load sound: " << m_soundNames[i] << std::endl;
-        }
-        else
-        {
-            m_soundBuffers.push_back(soundBuff);
-        }
+        m_sounds[i].setBuffer(m_soundBuffers[i]);
+        m_sounds[i].setVolume(50);
     }
 }
 
-
-sf::Sound *Manage::getSound(int soundIndex)
+sf::SoundBuffer* Manage:: getSoundBuffer(int index) 
 {
+    if (index < 0 || index >= m_soundBuffers.size())
+    {
+        std::cerr << "Invalid sound index" << std::endl;
+        return nullptr; // Indicate failure
+    }
+
+    return &m_soundBuffers[index];
+}
+
+
+sf::Sound Manage::getSound(int soundIndex)
+{
+
+    const sf::SoundBuffer* soundBuffer = Manage::getSoundBuffer(soundIndex);
     sf::Sound sound;
-    
-    sound.setBuffer(m_soundBuffers[soundIndex]);
-    sound.setVolume(20); // Adjust the volume as needed
-   
-    return &sound;
+    sound.setBuffer(*soundBuffer);
+    sound.play();
+    //sf::Time offset = sf::seconds(0.5f);
+    //sound.setPlayingOffset(offset);
+    sf::sleep(sf::milliseconds(100)); // Adjust the delay time as needed
+
+
+    /*sf::Time offset = sf::seconds(0.2f);
+    sound.setPlayingOffset(offset);*/
+    //sf::sleep(sf::milliseconds(500)); // Adjust the delay time as needed
+
+    return sound;
 }
 
 void Manage::fillTexturVector()
@@ -103,6 +132,8 @@ void Manage::fillTexturVector()
      m_gameBack.loadFromFile("garssBack.png");
      m_helpBack.loadFromFile("HELP.png");
      m_buttonBack.loadFromFile("cheesebutton.png");
+     m_muteButton.loadFromFile("mute.png");
+
  }
 
 

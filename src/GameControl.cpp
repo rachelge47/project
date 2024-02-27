@@ -8,6 +8,7 @@ GameControl::GameControl()
 
 void GameControl::run()
 {
+    Manage::playMusic(); //??
     bool startOver = false;
    
     Manage::fillTexturVector();
@@ -53,6 +54,13 @@ void GameControl::mainMenu()
                 {
                     startGame();
                     endGame = true;
+                }
+                else if (m_menu.isClickMenu(location) == "Music")
+                {
+                    if (Manage::getMusic().getStatus() == Manage::getMusic().Playing)
+                        Manage::stopMusic();
+                    else
+                        Manage::startMusic();
                 }
 
                 break;
