@@ -7,7 +7,8 @@ public:
 	MovingObject(const sf::Vector2f& tileSize, const sf::Vector2f& position, const sf::Texture * texture, float speedPerSecond);
 	void setDirection(const sf::Vector2f& direction);
 	sf::Vector2f getDirection() { return m_direction; }
-	void move(float time); 
+	void setScale();
+	void move(float time);
 	bool isMouseEaten() { return m_resetLoc; }
 	void mouseGotEaten(bool toReset) { m_resetLoc = toReset; } //recive true if need to reset
 

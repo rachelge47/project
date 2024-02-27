@@ -153,6 +153,7 @@ void GameControl::catsTurn(bool mouseMoved,const sf::Time& deltaTime)
         for (auto& cat : m_cats)
         {
             cat->setDirection(cat->catMovment(m_mouse->getPosition()));
+            cat->setScale();
             cat->move(deltaTime.asSeconds());
         }
     }
@@ -188,6 +189,7 @@ void GameControl::move(const sf::Keyboard::Key& key, const sf::Time &deltaTime)
     }
 
     m_mouse->setDirection(direction);
+    m_mouse->setScale();
     m_mouse-> move(deltaTime.asSeconds());
 }
 
