@@ -1,55 +1,50 @@
+
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-class GameControl;
+class GameControl; 
 
 class Button {
-public:
 
-	Button(const sf::Text &text, const sf::Vector2f& position);
-	//virtual void action() = 0;
-	void drawButton( sf::RenderWindow& window) ;
-	virtual int getSize() { return m_button.getSize().x; }
-	virtual void setPosition(const sf::Vector2f& position); ///?
-	virtual bool isClick(const sf::Vector2f& location) const;
-	sf::Text getText() { return m_text; }
-	virtual~Button()= default;
+public:
+    Button(const sf::Text& text, const sf::Vector2f& position);
+    void drawButton(sf::RenderWindow& window, const sf::Vector2f& mousePosition);
+    virtual int getSize() { return m_button.getSize().x; }
+    virtual void setPosition(const sf::Vector2f& position);
+    virtual bool isClick(const sf::Vector2f& location) const;
+    virtual ~Button() = default;
+    sf::Text getText() { return m_text; }
 
 private:
+    sf::RectangleShape m_button; 
+    sf::Vector2f m_position;     
+    sf::Text m_text;            
+    bool m_hovered;            
 
-	sf::RectangleShape m_button;
-	sf::Vector2f m_position;
-	sf::Text m_text;
+    void updateHover(const sf::Vector2f& mousePosition);
 };
 
-class HelpButton : public Button
-{
+// Derived class for HelpButton
+class HelpButton : public Button {
 public:
-	using Button::Button;
-	//HelpButton(const sf::Text& text, const sf::Vector2f& position) :Button(text,position) {}
-	//virtual void action () override;
+    using Button::Button; 
 };
 
-class ExitButton : public Button
-{
+// Derived class for ExitButton
+class ExitButton : public Button {
 public:
-	using Button::Button;
-	//ExitButton(const sf::Text& text, const sf::Vector2f& position) :Button(text,position) {}
-	//virtual void action() override;
+    using Button::Button; 
 };
 
-class NewGameButton : public Button
-{
+// Derived class for NewGameButton
+class NewGameButton : public Button {
 public:
-	using Button::Button;
-	//NewGameButton(const sf::Text& text, const sf::Vector2f& position) :Button(text,position) {}
-	//virtual void action() override;
+    using Button::Button; 
 };
 
-class StartButton : public Button
-{
+// Derived class for StartButton
+class StartButton : public Button {
 public:
-	using Button::Button;
-	//virtual void action() override;
+    using Button::Button;
 };

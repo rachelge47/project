@@ -21,6 +21,7 @@ public:
 
 	Board();
 
+	void startOver(bool toDo);
 	void loadFromFile(std::ifstream& boardFile);
 	int getLevel() const;
 	void setLevel(int toAdd) { m_level =toAdd; }
@@ -48,12 +49,13 @@ public:
 	void printBoardData(sf::RenderWindow& window);
 	float getInitLevelTime() { return std::stof(m_initLevelTime); }
 
-	//void toStartOver() { m_startOver = true; }
+	//void startOver(bool toDo) { m_startOver = toDo; }
 
 private:
 	sf::Text make(const std::string& str, const sf::Font* font, int down);
 
 	//void findInitCount();
+	std::streampos m_filePos;
 
 	std::vector <std::unique_ptr <StillObject>> m_stills;
 	std::vector <std::unique_ptr <Present>> m_presents;

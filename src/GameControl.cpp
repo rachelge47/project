@@ -24,8 +24,9 @@ void GameControl::mainMenu()
     {
         m_window.clear();
         Manage::cover(m_window, "backCatMouse");
-        
-        m_menu.drawMenu(m_window);
+        sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(m_window));
+        m_menu.drawMenu(m_window, mousePosition);
+       // m_menu.drawMenu(m_window);
         m_window.display();
         
         for (auto event = sf::Event{}; m_window.pollEvent(event);)
@@ -90,24 +91,33 @@ void GameControl::startGame()
         m_cats.clear();
         m_board.clearBoard();
         m_data.restartTime();
-
+        
         m_board.getStills(boardFile);
 
-
-        if (!levelRun())
+        if (levelRun(boardFile)==0)
         {
             break;
         }
+        else if (levelRun(boardFile) == 2)
+        {
+            levelRun(boardFile);
+        }
     }
     
-
     m_mouse.reset();
     m_board.setLevel(0);
 }
 
 
-bool GameControl::levelRun()
+int GameControl::levelRun(std::ifstream& boardFile)
 {
+    std::cout << "in start of level run\n";
+
+    if (m_data.timeOut())
+    {
+        std::cout << "time out\n";
+
+    }
     m_window.setFramerateLimit(60);
     sf::Clock clock;
 
@@ -128,7 +138,7 @@ bool GameControl::levelRun()
             case sf::Event::Closed:
             {
                 m_window.close();
-                return false;
+                return 0;
             }
 
             case sf::Event::KeyPressed:
@@ -139,8 +149,8 @@ bool GameControl::levelRun()
             }
             default:
                 break;
-
             }
+           
         }
 
         catsTurn(mouseMoved, deltaTime);
@@ -149,15 +159,23 @@ bool GameControl::levelRun()
 
         if (Board::getCheeseCount() == 0 || m_mouse->getLife() == 0)
         {
-            return true;
+            return 1;
         }
 
-       /* if (m_data.timeOut())
+        if (m_data.timeOut())
         {
-            return true;
-        } */  
+            m_cats.clear();
+            m_board.clearBoard();
+            m_data.restartTime();
+            m_data.setTimeOut();
+            //m_board.toStartOver(true);
+            m_board.startOver(true);
+            m_board.getStills(boardFile);
+            m_board.startOver(false);
+           return 2;
+        }
     }
-    return true;
+    return 1;
 }
 
 

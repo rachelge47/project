@@ -6,6 +6,7 @@ GameObject::GameObject(const sf::Vector2f& tileSize, const sf::Vector2f& positio
 	m_object.setTexture(texture);
 	m_object.setPosition(position);
 	m_object.setSize(tileSize);
+	m_object.setOrigin(m_object.getSize());
 }
 
 	

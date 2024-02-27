@@ -5,20 +5,13 @@
 
 class Menu {
 public:
+    Menu();
 
-	Menu();
-
-	void drawMenu( sf::RenderWindow& window)const ;
-	virtual std::string isClickMenu(const sf::Vector2f& location) const;
-	virtual ~Menu()=default;
+    void drawMenu(sf::RenderWindow& window, const sf::Vector2f& mousePosition) const;
+    std::string isClickMenu(const sf::Vector2f& location) const;
 
 private:
+    sf::Text makeButton(const std::string& str, const sf::Font* font);
 
-	std::vector<std::unique_ptr<Button>> m_menu;
-	sf::Font m_font;
-
-	sf::Text makeButton(const std::string& str, const sf::Font* font);
-
-
+    std::vector<std::unique_ptr<Button>> m_menu; // Vector of buttons
 };
-
