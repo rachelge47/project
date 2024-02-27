@@ -314,9 +314,7 @@ void Board:: printBoardData(sf::RenderWindow& window)
 	down += 280;
 	text= make(str, Manage::getFont(), down);
 	window.draw(text);
-
 }
-
 
 
 sf::Text Board::make(const std::string& str, const sf::Font* font, int down)

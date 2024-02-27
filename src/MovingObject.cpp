@@ -2,7 +2,7 @@
 
 
 MovingObject::MovingObject(const sf::Vector2f& tileSize, const sf::Vector2f& position, const sf::Texture* texture, float speedPerSecond)
-	: GameObject(tileSize, position, texture) , m_initPos (position), m_resetLoc(false), m_speedPerSecond(speedPerSecond)
+	: GameObject(tileSize, position, texture) , m_resetLoc(false), m_speedPerSecond(speedPerSecond)
 {}
 
 void MovingObject::setDirection(const sf::Vector2f& direction)

@@ -59,7 +59,7 @@ public:
 private:
 	sf::Text make(const std::string& str, const sf::Font* font, int down);
 
-	void findInitCount();
+	//void findInitCount();
 
 	std::vector <std::unique_ptr <StillObject>> m_stills;
 	std::vector <std::unique_ptr <Present>> m_presents;

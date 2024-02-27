@@ -5,8 +5,6 @@ GameControl::GameControl()
 	:m_window(sf::VideoMode(WIDTH,LENGTH), "Mouse and Cat")
 {}
 
-//GameControl* GameControl::m_instance = nullptr;
-//int GameControl::m_level;
 
 void GameControl::run()
 {
@@ -92,15 +90,12 @@ void GameControl::startGame()
 
 bool GameControl::levelRun()
 {
-
     m_window.setFramerateLimit(60);
     sf::Clock clock;
 
     bool mouseMoved = false;
    
     while (m_window.isOpen())//timer
-
-
     {
         const auto deltaTime = clock.restart();
 
@@ -126,7 +121,6 @@ bool GameControl::levelRun()
                 break;
 
             }
-
         }
 
         catsTurn(mouseMoved, deltaTime);
@@ -149,7 +143,6 @@ void GameControl::catsTurn(bool mouseMoved,const sf::Time& deltaTime)
         for (auto& cat : m_cats)
         {
             cat->setDirection(cat->catMovment(m_mouse->getPosition()));
-           // cat->move(deltaTime);
             cat->move(deltaTime.asSeconds());
         }
     }
@@ -162,11 +155,6 @@ void GameControl::move(const sf::Keyboard::Key& key, const sf::Time &deltaTime)
 
     switch (key)
     {
-    case sf::Keyboard::Key::Space:
-    {
-        direction= sf::Vector2f(0, 0);
-        break;
-    }
     case sf::Keyboard::Key::Left:
     {
         direction = sf::Vector2f(-1, 0);
@@ -190,10 +178,7 @@ void GameControl::move(const sf::Keyboard::Key& key, const sf::Time &deltaTime)
     }
 
     m_mouse->setDirection(direction);
-  //  m_mouse->move(deltaTime);
     m_mouse-> move(deltaTime.asSeconds());
-    //move (deltaTime.asSeconds()); 
-       //uts float
 }
 
 
@@ -230,10 +215,6 @@ void GameControl::exitGame()
     m_window.close();
 }
 
-//void GameControl::newGame()
-//{
-//    std::cout << "newGameButton\n";
-//}
 
 void GameControl::drawGame()
 {
@@ -260,16 +241,6 @@ void GameControl::removeCat()
     }
 }
 
-//void GameControl::freezeCat()
-//{
-//    for (auto& cat : m_cats)
-//    {
-//        cat->setDirection({0,0});
-//        cat->move(deltaTime);
-//    }
-//}
-
-
 void GameControl::addCat(const sf::Vector2f& tileSize, const sf::Vector2f& position)
 {
     m_cats.push_back(std::make_unique<Cat>(tileSize, position, Manage::getTexture(O_CAT)));
@@ -285,6 +256,7 @@ void GameControl::saveMouse(const sf::Vector2f& tileSize,const sf::Vector2f& pos
     {
         m_mouse->setPosition(position);
         m_mouse->setSize(tileSize);
+        m_mouse->setInitPos(position);
     }
 }
 

@@ -9,6 +9,8 @@ public:
 	int getSize() {return m_size;}  //change
 	sf::Vector2f getPosition() const { return m_object.getPosition(); }
 	void setPosition(const sf::Vector2f& position) { m_object.setPosition(position); }
+	sf::Vector2f getInitPos() { return m_initPos; }
+	void setInitPos(const sf::Vector2f& position) { m_initPos = position; }
 	void setSize(const sf::Vector2f& size) { m_object.setSize(size); }
 	sf::FloatRect getGlobalBounds() const;
 	virtual ~GameObject()= default;
@@ -20,6 +22,7 @@ private:
 
 protected:
 	sf::RectangleShape m_object;
+	sf::Vector2f m_initPos;
 
 };
 
