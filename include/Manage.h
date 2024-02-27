@@ -13,6 +13,16 @@ const sf::Vector2f RIGHT = { 1 , 0 };
 
 const sf::Vector2f LEFT = { -1 , 0 };
 
+const char MOUSE = '%';
+const char CAT = '^';
+const char KEY = 'F';
+const char PRESENT = '$';
+const char DOOR = 'D';
+const char CHEESE = '*';
+const char WALL = '#';
+const char EMPTY = ' ';
+const int NUMOFLEVELS = 3;
+
 
 enum ObjectType {
     O_WALL,

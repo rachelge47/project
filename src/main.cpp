@@ -7,7 +7,5 @@ int main()
 
 	controller.run();
 
-
-	//rachel
 	return EXIT_SUCCESS;
 }

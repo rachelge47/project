@@ -7,8 +7,6 @@
 #include <iostream>
 
 
-const int NUMOFLEVELS = 3;
-
 class GameControl {
 
 public:
@@ -18,7 +16,7 @@ public:
 	//static GameControl* getInstance();
 	void helpScreen();
 	void exitGame();
-	void newGame();
+	//void newGame();
 	void drawGame();
 	void removeCat();
 	void freezeCat();

@@ -56,9 +56,10 @@ void Manage::fillTexturVector()
      m_buttonBack.loadFromFile("cheesebutton.png");
  }
 
+
+
  void Manage::load1()
- {
-     
+ {    
      m_infoBack.loadFromFile("bar.png");
  }
 

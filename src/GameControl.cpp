@@ -18,6 +18,7 @@ void GameControl::run()
 
 void GameControl::mainMenu()
 {
+    bool endGame = false;
     while (m_window.isOpen())
     {
         m_window.clear();
@@ -50,6 +51,7 @@ void GameControl::mainMenu()
                 else if (m_menu.isClickMenu(location) == "newGame")
                 {
                     startGame();
+                    endGame = true;
                 }
 
                 break;
@@ -58,6 +60,10 @@ void GameControl::mainMenu()
             default:
                 break;
 
+            }
+            if (endGame)
+            {
+                break;
             }
 
         }
@@ -72,6 +78,11 @@ void GameControl::startGame()
 
     while (m_board.getLevel() < NUMOFLEVELS || (m_mouse && m_mouse->getLife() > 0))
     {
+        if (m_board.getLevel()>= NUMOFLEVELS)
+        {
+            break;
+        }
+
         m_board.setLevel(m_board.getLevel()+1);
         m_cats.clear();
         m_board.clearBoard();
@@ -81,7 +92,6 @@ void GameControl::startGame()
         {
             break;
         }
-
     }
     m_mouse.reset();
     m_board.setLevel(0);
@@ -157,22 +167,22 @@ void GameControl::move(const sf::Keyboard::Key& key, const sf::Time &deltaTime)
     {
     case sf::Keyboard::Key::Left:
     {
-        direction = sf::Vector2f(-1, 0);
+        direction = LEFT;
         break;
     }
     case sf::Keyboard::Key::Down:
     {
-        direction = sf::Vector2f(0, 1);
+        direction = DOWN;
         break;
     }
     case sf::Keyboard::Key::Up:
     {
-        direction = sf::Vector2f(0, -1);
+        direction = UP;
         break;
     }
     case sf::Keyboard::Key::Right:
     {
-        direction = sf::Vector2f(1, 0);
+        direction = RIGHT;
         break;
     }
     }

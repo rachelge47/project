@@ -46,34 +46,36 @@ void Board::clearBoard()
 
 void Board::getStills(std::ifstream& boardFile)
 {
-	//clearBoard();
-	/*if (startOver)
-	{
-		boardFile.seekg(0, std::ios::beg);
-
-	}*/
-
 	std::string line;
 
 	std::vector<std::string> fileContent;
 
 	//contain the board to know num of rows and cols
-	for (auto line = std::string(); std::getline(boardFile, line) && !line.empty();)
+	//for (auto line = std::string(); std::getline(boardFile, line) && !line.empty();)
+	//{
+	//	fileContent.push_back(line);
+	//}
+
+	
+
+	while (std::getline(boardFile, line))
 	{
+		if (line.empty())
+		{
+			break;
+		}
+
 		fileContent.push_back(line);
 	}
-
 	int rows = fileContent.size();
 	int cols= fileContent[0].size();
 	
 	//calculate the tiles size Depends on the size of window
-	float tileWidth = (/*WIDTH - 200*/BOARD_WIDTH)/ cols;
-	float tileHeight = (/*LENGTH - 100*/BOARD_HEIGHT) / rows;
+	float tileWidth = (BOARD_WIDTH)/ cols;
+	float tileHeight = (BOARD_HEIGHT) / rows;
 	
 	sf::Vector2f tileSize = { tileWidth,tileHeight };
 	m_boardSize = { tileWidth * cols,tileHeight * rows };
-
-	//
 
 	sf::Vector2f currentPosition(20, 20);
 
@@ -81,16 +83,10 @@ void Board::getStills(std::ifstream& boardFile)
 	{
 		for (int j = 0; j < fileContent[i].size(); j++)
 		{
-			//std::cout << line[j] << std::endl;
-
-		
 			currentPosition.x = 20 + (j * tileWidth);
 			currentPosition.y = 20 + (i * tileHeight);
-			// 
-			//currentPosition.x = 250 + (j * 50);
-			//currentPosition.y = 20 + (i * 50);
-
-			switch (/*line[j]*/fileContent[i][j])
+			
+			switch (fileContent[i][j])
 			{
 			case WALL:
 			{
@@ -112,9 +108,7 @@ void Board::getStills(std::ifstream& boardFile)
 			}
 			case PRESENT:
 			{
-				m_presentCount++;
-				//m_stills.push_back(std::make_unique<Present>(tileSize,currentPosition, Manage::getTexture(O_PRESENT)));
-				//m_firstPresent = false;
+				//m_presentCount++;
 				fillPresents(tileSize, currentPosition);
 
 

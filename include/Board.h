@@ -9,20 +9,11 @@
 #include "Mouse.h"
 #include "Cat.h"
 #include "Present.h"
+#include "Manage.h"
 
 class collisions;
 
 class GameControl;
-
-const char MOUSE = '%';
-const char CAT = '^';
-const char KEY = 'F';
-const char PRESENT = '$';
-const char DOOR = 'D';
-const char CHEESE = '*';
-const char WALL = '#';
-const char EMPTY = ' ';
-
 
 class Board {
 public:
