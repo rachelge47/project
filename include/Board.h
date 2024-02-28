@@ -54,14 +54,17 @@ public:
 
 private:
 	sf::Text make(const std::string& str, const sf::Font* font, float down);
+	void resetFileAndContent(std::ifstream& boardFile, std::vector<std::string>& fileContent);
+	void parseFileContent(std::ifstream& boardFile, std::vector<std::string>& fileContent);
+	void calculateTileAndBoardSize(const std::vector<std::string>& fileContent);
+	void createBoardObject(char symbol, const sf::Vector2f& tileSize, const sf::Vector2f& position);
 
-	//void findInitCount();
 	std::streampos m_filePos;
-
 	std::vector <std::unique_ptr <StillObject>> m_stills;
 	std::vector <std::unique_ptr <Present>> m_presents;
 	int m_level;
 	bool m_startOver = false;
+	sf::Vector2f m_tileSize;
 	static int m_initCheeseCount;
 	static int m_cheeseCount;
 	static int m_presentCount;
@@ -69,11 +72,11 @@ private:
 	static int m_initKeyCount;
 	sf::Vector2f m_boardSize;
 	bool m_firstPresent;
-	 sf::Clock m_freezeTimer;
-	 GameControl * m_controller;
-	 std::string m_initLevelTime;
-	 Data m_data;
-	 int m_numOfLevels;
+	sf::Clock m_freezeTimer;
+	GameControl * m_controller;
+	std::string m_initLevelTime;
+	Data m_data;
+	int m_numOfLevels;
 
 
 

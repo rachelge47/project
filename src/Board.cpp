@@ -43,50 +43,24 @@ void Board::clearBoard()
 void Board::startOver(bool toDo)
 {
 	m_startOver = toDo;
-	//boardFile.clear();
-	//boardFile.seekg(m_filePos);
-	//getStills(boardFile);
 }
 
 
 void Board::getStills(std::ifstream& boardFile)
 {
-	std::string line;
-
 	std::vector<std::string> fileContent;
 
-	
 	if (m_startOver)
 	{
-		boardFile.clear();
-		fileContent.clear();
-		line.clear();
-		boardFile.seekg(m_filePos);
+		resetFileAndContent(boardFile, fileContent);
 	}
-	
+
 	m_filePos = boardFile.tellg();
 	std::getline(boardFile, m_initLevelTime);
 
-	while (std::getline(boardFile, line))
-	{
-		if (line.empty())
-		{
-			break;
-		}
+	parseFileContent(boardFile, fileContent);
 
-
-		fileContent.push_back(line);
-	}
-
-	int rows = fileContent.size();
-	int cols= fileContent[0].size();
-	
-	//calculate the tiles size Depends on the size of window
-	float tileWidth = (BOARD_WIDTH)/ cols;
-	float tileHeight = (BOARD_HEIGHT) / rows;
-	
-	sf::Vector2f tileSize = { tileWidth,tileHeight };
-	m_boardSize = { tileWidth * cols,tileHeight * rows };
+	calculateTileAndBoardSize(fileContent);
 
 	sf::Vector2f currentPosition(CUR_POS);
 
@@ -94,69 +68,88 @@ void Board::getStills(std::ifstream& boardFile)
 	{
 		for (int j = 0; j < fileContent[i].size(); j++)
 		{
-			currentPosition.x = CUR_POS.x + (j * tileWidth);
-			currentPosition.y = CUR_POS.y + (i * tileHeight);
-			
-			switch (fileContent[i][j])
-			{
-			case WALL:
-			{
-				m_stills.push_back(std::make_unique<Wall>(tileSize,currentPosition, Manage::getInstance()->getTexture(O_WALL)));
-				break;
-			}
-			case CHEESE:
-			{
-				m_initCheeseCount++;
-				m_cheeseCount++;
-				m_stills.push_back(std::make_unique<Cheese>(tileSize,currentPosition, Manage::getInstance()->getTexture(O_CHEESE)));
-				break;
-			}
-			case KEY:
-			{
-				m_initKeyCount++;
-				m_stills.push_back(std::make_unique<Key>(tileSize,currentPosition, Manage::getInstance()->getTexture(O_KEY)));
-				break;
-			}
-			case PRESENT:
-			{
-				//m_presentCount++;
-				fillPresents(tileSize, currentPosition);
+			currentPosition.x = CUR_POS.x + (j * m_tileSize.x);
+			currentPosition.y = CUR_POS.y + (i * m_tileSize.y);
 
-
-				break;
-			}
-			case DOOR:
-			{
-				m_stills.push_back(std::make_unique<Door>(tileSize,currentPosition, Manage::getInstance()->getTexture(O_DOOR)));
-				break;
-			}
-
-			case CAT:
-			{
-				sf::Vector2f tempSize;   //make cats size a bit smaller so can pass in narrow spaces
-				tempSize.x = tileSize.x / 1.2;
-				tempSize.y = tileSize.y / 1.2;
-
-				m_controller->addCat(tempSize,currentPosition);
-				break;
-			}
-
-			case MOUSE:
-			{
-				sf::Vector2f tempSize;     //make mouse size a bit smaller so can pass in narrow spaces
-				tempSize.x= tileSize.x / 1.4;
-				tempSize.y= tileSize.y / 1.4;
-
-				m_controller->saveMouse(tempSize,currentPosition);
-				break;
-			}
-
-			default:
-				break;
-			}
+			createBoardObject(fileContent[i][j], m_tileSize, currentPosition);
 		}
-	}	
+	}
 }
+
+void Board::resetFileAndContent(std::ifstream& boardFile, std::vector<std::string>& fileContent)
+{
+	boardFile.clear();
+	fileContent.clear();
+	//std::string line;
+	boardFile.seekg(m_filePos);
+}
+
+void Board::parseFileContent(std::ifstream& boardFile, std::vector<std::string>& fileContent)
+{
+	std::string line;
+	while (std::getline(boardFile, line) && !line.empty())
+	{
+		fileContent.push_back(line);
+	}
+}
+
+void Board::calculateTileAndBoardSize(const std::vector<std::string>& fileContent)
+{
+	int rows = fileContent.size();
+	int cols = fileContent[0].size();
+
+	float tileWidth = (BOARD_WIDTH) / cols;
+	float tileHeight = (BOARD_HEIGHT) / rows;
+
+	m_tileSize = { tileWidth, tileHeight };
+	m_boardSize = { tileWidth * cols, tileHeight * rows };
+}
+
+void Board::createBoardObject(char symbol, const sf::Vector2f& tileSize, const sf::Vector2f& position)
+{
+	switch (symbol)
+	{
+	case WALL:
+		m_stills.push_back(std::make_unique<Wall>(tileSize, position, Manage::getInstance()->getTexture(O_WALL)));
+		break;
+	case CHEESE:
+		m_initCheeseCount++;
+		m_cheeseCount++;
+		m_stills.push_back(std::make_unique<Cheese>(tileSize, position, Manage::getInstance()->getTexture(O_CHEESE)));
+		break;
+	case KEY:
+		m_initKeyCount++;
+		m_stills.push_back(std::make_unique<Key>(tileSize, position, Manage::getInstance()->getTexture(O_KEY)));
+		break;
+	case PRESENT:
+		fillPresents(tileSize, position);
+		break;
+	case DOOR:
+		m_stills.push_back(std::make_unique<Door>(tileSize, position, Manage::getInstance()->getTexture(O_DOOR)));
+		break;
+	case CAT:
+	{
+		sf::Vector2f tempSize;   //make cats size a bit smaller so can pass in narrow spaces
+		tempSize.x = tileSize.x / 1.2;
+		tempSize.y = tileSize.y / 1.2;
+
+		m_controller->addCat(tempSize, position);
+		break;
+	}
+	case MOUSE:
+	{
+		sf::Vector2f tempSize;     //make mouse size a bit smaller so can pass in narrow spaces
+		tempSize.x = tileSize.x / 1.4;
+		tempSize.y = tileSize.y / 1.4;
+
+		m_controller->saveMouse(tempSize, position);
+		break;
+	}
+	default:
+		break;
+	}
+}
+
 
 void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vector <std::unique_ptr <Cat>>& cats)
 {
