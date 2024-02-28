@@ -73,6 +73,7 @@ void Board::getStills(std::ifstream& boardFile)
 	//}
 
 	//std::string time;
+	m_filePos = boardFile.tellg();
 	std::getline(boardFile, m_initLevelTime);
 	//std::cout << initLevelTime;
 	
@@ -83,13 +84,11 @@ void Board::getStills(std::ifstream& boardFile)
 		{
 			break;
 		}
-		if (boardFile.tellg() == m_filePos)
-		{
-			m_filePos = boardFile.tellg();
-		}
+
 
 		fileContent.push_back(line);
 	}
+
 	int rows = fileContent.size();
 	int cols= fileContent[0].size();
 	
@@ -187,6 +186,10 @@ void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vect
 		if (mouse->getGlobalBounds().intersects(obj->getGlobalBounds()))
 		{
 			processCollision(*mouse, *obj);
+		}
+		else
+		{
+			mouse->isIntersects(false);
 		}
 	}
 

@@ -53,7 +53,7 @@ void Data::draw(sf::RenderWindow& window)
 	//updateTime(0);
 	m_timeText.setFont(*(Manage::getFont()));
 	m_timeText.setCharacterSize({ 80 });
-	m_timeText.setPosition({ 1300, 600 });
+	m_timeText.setPosition({ 1350, 600 });
 	m_timeText.setFillColor(sf::Color::Black);
 
 	window.draw(m_timeText);

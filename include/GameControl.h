@@ -32,7 +32,7 @@ private:
 	void makeWindow(bool gameStarted);
 	void catsTurn(bool mouseMoved,const sf::Time& deltaTime);
 	void drawCats();
-	void move(const sf::Keyboard::Key& key, const sf::Time& deltaTime);
+	void setDirection(const sf::Keyboard::Key& key);
 
 	Board m_board;
 	Menu m_menu;

@@ -15,59 +15,26 @@
 
 //this namespace handles all collisions creating double v-table
 namespace {
-   
-    int keysCount = 0;
-    //Board board;
-    
+     
     void MouseWithWall(GameObject& mouse, GameObject& wall)
     {
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
-        Wall& c_wall= dynamic_cast <Wall&> (wall);
 
-        auto reverseDirection = c_mouse.getDirection() * -1.f;
-
-         
-
-        //moves back till gets out of wall bounds
-        c_mouse.setDirection(reverseDirection);
-        c_mouse.setScale();
-
-        while (c_mouse.getGlobalBounds().intersects(c_wall.getGlobalBounds()))
-        {
-            c_mouse.isIntersects(true);
-            c_mouse.move(0.0001);
-        }
-        //c_mouse.isIntersects(false);
+         // c_mouse.isIntersects(true);
+        c_mouse.setPos();
     }
 
     void mouseWithBoard(GameObject& mouse, const Board& board)
     {
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
-
-        auto reverseDirection = c_mouse.getDirection() * -1.f;
-            c_mouse.setDirection(reverseDirection );
-
-
-        //moves back till gets out of wall bounds
-        while (!board.inBounds(c_mouse.getGlobalBounds()))
-        {
-            //c_mouse.move(sf::Time(sf::milliseconds(20)));
-            c_mouse.move(0.00001);
-        }
+        c_mouse.setPos();
     }
 
     void catWithBoard(GameObject& cat, const Board& board)
     {
         Cat& c_cat = dynamic_cast <Cat&> (cat);
 
-        auto reverseDirection = c_cat.getDirection() * -1.f;
-            c_cat.setDirection(reverseDirection );
-
-        //moves back till gets out of wall bounds
-        while (!board.inBounds(c_cat.getGlobalBounds()))
-        {
-            c_cat.move(0.00001);
-        }
+        c_cat.setPos();
     }
 
 
@@ -79,12 +46,11 @@ namespace {
 
         if (Board::getKeyCount() > 0)
         {
-            sf::Sound sound = Manage::getSound(O_OPENDOOR);
+            sf::Sound* sound = Manage::getSound(O_OPENDOOR);
 
             c_door.gotEaten();
 
             Board::setKeyCount(-1);
-           // keysCount -= 1;
             c_mouse.addPoints(2);
         }
 
@@ -105,15 +71,20 @@ namespace {
         Key& c_key = dynamic_cast <Key&> (key);
 
         Board::setKeyCount(1);
-       //keysCout+=1;
         c_key.gotEaten();
-        sf::Sound sound = Manage::getSound(O_EATCHEESE);
+        sf::Sound* sound = Manage::getSound(O_EATCHEESE);
 
     }
 
     void MouseWithCheese(GameObject& mouse, GameObject& cheese)
     {
-        sf::Sound sound = Manage::getSound(O_EATCHEESE);
+        if (Board::getCheeseCount() == 1)
+        {
+            sf::Sound* sound = Manage::getSound(O_WON);
+
+        }
+        else
+        sf::Sound* sound = Manage::getSound(O_EATCHEESE);
 
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         Cheese& c_cheese = dynamic_cast <Cheese&> (cheese);
@@ -126,7 +97,7 @@ namespace {
 
     void MouseWithMoreLifePresent(GameObject& mouse, GameObject& present)
     {
-        sf::Sound sound = Manage::getSound(O_PRESENT);
+        sf::Sound* sound = Manage::getSound(O_PRESENT);
 
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         MoreLifePresent& c_present = dynamic_cast <MoreLifePresent&> (present);
@@ -138,7 +109,7 @@ namespace {
 
     void MouseWithKillCatPresent(GameObject& mouse, GameObject& present)
     {
-        sf::Sound sound = Manage::getSound(O_PRESENT);
+        sf::Sound* sound = Manage::getSound(O_PRESENT);
 
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         KillCatPresent& c_present = dynamic_cast <KillCatPresent&> (present);
@@ -150,7 +121,7 @@ namespace {
 
     void MouseWithTimePresent(GameObject& mouse, GameObject& present)
     {
-        sf::Sound sound = Manage::getSound(O_PRESENT);
+        sf::Sound* sound = Manage::getSound(O_PRESENT);
 
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         IncreaseTimePresent& c_present = dynamic_cast <IncreaseTimePresent&> (present);
@@ -164,7 +135,7 @@ namespace {
 
     void MouseWithFreezePresent(GameObject& mouse, GameObject& present)
     {
-        sf::Sound sound = Manage::getSound(O_PRESENT);
+        sf::Sound* sound = Manage::getSound(O_PRESENT);
 
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         FreezePresent& c_present = dynamic_cast <FreezePresent&> (present);
@@ -183,14 +154,12 @@ namespace {
          Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
          if (c_mouse.getLife() == 1)
          {
-             sf::Sound sound = Manage::getSound(O_GAMEOVER);
-             sf::sleep(sf::milliseconds(1500)); // Adjust the delay time as needed
+             sf::Sound* sound = Manage::getSound(O_GAMEOVER);
 
          }
          else
          {
-             sf::Sound sound = Manage::getSound(O_CATMOUSE);
-             //sf::sleep(sf::milliseconds(1000)); // Adjust the delay time as needed
+             sf::Sound* sound = Manage::getSound(O_CATMOUSE);
 
          }
 
@@ -204,20 +173,8 @@ namespace {
 
     void CatWithWall(GameObject& cat, GameObject& wall)
     {
-        Cat& c_cat = dynamic_cast <Cat&> (cat);
-        Wall& c_wall = dynamic_cast <Wall&> (wall);
-
-        auto CatBounds = c_cat.getGlobalBounds();
-        auto WallBounds = c_wall.getGlobalBounds();
-
-        auto reverseDirection = c_cat.getDirection() * -1.f;
-        c_cat.setDirection(reverseDirection );
-
-        //moves back till gets out of wall bounds
-        while (c_cat.getGlobalBounds().intersects(c_wall.getGlobalBounds()))
-        {    
-            c_cat.move(0.00005);  //float 0.0001
-        }
+        Cat& c_cat = dynamic_cast <Cat&> (cat);       
+        c_cat.setPos();
     }
   
     void CatWithDoor(GameObject& cat, GameObject& door)

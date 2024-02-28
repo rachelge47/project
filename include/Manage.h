@@ -13,6 +13,7 @@ const sf::Vector2f DOWN = { 0 , 1 };
 const sf::Vector2f RIGHT = { 1 , 0 };
 
 const sf::Vector2f LEFT = { -1 , 0 };
+const sf::Vector2f STAY = { 0 , 0 };
 
 const char MOUSE = '%';
 const char CAT = '^';
@@ -44,6 +45,7 @@ enum soundType {
     O_OPENDOOR,
     O_GETPRESENT,
     O_WON,
+    O_TIMEOUT
 };
 
 
@@ -57,7 +59,7 @@ public:
     static void cover( sf::RenderWindow& window, const std::string& backName);
     static sf::Texture *getTexture(int index) { return &m_textures[index]; }
     //static sf::Sound *getSound(int index) { return &m_sounds[index]; }
-    static sf::Sound getSound(int index);
+    static sf::Sound* getSound(int index);
     static sf::Music& getMusic() { return m_music; }
     static void stopMusic() { m_music.pause(); }
     static void startMusic() { m_music.play(); }
@@ -69,12 +71,13 @@ public:
     static sf::Font* getFont();
     static sf::Texture* infoTexture();
     static const std::string m_names[7];
-    static const std::string m_soundNames[8];
+    static const std::string m_soundNames[9];
 
 private:
 
     static std::vector<sf::Texture> m_textures;
-    static std::vector<sf::Sound> m_sounds;
+    //static std::vector<sf::Sound> m_sounds;
+    static sf::Sound m_sound;
     static std::vector<sf::SoundBuffer> m_soundBuffers;
     static sf::Texture m_menuBack;
     static sf::Texture m_gameBack;

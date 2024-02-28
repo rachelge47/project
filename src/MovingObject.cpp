@@ -9,49 +9,46 @@ MovingObject::MovingObject(const sf::Vector2f& tileSize, const sf::Vector2f& pos
 
 void MovingObject::setDirection(const sf::Vector2f& direction)
 {
+	
 	m_direction = direction;
 }
+
+sf::Vector2f MovingObject::getLoc()
+{
+	return m_object.getPosition();
+}
+
+void MovingObject::setPos()
+{
+	
+	m_object.setPosition(m_prevPos);
+	
+}
+
 
 
 void MovingObject:: setScale()
 {
-	if (!m_inter)
+	
+	if (m_direction == LEFT)
 	{
-		if (m_direction == LEFT)
-		{
-			m_object.setScale(-1, 1);
-		}
-		if (m_direction == RIGHT)
-		{
-			m_object.setScale(1, 1);
-		}
+		m_object.setScale(-1, 1);
 	}
+	if (m_direction == RIGHT)
+	{
+		m_object.setScale(1, 1);
+	}
+	
 
-	m_inter = false;
 }
 
-
-void MovingObject::setScaleCollision()
-{
-	//if (!m_inter)
-	//{
-		if (m_direction == LEFT)
-		{
-			m_object.setScale(1, 1);
-		}
-		if (m_direction == RIGHT)
-		{
-			m_object.setScale(-1, 1);
-		}
-//	}
-
-	//m_inter = false;
-}
 
 void MovingObject::move(float time)
 {
 	
-		m_object.move(m_speedPerSecond * m_direction * time);  //speed*float
+	m_prevPos = getLoc();
 
+	m_object.move(m_speedPerSecond * m_direction * time);  //speed*float
+	
 	
 }

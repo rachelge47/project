@@ -152,9 +152,13 @@ int GameControl::levelRun(std::ifstream& boardFile)
             case sf::Event::KeyPressed:
             {
                 mouseMoved = true;
-                move(event.key.code, deltaTime);
+                setDirection(event.key.code);
                 break;
             }
+            case sf::Event::KeyReleased:
+                setDirection(sf::Keyboard::Space);
+                break;
+
             default:
                 break;
             }
@@ -163,6 +167,8 @@ int GameControl::levelRun(std::ifstream& boardFile)
 
         catsTurn(mouseMoved, deltaTime);
 
+        //m_mouse->setScale();
+        m_mouse->move(deltaTime.asSeconds());
         m_board.checkCollisions(m_mouse, m_cats);
 
         if (Board::getCheeseCount() == 0 || m_mouse->getLife() == 0)
@@ -172,14 +178,16 @@ int GameControl::levelRun(std::ifstream& boardFile)
 
         if (m_data.timeOut())
         {
+            sf::Sound* sound = Manage::getSound(O_TIMEOUT);
             m_cats.clear();
+            m_board.setLevel(m_board.getLevel());
             m_board.clearBoard();
             m_data.restartTime();
             m_data.setTimeOut();
-            //m_board.toStartOver(true);
             m_board.startOver(true);
             m_board.getStills(boardFile);
             m_board.startOver(false);
+            m_mouse->addLife(-1);
            return 2;
         }
     }
@@ -194,14 +202,14 @@ void GameControl::catsTurn(bool mouseMoved,const sf::Time& deltaTime)
         for (auto& cat : m_cats)
         {
             cat->setDirection(cat->catMovment(m_mouse->getPosition()));
-            cat->setScale();
+            //cat->setScale();
             cat->move(deltaTime.asSeconds());
         }
     }
 }
 
 
-void GameControl::move(const sf::Keyboard::Key& key, const sf::Time &deltaTime)
+void GameControl::setDirection(const sf::Keyboard::Key& key)
 {
     sf::Vector2f direction;
 
@@ -227,11 +235,13 @@ void GameControl::move(const sf::Keyboard::Key& key, const sf::Time &deltaTime)
         direction = RIGHT;
         break;
     }
+    case sf::Keyboard::Space:
+        direction = STAY;
+        break;
     }
-
+    //m_mouse->setScale();
+    //m_mouse-> move(deltaTime.asSeconds());
     m_mouse->setDirection(direction);
-    m_mouse->setScale();
-    m_mouse-> move(deltaTime.asSeconds());
 }
 
 

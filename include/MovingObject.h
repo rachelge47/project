@@ -7,6 +7,8 @@ public:
 	MovingObject(const sf::Vector2f& tileSize, const sf::Vector2f& position, const sf::Texture * texture, float speedPerSecond);
 	void setDirection(const sf::Vector2f& direction);
 	void clear();
+	void setPos();
+	sf::Vector2f getLoc();
 	sf::Vector2f getDirection() { return m_direction; }
 	void setScale();
 	void setScaleCollision();
@@ -22,5 +24,6 @@ private:
 protected:
 	sf::Vector2f m_direction;
 	bool m_resetLoc;
+	sf::Vector2f m_prevPos;
 	
 };
