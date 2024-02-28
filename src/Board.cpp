@@ -63,17 +63,9 @@ void Board::getStills(std::ifstream& boardFile)
 		line.clear();
 		boardFile.seekg(m_filePos);
 	}
-	//contain the board to know num of rows and cols
-	//for (auto line = std::string(); std::getline(boardFile, line) && !line.empty();)
-	//{
-	//	fileContent.push_back(line);
-	//}
-
-	//std::string time;
+	
 	m_filePos = boardFile.tellg();
 	std::getline(boardFile, m_initLevelTime);
-	//std::cout << initLevelTime;
-	
 
 	while (std::getline(boardFile, line))
 	{
@@ -152,8 +144,8 @@ void Board::getStills(std::ifstream& boardFile)
 			case MOUSE:
 			{
 				sf::Vector2f tempSize;     //make mouse size a bit smaller so can pass in narrow spaces
-				tempSize.x= tileSize.x / 1.2;
-				tempSize.y= tileSize.y / 1.2;
+				tempSize.x= tileSize.x / 1.4;
+				tempSize.y= tileSize.y / 1.4;
 
 				m_controller->saveMouse(tempSize,currentPosition);
 				break;

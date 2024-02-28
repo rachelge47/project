@@ -22,6 +22,7 @@ public:
 	Board();
 
 	void startOver(bool toDo);
+	int getNumOfLevels();
 	void loadFromFile(std::ifstream& boardFile);
 	int getLevel() const;
 	void setLevel(int toAdd) { m_level =toAdd; }
@@ -72,6 +73,7 @@ private:
 	 GameControl * m_controller;
 	 std::string m_initLevelTime;
 	 Data m_data;
+	 int m_numOfLevels;
 
 
 

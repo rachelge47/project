@@ -26,6 +26,11 @@ private:
 	
 	void mainMenu();
 	void startGame();
+	bool shouldContinueGame();
+	bool shouldEndGame();
+	void setupNextLevel(std::ifstream& boardFile);
+	void handleEndGame(int life);
+	void displayEndScreen( int textureKey);
 	void helpScreen();
 	void exitGame();
 	void drawGame();

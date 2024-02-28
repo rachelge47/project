@@ -81,6 +81,86 @@ void GameControl::mainMenu()
        
     }
 }
+//
+//void GameControl::startGame()
+//{
+//    auto boardFile = std::ifstream("Board.txt");
+//    m_board.loadFromFile(boardFile);
+//    int life = 3;
+//
+//
+//    while (m_board.getLevel() < NUMOFLEVELS || (m_mouse && m_mouse->getLife() > 0))
+//    {
+//        if (m_board.getLevel()>= NUMOFLEVELS || (m_mouse && m_mouse->getLife() == 0))
+//        {
+//            life = 0;
+//            break;
+//        }
+//
+//        m_board.setLevel(m_board.getLevel()+1);
+//        m_cats.clear();
+//        m_board.clearBoard();
+//        m_data.restartTime();
+//        
+//        m_board.getStills(boardFile);
+//
+//        if (levelRun(boardFile)==0)
+//        {
+//            break;
+//        }
+//        else if (levelRun(boardFile) == 2)
+//        {
+//            levelRun(boardFile);
+//        }
+//    }
+//    
+//  
+//
+//    if (m_board.getLevel() >= NUMOFLEVELS)
+//    {
+//        sf::Clock timer;
+//        sf::Time elapsedTime = sf::Time::Zero;
+//
+//        while (elapsedTime < sf::seconds(TIME))
+//        {
+//            m_window.clear();
+//            elapsedTime += timer.restart();
+//            sf::Sprite screen;
+//            screen.setTexture(*Manage::getInstance()->getTexture(O_WIN));
+//           // screen.setSize({ WIDTH, LENGTH });
+//            m_window.draw(screen);
+//            m_window.display();
+//        }
+//
+//        // Clear the window after 5 seconds to remove the victory screen
+//      //  m_window.clear();
+//        //m_window.display();
+//    }
+//
+//    else if (life==0)
+//    {
+//        sf::Clock timer;
+//        sf::Time elapsedTime = sf::Time::Zero;
+//
+//        while (elapsedTime < sf::seconds(TIME))
+//        {
+//            m_window.clear();
+//            elapsedTime += timer.restart();
+//            sf::Sprite screen;
+//            screen.setTexture(*Manage::getInstance()->getTexture(O_OVER));
+//            m_window.draw(screen);
+//            m_window.display();
+//        }
+//
+//        // Clear the window after 5 seconds to remove the victory screen
+//      //  m_window.clear();
+//        //m_window.display();
+//    }
+//
+//    m_mouse.reset();
+//    m_board.setLevel(0);
+//}
+
 
 void GameControl::startGame()
 {
@@ -88,23 +168,17 @@ void GameControl::startGame()
     m_board.loadFromFile(boardFile);
     int life = 3;
 
-
-    while (m_board.getLevel() < NUMOFLEVELS || (m_mouse && m_mouse->getLife() > 0))
+    while (shouldContinueGame())
     {
-        if (m_board.getLevel()>= NUMOFLEVELS || (m_mouse && m_mouse->getLife() == 0))
+        if (shouldEndGame())
         {
             life = 0;
             break;
         }
 
-        m_board.setLevel(m_board.getLevel()+1);
-        m_cats.clear();
-        m_board.clearBoard();
-        m_data.restartTime();
-        
-        m_board.getStills(boardFile);
+        setupNextLevel(boardFile);
 
-        if (levelRun(boardFile)==0)
+        if (levelRun(boardFile) == 0)
         {
             break;
         }
@@ -113,52 +187,61 @@ void GameControl::startGame()
             levelRun(boardFile);
         }
     }
-    
-  
 
-    if (m_board.getLevel() >= NUMOFLEVELS)
+    handleEndGame(life);
+}
+
+bool GameControl::shouldContinueGame()
+{
+    return m_board.getLevel() < NUMOFLEVELS || (m_mouse && m_mouse->getLife() > 0);
+}
+
+bool GameControl::shouldEndGame()
+{
+    return m_board.getLevel() >= NUMOFLEVELS || (m_mouse && m_mouse->getLife() == 0);
+}
+
+void GameControl::setupNextLevel(std::ifstream& boardFile)
+{
+    m_board.setLevel(m_board.getLevel() + 1);
+    m_cats.clear();
+    m_board.clearBoard();
+    m_data.restartTime();
+    m_board.getStills(boardFile);
+}
+
+void GameControl::handleEndGame(int life)
+{
+    if (m_mouse->getLife() == 0 && m_board.getLevel() < NUMOFLEVELS)
     {
-        sf::Clock timer;
-        sf::Time elapsedTime = sf::Time::Zero;
-
-        while (elapsedTime < sf::seconds(TIME))
-        {
-            m_window.clear();
-            elapsedTime += timer.restart();
-            sf::Sprite screen;
-            screen.setTexture(*Manage::getInstance()->getTexture(O_WIN));
-           // screen.setSize({ WIDTH, LENGTH });
-            m_window.draw(screen);
-            m_window.display();
-        }
-
-        // Clear the window after 5 seconds to remove the victory screen
-      //  m_window.clear();
-        //m_window.display();
+        displayEndScreen(O_WIN);
     }
-
-    else if (life==0)
+    else if (m_board.getLevel() >= NUMOFLEVELS)
     {
-        sf::Clock timer;
-        sf::Time elapsedTime = sf::Time::Zero;
-
-        while (elapsedTime < sf::seconds(TIME))
-        {
-            m_window.clear();
-            elapsedTime += timer.restart();
-            sf::Sprite screen;
-            screen.setTexture(*Manage::getInstance()->getTexture(O_OVER));
-            m_window.draw(screen);
-            m_window.display();
-        }
-
-        // Clear the window after 5 seconds to remove the victory screen
-      //  m_window.clear();
-        //m_window.display();
+        displayEndScreen(O_OVER);
     }
 
     m_mouse.reset();
     m_board.setLevel(0);
+}
+
+void GameControl::displayEndScreen(int textureKey)
+{
+    sf::Clock timer;
+    sf::Time elapsedTime = sf::Time::Zero;
+
+    while (elapsedTime < sf::seconds(TIME))
+    {
+        m_window.clear();
+        elapsedTime += timer.restart();
+        sf::Sprite screen;
+        screen.setTexture(*Manage::getInstance()->getTexture(textureKey));
+        m_window.draw(screen);
+        m_window.display();
+    }
+    // Clear the window after 5 seconds to remove the screen
+    // m_window.clear();
+    // m_window.display();
 }
 
 
