@@ -212,13 +212,13 @@ void GameControl::setupNextLevel(std::ifstream& boardFile)
 
 void GameControl::handleEndGame(int life)
 {
-    if (m_mouse->getLife() == 0 && m_board.getLevel() < NUMOFLEVELS)
-    {
-        displayEndScreen(O_WIN);
-    }
-    else if (m_board.getLevel() >= NUMOFLEVELS)
+    if (m_mouse->getLife() == 0 )
     {
         displayEndScreen(O_OVER);
+    }
+    else if (m_board.getLevel() >= NUMOFLEVELS&& m_mouse->getLife() > 0)
+    {
+        displayEndScreen(O_WIN);
     }
 
     m_mouse.reset();
@@ -239,9 +239,7 @@ void GameControl::displayEndScreen(int textureKey)
         m_window.draw(screen);
         m_window.display();
     }
-    // Clear the window after 5 seconds to remove the screen
-    // m_window.clear();
-    // m_window.display();
+    
 }
 
 
@@ -253,7 +251,6 @@ int GameControl::levelRun(std::ifstream& boardFile)
     bool mouseMoved = false;
 
     while (m_window.isOpen())
-        //timer
     {
         const auto deltaTime = clock.restart();
 
@@ -300,19 +297,25 @@ int GameControl::levelRun(std::ifstream& boardFile)
         if (m_data.timeOut())
         {
             sf::Sound* sound = Manage::getInstance()->getSound(O_TIMEOUT);
-            m_cats.clear();
-            m_board.setLevel(m_board.getLevel());
-            m_board.clearBoard();
-            m_data.restartTime();
-            m_data.setTimeOut();
-            m_board.startOver(true);
-            m_board.getStills(boardFile);
-            m_board.startOver(false);
-            m_mouse->addLife(-1);
+            resetBoardAfterTimeOut(boardFile);
+
             return 2;
         }
     }
     return 1;
+}
+
+void GameControl::resetBoardAfterTimeOut(std::ifstream& boardFile)
+{
+    m_cats.clear();
+    m_board.setLevel(m_board.getLevel());
+    m_board.clearBoard();
+    m_data.restartTime();
+    m_data.setTimeOut();
+    m_board.startOver(true);
+    m_board.getStills(boardFile);
+    m_board.startOver(false);
+    m_mouse->addLife(-1);
 }
 
 
