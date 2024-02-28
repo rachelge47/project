@@ -312,7 +312,6 @@ void GameControl::helpScreen()
 
 void GameControl::exitGame()
 {
-    std::cout << "exitButton\n";
     m_window.close();
 }
 
@@ -327,8 +326,8 @@ void GameControl::drawGame()
     m_mouse->printMouseData(m_window);
     m_data.draw(m_window);
     m_mouse->draw(m_window);
-    drawCats();
     m_board.drawPresents(m_window);
+    drawCats();
     m_window.display();
 
 }
