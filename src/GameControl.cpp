@@ -127,7 +127,7 @@ void GameControl::startGame()
             elapsedTime += timer.restart();
             sf::Sprite screen;
             screen.setTexture(*Manage::getInstance()->getTexture(O_WIN));
-            screen.setScale(WIDTH, LENGTH);
+           // screen.setSize({ WIDTH, LENGTH });
             m_window.draw(screen);
             m_window.display();
         }
