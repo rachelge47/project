@@ -18,12 +18,10 @@ void Mouse::printMouseData(sf::RenderWindow& window)
 	down += M_SPACE;
 	text = make(str, Manage::getInstance()->getFont(), down);
 	window.draw(text);
-
 }
 
 
-
-sf::Text Mouse::make(const std::string& str, const sf::Font* font, float down)
+sf::Text Mouse::make(const std::string& str, const sf::Font* font, float down)  //make the text
 {
 	sf::Text text(str, *font);
 	text.setPosition({ POS_X, down });

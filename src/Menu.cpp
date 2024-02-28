@@ -5,7 +5,7 @@ Menu::Menu()
 {
     sf::Vector2f position = { INIT_POS };
 
-    sf::Text text = makeButton("New Game", Manage::getInstance()->getFont());
+    sf::Text text = makeButton("New Game", Manage::getInstance()->getFont());   //make four buttons
     m_menu.push_back(std::make_unique<StartButton>(text, position));
 
     position.y += m_menu[0]->getSize() + R_SPACE;
@@ -19,7 +19,6 @@ Menu::Menu()
 	position = { MUTE_POS };
 	text = makeButton("Music", Manage::getInstance()->getFont());
 	m_menu.push_back(std::make_unique<ExitButton>(text, position));
-
 }
 
 sf::Text Menu::makeButton(const std::string& str, const sf::Font* font)
@@ -41,7 +40,7 @@ std::string Menu::isClickMenu(const sf::Vector2f& location) const
 {
 	for (auto& button : m_menu)
 	{
-		if (button->isClick(location))
+		if (button->isClick(location))  //check on which button were the click
 		{
 			if (button->getText().getString() == "Help")
 			{

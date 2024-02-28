@@ -47,7 +47,6 @@ public:
 class StartButton : public Button {
 public:
 	using Button::Button;
-	//virtual void action() override;
 };
 
 class MusicButton : public Button

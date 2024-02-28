@@ -19,7 +19,7 @@ void Button::drawButton(sf::RenderWindow& window, const sf::Vector2f& mousePosit
     window.draw(m_text);
 }
 
-void Button::setPosition(const sf::Vector2f& position)
+void Button::setPosition(const sf::Vector2f& position) //set the text position
 {
     m_position = position; 
     m_button.setPosition(m_position);
@@ -32,7 +32,7 @@ void Button::setPosition(const sf::Vector2f& position)
     m_text.setPosition(m_position + sf::Vector2f(offsetX, offsetY));
 }
 
-void Button::updateHover(const sf::Vector2f& mousePosition)
+void Button::updateHover(const sf::Vector2f& mousePosition)  //check if the mouse hovers on the button
 {
     m_hovered = m_button.getGlobalBounds().contains(mousePosition);
 

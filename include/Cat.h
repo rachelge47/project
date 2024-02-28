@@ -19,6 +19,5 @@ private:
 	double distance(const sf::Vector2f& v1, const sf::Vector2f& v2);
 	static bool m_cantMove;
 	static bool m_catDead;
-	//bool m_isFrozen;
 
 };

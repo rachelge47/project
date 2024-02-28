@@ -4,8 +4,8 @@ bool Cat::m_catDead = false;
 bool Cat::m_cantMove = false;
 
 
-
-sf::Vector2f Cat::catMovment(const sf::Vector2f& mouseLoc)
+//set the cat direction based on mouse loc an calct it to the smallest distance between them
+sf::Vector2f Cat::catMovment(const sf::Vector2f& mouseLoc)  
 {
 	sf::Vector2f catLoc= m_object.getPosition();
 

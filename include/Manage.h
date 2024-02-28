@@ -4,22 +4,22 @@
 #include <SFML/Audio.hpp>
 #include "Macros.h"
 
+//a singltone class to load and save all textures and sounds
+
 class Manage {
 public:
-   // Manage();
+
     static Manage* getInstance();
     void playMusic();
     void fillSoundBufVector();
     void fillTexturVector();
     void cover( sf::RenderWindow& window, const std::string& backName);
     sf::Texture *getTexture(int index) { return &m_textures[index]; }
-    //static sf::Sound *getSound(int index) { return &m_sounds[index]; }
     sf::Sound* getSound(int index);
     sf::Music& getMusic() { return m_music; }
     void stopMusic() { m_music.pause(); }
     void startMusic() { m_music.play(); }
     sf::SoundBuffer* getSoundBuffer(int index);
-
     void load();
     void loadBar();
     sf::Texture* buttonTexture();
@@ -28,18 +28,13 @@ public:
    
     ~Manage() { delete m_instance; }
 
-
 private:
-
     Manage();
     std::vector<sf::Texture> m_textures;
-    //static std::vector<sf::Sound> m_sounds;
     sf::Sound m_sound;
     std::vector<sf::SoundBuffer> m_soundBuffers;
-
     std::string m_names[9];
     std::string m_soundNames[9];
-
     sf::Texture m_menuBack;
     sf::Texture m_gameBack;
     sf::Texture m_helpBack;

@@ -9,7 +9,6 @@ Manage::Manage()
 
 Manage* Manage::m_instance = nullptr;
 
-
 Manage* Manage::getInstance()
 {
     if (m_instance == nullptr)
@@ -68,8 +67,7 @@ void Manage::fillTexturVector()
 }
 
 
-
- void Manage::cover(sf::RenderWindow &window, const std ::string& backName)
+void Manage::cover(sf::RenderWindow &window, const std ::string& backName)
 {    
     sf::Sprite background;
     
@@ -91,7 +89,6 @@ void Manage::fillTexturVector()
     }
 
     window.draw(background);
-   // window.display();
 }
 
  void Manage::load()

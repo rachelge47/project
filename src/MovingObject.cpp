@@ -8,8 +8,7 @@ MovingObject::MovingObject(const sf::Vector2f& tileSize, const sf::Vector2f& pos
 }
 
 void MovingObject::setDirection(const sf::Vector2f& direction)
-{
-	
+{	
 	m_direction = direction;
 }
 
@@ -19,17 +18,13 @@ sf::Vector2f MovingObject::getLoc()
 }
 
 void MovingObject::setPos()
-{
-	
-	m_object.setPosition(m_prevPos);
-	
+{	
+	m_object.setPosition(m_prevPos);	
 }
 
-
-
 void MovingObject:: setScale()
-{
-	
+{	
+	//scale the mouse depend on his direction
 	if (m_direction == LEFT)
 	{
 		m_object.setScale(-1, 1);
@@ -37,17 +32,12 @@ void MovingObject:: setScale()
 	if (m_direction == RIGHT)
 	{
 		m_object.setScale(1, 1);
-	}
-	
+	}	
 }
 
 
 void MovingObject::move(float time)
 {
-	
-	m_prevPos = getLoc();
-
-	m_object.move(m_speedPerSecond * m_direction * time);  //speed*float
-	
-	
+	m_prevPos = getLoc();  //save the previouse location
+	m_object.move(m_speedPerSecond * m_direction * time); 	
 }

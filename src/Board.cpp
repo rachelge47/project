@@ -7,12 +7,11 @@ Board::Board()
 	:m_level(0), m_firstPresent(false)
 {}
 
-int Board::m_initCheeseCount;
-int Board::m_cheeseCount;// m_initCheeseCount;
-int Board::m_keyCount;
-int Board::m_presentCount;
-int Board::m_initKeyCount;
-
+//initiat static members
+int Board::m_initCheeseCount=0;
+int Board::m_cheeseCount=0;
+int Board::m_keyCount=0;
+int Board::m_initKeyCount=0;
 
 
 void Board::loadFromFile(std::ifstream& boardFile)
@@ -22,10 +21,6 @@ void Board::loadFromFile(std::ifstream& boardFile)
 		std::cerr << "Error opening file!" << std::endl;
 		exit(EXIT_FAILURE);
 	}
-	
-	//getStills(boardFile);
-
-	//boardFile.clear();  // Clear any error flags
 }
 
 void Board::clearBoard()
@@ -37,10 +32,9 @@ void Board::clearBoard()
 	m_initCheeseCount = 0;
 	m_initKeyCount = 0;
 	m_keyCount = 0;
-
 }
 
-void Board::startOver(bool toDo)
+void Board::startOver(bool toDo)    //do it if time is up
 {
 	m_startOver = toDo;
 }
@@ -55,7 +49,7 @@ void Board::getStills(std::ifstream& boardFile)
 		resetFileAndContent(boardFile, fileContent);
 	}
 
-	m_filePos = boardFile.tellg();
+	m_filePos = boardFile.tellg();   //save the position in the file
 	std::getline(boardFile, m_initLevelTime);
 
 	parseFileContent(boardFile, fileContent);
@@ -80,8 +74,7 @@ void Board::resetFileAndContent(std::ifstream& boardFile, std::vector<std::strin
 {
 	boardFile.clear();
 	fileContent.clear();
-	//std::string line;
-	boardFile.seekg(m_filePos);
+	boardFile.seekg(m_filePos);   //reset the file pointer to the beginning of the level
 }
 
 void Board::parseFileContent(std::ifstream& boardFile, std::vector<std::string>& fileContent)
@@ -98,13 +91,14 @@ void Board::calculateTileAndBoardSize(const std::vector<std::string>& fileConten
 	int rows = fileContent.size();
 	int cols = fileContent[0].size();
 
-	float tileWidth = (BOARD_WIDTH) / cols;
+	float tileWidth = (BOARD_WIDTH) / cols;  
 	float tileHeight = (BOARD_HEIGHT) / rows;
 
-	m_tileSize = { tileWidth, tileHeight };
+	m_tileSize = { tileWidth, tileHeight };   //calculate the tile size to the board size and the rows and cols
 	m_boardSize = { tileWidth * cols, tileHeight * rows };
 }
 
+//create vector of stills objects
 void Board::createBoardObject(char symbol, const sf::Vector2f& tileSize, const sf::Vector2f& position)
 {
 	switch (symbol)
@@ -169,13 +163,9 @@ void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vect
 		{
 			processCollision(*mouse, *obj);
 		}
-		else
-		{
-			mouse->isIntersects(false);
-		}
 	}
 
-	for (auto& cat : cats)   //handle cats collision
+	for (auto& cat : cats)   //handle cats collision with stills
 	{
 		for (auto& obj : m_stills)
 		{
@@ -186,7 +176,7 @@ void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vect
 		}
 	}
 
-	for (auto& cat : cats)
+	for (auto& cat : cats)     //handle cats collision with mouse
 	{
 		if (cat->getGlobalBounds().intersects(mouse->getGlobalBounds()))
 		{
@@ -200,7 +190,7 @@ void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vect
 		{
 			processCollision(*mouse, *present);
 
-			if (Cat::isFrozen())
+			if (Cat::isFrozen())   //if need to freeze cat, reset clock
 			{
 				m_freezeTimer.restart();
 			}
@@ -210,25 +200,24 @@ void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vect
 	m_stills.erase( std::remove_if(m_stills.begin(), m_stills.end(),    //erase object that has been eaten
 			[](const auto& obj) { return obj->beenEaten(); }),	m_stills.end());
 
-	m_presents.erase(std::remove_if(m_presents.begin(), m_presents.end(),    //erase object that has been eaten
+	m_presents.erase(std::remove_if(m_presents.begin(), m_presents.end(),    //erase presents that has been eaten
 		[](const auto& present) { return present->beenEaten(); }), m_presents.end());
 
-	m_controller->removeCat();
+	m_controller->removeCat();  //check if need to remove cat
 
-	m_controller->resetMovingPos();
-	//m_controller->freezeCat();
+	m_controller->resetMovingPos();  //check if need to move mouse and cat to init position becouse of mouse cat collision
 
-	if (m_freezeTimer.getElapsedTime().asSeconds()>=TIME)
+	if (m_freezeTimer.getElapsedTime().asSeconds()>=TIME)   //freeze the cat
 	{
 		Cat::needFreeze(false);
 	}
 
 }
 
-
+//fill present vector of different kinds of present
 void Board::fillPresents(const sf::Vector2f &tileSize, const sf::Vector2f &currentPosition)
 {
-	if (!m_firstPresent)
+	if (!m_firstPresent)   //first present in vector is kiil cat
 	{
 		m_presents.push_back(std::make_unique<KillCatPresent>(tileSize, currentPosition, Manage::getInstance()->getTexture(O_PRESENT)));
 		m_firstPresent = true;
@@ -237,17 +226,17 @@ void Board::fillPresents(const sf::Vector2f &tileSize, const sf::Vector2f &curre
 	{
 		switch (m_presents.size() % 3)
 		{
-		case 0:
+		case 0:  //third present in vector is more life
 		{
 			m_presents.push_back(std::make_unique<MoreLifePresent>(tileSize, currentPosition, Manage::getInstance()->getTexture(O_PRESENT)));
 			break;
 		}
-		case 1:
+		case 1: //second present in vector is freeze cats
 		{
 			m_presents.push_back(std::make_unique<FreezePresent>(tileSize, currentPosition, Manage::getInstance()->getTexture(O_PRESENT)));
 			break;
 		}
-		case 2:
+		case 2: //forth present in vector is increace time
 		{
 			m_presents.push_back(std::make_unique<IncreaseTimePresent>(tileSize, currentPosition, Manage::getInstance()->getTexture(O_PRESENT)));
 			break;
@@ -259,7 +248,6 @@ void Board::fillPresents(const sf::Vector2f &tileSize, const sf::Vector2f &curre
 		}
 	}
 }
-
 
 
 int Board::getLevel() const
@@ -282,13 +270,11 @@ void Board::drawPresents(sf::RenderWindow& window) const
 
 sf::FloatRect Board::getGlobalBounds() const
 {
-	//sf::Vector2f boardStartPoint = { m_position.x - float(0.5) * m_width,
-								//	m_position.y - float(0.5) * m_height };
-
 	return sf::FloatRect(START_POINT.x, START_POINT.y, BOARD_WIDTH, BOARD_HEIGHT);
 }
 
-bool Board::inBounds(sf::FloatRect rect) const
+
+bool Board::inBounds(sf::FloatRect rect) const  //check if object is in board bounds
 {
 	auto bounds = this->getGlobalBounds();
 	bool topLeft = bounds.contains(rect.left, rect.top);
@@ -313,11 +299,9 @@ void Board:: printBoardData(sf::RenderWindow& window)
 	down += DOWN_B*2;
 	text= make(str, Manage::getInstance()->getFont(), down);
 	window.draw(text);
-
-	
 }
 
-
+//function to make text
 sf::Text Board::make(const std::string& str, const sf::Font* font, float down)
 {
 	sf::Text text(str, *font);

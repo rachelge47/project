@@ -13,34 +13,31 @@ class GameControl {
 public:
 	GameControl(); 
 	void run();
-	
-	
 	void removeCat();
-	//void freezeCat();
 	void saveMouse(const sf::Vector2f& tileSize,const sf::Vector2f &position);
 	void addCat(const sf::Vector2f& tileSize,const sf::Vector2f& position);
 	void resetMovingPos();
 
-
 private:
-	
+	//------functions-----
+
 	void mainMenu();
 	void startGame();
 	bool shouldContinueGame();
 	bool shouldEndGame();
 	void setupNextLevel(std::ifstream& boardFile);
-	void handleEndGame(int life);
+	void handleEndGame();
 	void displayEndScreen( int textureKey);
 	void helpScreen();
 	void exitGame();
 	void drawGame();
 	int levelRun(std::ifstream& boardFile);
-	void makeWindow(bool gameStarted);
 	void resetBoardAfterTimeOut(std::ifstream& boardFile);
 	void catsTurn(bool mouseMoved,const sf::Time& deltaTime);
 	void drawCats();
 	void setDirection(const sf::Keyboard::Key& key);
 
+	//------members-----
 	Board m_board;
 	Menu m_menu;
 	std::unique_ptr<Mouse> m_mouse;

@@ -20,7 +20,6 @@ namespace {
     {
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
 
-        //  c_mouse.isIntersects(true);
         c_mouse.setPos();
     }
 
@@ -29,6 +28,7 @@ namespace {
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         c_mouse.setPos();
     }
+
 
     void catWithBoard(GameObject& cat, const Board& board)
     {
@@ -44,7 +44,7 @@ namespace {
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
         Door& c_door = dynamic_cast <Door&> (door);
 
-        if (Board::getKeyCount() > 0)
+        if (Board::getKeyCount() > 0)  //if the mose has a key, open the door
         {
             sf::Sound* sound = Manage::getInstance()->getSound(O_OPENDOOR);
 
@@ -54,7 +54,7 @@ namespace {
             c_mouse.addPoints(2);
         }
 
-        else
+        else   //without key, treat door like wall
         {
             int doorWidth = c_door.getSize();
             sf::Vector2f wallSize(static_cast<float>(doorWidth), static_cast<float>(doorWidth));
@@ -67,13 +67,11 @@ namespace {
 
     void MouseWithKey(GameObject& mouse, GameObject& key)
     {
-
         Key& c_key = dynamic_cast <Key&> (key);
 
         Board::setKeyCount(1);
         c_key.gotEaten();
         sf::Sound* sound = Manage::getInstance()->getSound(O_EATCHEESE);
-
     }
 
     void MouseWithCheese(GameObject& mouse, GameObject& cheese)
@@ -81,7 +79,6 @@ namespace {
         if (Board::getCheeseCount() == 1)
         {
             sf::Sound* sound = Manage::getInstance()->getSound(O_WON);
-
         }
         else
         sf::Sound* sound = Manage::getInstance()->getSound(O_EATCHEESE);
@@ -92,7 +89,6 @@ namespace {
         c_cheese.gotEaten();
         Board::setCheeseCount(-1);
         c_mouse.addPoints(10);
-        
     }
 
     void MouseWithMoreLifePresent(GameObject& mouse, GameObject& present)
@@ -129,8 +125,7 @@ namespace {
         c_present.gotEaten();
         c_mouse.addPoints(5);
 
-        Data::needAddTime();
-               
+        Data::needAddTime(); 
     }
 
     void MouseWithFreezePresent(GameObject& mouse, GameObject& present)
@@ -149,26 +144,20 @@ namespace {
 
     void CatWithMouse(GameObject& cat, GameObject& mouse)
     {
-
-         Cat& c_cat = dynamic_cast <Cat&> (cat);
          Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
+
          if (c_mouse.getLife() == 1)
          {
              sf::Sound* sound = Manage::getInstance()->getSound(O_GAMEOVER);
-
          }
          else
          {
              sf::Sound* sound = Manage::getInstance()->getSound(O_CATMOUSE);
-
          }
 
          c_mouse.addLife(-1);
-
-         c_mouse.mouseGotEaten(true);
-     
+         c_mouse.mouseGotEaten(true);   
     }
-
 
 
     void CatWithWall(GameObject& cat, GameObject& wall)
@@ -186,20 +175,18 @@ namespace {
 
         auto wall = Wall(wallSize, c_door.getPosition(), Manage::getInstance()->getTexture(O_WALL));
 
-        CatWithWall(cat, wall);
+        CatWithWall(cat, wall);  //treat the door like a wall
     }
 
-    
 
     using collisionFunc = void (*) (GameObject& object1, GameObject& object2);
     using CollisionMap = std::unordered_map<std::string, collisionFunc>;
 
-
+    //v-table
     std::unique_ptr<CollisionMap> CreateMap() {
         std::unique_ptr<CollisionMap> cm = std::make_unique<CollisionMap>();
 
         (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(Wall).name())] = MouseWithWall;
-       // (*cm)[std::string(typeid(MovingObject).name()) + std::string(typeid(Wall).name())] = MovingObjectWithWall;
         (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(Door).name())] = MouseWithDoor;
         (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(Key).name())] = MouseWithKey;
         (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(IncreaseTimePresent).name())] = MouseWithTimePresent;
@@ -208,8 +195,7 @@ namespace {
         (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(MoreLifePresent).name())] = MouseWithMoreLifePresent;
         (*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(Cheese).name())] = MouseWithCheese;
 
-        //(*cm)[std::string(typeid(Mouse).name()) + std::string(typeid(Cat).name())] = MouseWithCat;
-        (*cm)[std::string(typeid(Cat).name()) + std::string(typeid(Mouse).name())] = CatWithMouse; //?
+        (*cm)[std::string(typeid(Cat).name()) + std::string(typeid(Mouse).name())] = CatWithMouse;
 
         (*cm)[std::string(typeid(Cat).name()) + std::string(typeid(Wall).name())] = CatWithWall;
         (*cm)[std::string(typeid(Cat).name()) + std::string(typeid(Door).name())] = CatWithDoor;
@@ -217,7 +203,8 @@ namespace {
         return cm;
     }
 
-    collisionFunc lookup(const std::string& object1, const std::string& object2)
+    //function to return which the name of the objects prosses collisions resived
+    collisionFunc lookup(const std::string& object1, const std::string& object2)  
     {
         static std::unique_ptr<CollisionMap> map = CreateMap();
         std::string name = object1 + object2;
@@ -228,7 +215,7 @@ namespace {
         return itr->second;
     }
 
-
+   
     void processCollision(GameObject& object1, GameObject& object2)
     {
         collisionFunc p2f = lookup(typeid(object1).name(),

@@ -8,10 +8,7 @@ GameControl::GameControl()
 
 void GameControl::run()
 {
-    Manage::getInstance()->getInstance()->playMusic();
-    Manage::getInstance()->playMusic(); 
-    bool startOver = false;
-   
+    Manage::getInstance()->playMusic();    
     Manage::getInstance()->fillTexturVector();
     Manage::getInstance()->fillSoundBufVector();
     Manage::getInstance()->load();
@@ -26,9 +23,10 @@ void GameControl::mainMenu()
     {
         m_window.clear();
         Manage::getInstance()->cover(m_window, "backCatMouse");
+
         sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(m_window));
+
         m_menu.drawMenu(m_window, mousePosition);
-       // m_menu.drawMenu(m_window);
         m_window.display();
         
         for (auto event = sf::Event{}; m_window.pollEvent(event);)
@@ -72,123 +70,40 @@ void GameControl::mainMenu()
                 break;
 
             }
-            if (endGame)
+            if (endGame)   //check if window already closed
             {
                 break;
             }
-
-        }
-       
+        }     
     }
 }
-//
-//void GameControl::startGame()
-//{
-//    auto boardFile = std::ifstream("Board.txt");
-//    m_board.loadFromFile(boardFile);
-//    int life = 3;
-//
-//
-//    while (m_board.getLevel() < NUMOFLEVELS || (m_mouse && m_mouse->getLife() > 0))
-//    {
-//        if (m_board.getLevel()>= NUMOFLEVELS || (m_mouse && m_mouse->getLife() == 0))
-//        {
-//            life = 0;
-//            break;
-//        }
-//
-//        m_board.setLevel(m_board.getLevel()+1);
-//        m_cats.clear();
-//        m_board.clearBoard();
-//        m_data.restartTime();
-//        
-//        m_board.getStills(boardFile);
-//
-//        if (levelRun(boardFile)==0)
-//        {
-//            break;
-//        }
-//        else if (levelRun(boardFile) == 2)
-//        {
-//            levelRun(boardFile);
-//        }
-//    }
-//    
-//  
-//
-//    if (m_board.getLevel() >= NUMOFLEVELS)
-//    {
-//        sf::Clock timer;
-//        sf::Time elapsedTime = sf::Time::Zero;
-//
-//        while (elapsedTime < sf::seconds(TIME))
-//        {
-//            m_window.clear();
-//            elapsedTime += timer.restart();
-//            sf::Sprite screen;
-//            screen.setTexture(*Manage::getInstance()->getTexture(O_WIN));
-//           // screen.setSize({ WIDTH, LENGTH });
-//            m_window.draw(screen);
-//            m_window.display();
-//        }
-//
-//        // Clear the window after 5 seconds to remove the victory screen
-//      //  m_window.clear();
-//        //m_window.display();
-//    }
-//
-//    else if (life==0)
-//    {
-//        sf::Clock timer;
-//        sf::Time elapsedTime = sf::Time::Zero;
-//
-//        while (elapsedTime < sf::seconds(TIME))
-//        {
-//            m_window.clear();
-//            elapsedTime += timer.restart();
-//            sf::Sprite screen;
-//            screen.setTexture(*Manage::getInstance()->getTexture(O_OVER));
-//            m_window.draw(screen);
-//            m_window.display();
-//        }
-//
-//        // Clear the window after 5 seconds to remove the victory screen
-//      //  m_window.clear();
-//        //m_window.display();
-//    }
-//
-//    m_mouse.reset();
-//    m_board.setLevel(0);
-//}
 
 
 void GameControl::startGame()
 {
     auto boardFile = std::ifstream("Board.txt");
     m_board.loadFromFile(boardFile);
-    int life = 3;
 
-    while (shouldContinueGame())
+    while (shouldContinueGame())  //game loop
     {
-        if (shouldEndGame())
-        {
-            life = 0;
-            break;
-        }
-
-        setupNextLevel(boardFile);
-
-        if (levelRun(boardFile) == 0)
+        if (shouldEndGame())  //the game ended
         {
             break;
         }
-        else if (levelRun(boardFile) == 2)
+
+        setupNextLevel(boardFile);   //clear all
+
+        if (levelRun(boardFile) == 0)  //level end because window closed
+        {
+            break;
+        }
+        else if (levelRun(boardFile) == 2)  //level end because time out
         {
             levelRun(boardFile);
         }
     }
 
-    handleEndGame(life);
+    handleEndGame();
 }
 
 bool GameControl::shouldContinueGame()
@@ -210,15 +125,15 @@ void GameControl::setupNextLevel(std::ifstream& boardFile)
     m_board.getStills(boardFile);
 }
 
-void GameControl::handleEndGame(int life)
+void GameControl::handleEndGame()
 {
     if (m_mouse->getLife() == 0 )
     {
-        displayEndScreen(O_OVER);
+        displayEndScreen(O_OVER);  //if game ended because the user lost
     }
     else if (m_board.getLevel() >= NUMOFLEVELS&& m_mouse->getLife() > 0)
     {
-        displayEndScreen(O_WIN);
+        displayEndScreen(O_WIN);  //if game ended because the user won
     }
 
     m_mouse.reset();
@@ -230,7 +145,7 @@ void GameControl::displayEndScreen(int textureKey)
     sf::Clock timer;
     sf::Time elapsedTime = sf::Time::Zero;
 
-    while (elapsedTime < sf::seconds(TIME))
+    while (elapsedTime < sf::seconds(TIME))   //display end screen for 5 seconds
     {
         m_window.clear();
         elapsedTime += timer.restart();
@@ -238,8 +153,7 @@ void GameControl::displayEndScreen(int textureKey)
         screen.setTexture(*Manage::getInstance()->getTexture(textureKey));
         m_window.draw(screen);
         m_window.display();
-    }
-    
+    } 
 }
 
 
@@ -248,13 +162,14 @@ int GameControl::levelRun(std::ifstream& boardFile)
     m_window.setFramerateLimit(FRAME_LIMIT);
     sf::Clock clock;
 
-    bool mouseMoved = false;
+    bool mouseMoved = false;   //the mouse didnt start moving
 
     while (m_window.isOpen())
     {
         const auto deltaTime = clock.restart();
 
         m_data.updateTime(m_board.getInitLevelTime());
+
         drawGame();
 
         for (auto event = sf::Event{}; m_window.pollEvent(event);)
@@ -269,7 +184,7 @@ int GameControl::levelRun(std::ifstream& boardFile)
 
             case sf::Event::KeyPressed:
             {
-                mouseMoved = true;
+                mouseMoved = true;   //the mouse start moving
                 setDirection(event.key.code);
                 break;
             }
@@ -283,18 +198,18 @@ int GameControl::levelRun(std::ifstream& boardFile)
            
         }
 
-        catsTurn(mouseMoved, deltaTime);
+        catsTurn(mouseMoved, deltaTime);   //move cat
 
         m_mouse->move(deltaTime.asSeconds());       
-        m_board.checkCollisions(m_mouse, m_cats);
+        m_board.checkCollisions(m_mouse, m_cats);  
         m_mouse->setScale();
 
-        if (Board::getCheeseCount() == 0 || m_mouse->getLife() == 0)
+        if (Board::getCheeseCount() == 0 || m_mouse->getLife() == 0)  //or passed a level or lost
         {
             return 1;
         }
 
-        if (m_data.timeOut())
+        if (m_data.timeOut())  //lost because time out
         {
             sf::Sound* sound = Manage::getInstance()->getSound(O_TIMEOUT);
             resetBoardAfterTimeOut(boardFile);
@@ -308,27 +223,26 @@ int GameControl::levelRun(std::ifstream& boardFile)
 void GameControl::resetBoardAfterTimeOut(std::ifstream& boardFile)
 {
     m_cats.clear();
-    m_board.setLevel(m_board.getLevel());
+    m_board.setLevel(m_board.getLevel());  //dont change level
     m_board.clearBoard();
     m_data.restartTime();
     m_data.setTimeOut();
-    m_board.startOver(true);
+    m_board.startOver(true); //need to read the same level
     m_board.getStills(boardFile);
-    m_board.startOver(false);
-    m_mouse->addLife(-1);
+    m_board.startOver(false); // reset to true to cintionue read othe levels
+    m_mouse->addLife(-1);  //remove life
 }
 
 
 void GameControl::catsTurn(bool mouseMoved,const sf::Time& deltaTime)
 {
-    if (mouseMoved)
+    if (mouseMoved)  //only if the mouse allready moved
     {
         for (auto& cat : m_cats)
         {
             cat->setDirection(cat->catMovment(m_mouse->getPosition()));
             cat->move(deltaTime.asSeconds());
             cat->setScale();
-
         }
     }
 }
@@ -364,15 +278,13 @@ void GameControl::setDirection(const sf::Keyboard::Key& key)
         direction = STAY;
         break;
     }
-    //m_mouse->setScale();
-    //m_mouse-> move(deltaTime.asSeconds());
+ 
     m_mouse->setDirection(direction);
 }
 
 
 void GameControl::helpScreen()
 {
-
     sf::RenderWindow helpWindow(sf::VideoMode(HELP_WIDTH, HELP_HEIGHT), "Help Screen");
     helpWindow.setFramerateLimit(FRAME_LIMIT);
 
@@ -415,12 +327,10 @@ void GameControl::drawGame()
     m_board.drawPresents(m_window);
     drawCats();
     m_window.display();
-
 }
 
-void GameControl::removeCat()
+void GameControl::removeCat()   //remove one cat from the vector
 {
-    
     if (Cat::isCatDead())
     {
         m_cats.pop_back();
@@ -435,7 +345,7 @@ void GameControl::addCat(const sf::Vector2f& tileSize, const sf::Vector2f& posit
 
 void GameControl::saveMouse(const sf::Vector2f& tileSize,const sf::Vector2f& position)
 {
-    if (!m_mouse)
+    if (!m_mouse)  //if mouse didnt created yet
     {
         m_mouse = std::make_unique<Mouse>(tileSize, position, Manage::getInstance()->getTexture(O_MOUSE));
     }
@@ -453,7 +363,7 @@ void GameControl::drawCats()
         cat->draw(m_window);
 }
 
-void GameControl::resetMovingPos()
+void GameControl::resetMovingPos()  //if mouse bean eaten, reset to init positions
 {
     if (m_mouse->isMouseEaten())
     {
@@ -464,7 +374,6 @@ void GameControl::resetMovingPos()
             cat->setPosition(cat->getInitPos());
         }
         m_mouse->mouseGotEaten(false);
-
     }
 }
 
