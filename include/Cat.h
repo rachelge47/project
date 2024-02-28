@@ -4,9 +4,8 @@
 
 class Cat :public MovingObject {
 public:
-	//using MovingObject::MovingObject;
-	Cat(const sf::Vector2f& tileSize, const sf::Vector2f& position, const sf::Texture * texture) : MovingObject(tileSize, position, texture, 90.f) {}
-	//virtual void move(const sf::Time& deltaTime) {}
+
+	Cat(const sf::Vector2f& tileSize, const sf::Vector2f& position, const sf::Texture * texture) : MovingObject(tileSize, position, texture, 120.f) {}
 
 	sf::Vector2f catMovment(const sf::Vector2f& mouseLoc);
 	static void catNeedToDie() { m_catDead = true; }

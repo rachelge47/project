@@ -168,9 +168,9 @@ int GameControl::levelRun(std::ifstream& boardFile)
 
         catsTurn(mouseMoved, deltaTime);
 
-        //m_mouse->setScale();
-        m_mouse->move(deltaTime.asSeconds());
+        m_mouse->move(deltaTime.asSeconds());       
         m_board.checkCollisions(m_mouse, m_cats);
+        m_mouse->setScale();
 
         if (Board::getCheeseCount() == 0 || m_mouse->getLife() == 0)
         {
@@ -189,7 +189,7 @@ int GameControl::levelRun(std::ifstream& boardFile)
             m_board.getStills(boardFile);
             m_board.startOver(false);
             m_mouse->addLife(-1);
-           return 2;
+            return 2;
         }
     }
     return 1;
@@ -203,8 +203,9 @@ void GameControl::catsTurn(bool mouseMoved,const sf::Time& deltaTime)
         for (auto& cat : m_cats)
         {
             cat->setDirection(cat->catMovment(m_mouse->getPosition()));
-            //cat->setScale();
             cat->move(deltaTime.asSeconds());
+            cat->setScale();
+
         }
     }
 }

@@ -39,7 +39,6 @@ void MovingObject:: setScale()
 		m_object.setScale(1, 1);
 	}
 	
-
 }
 
 

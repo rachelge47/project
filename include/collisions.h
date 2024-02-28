@@ -20,7 +20,7 @@ namespace {
     {
         Mouse& c_mouse = dynamic_cast <Mouse&> (mouse);
 
-         // c_mouse.isIntersects(true);
+        //  c_mouse.isIntersects(true);
         c_mouse.setPos();
     }
 
