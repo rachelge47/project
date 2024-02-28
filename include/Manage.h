@@ -52,40 +52,49 @@ enum soundType {
 
 class Manage {
 public:
-    Manage();
-    static void playMusic();
-    static void fillSoundVector();
-    static void fillTexturVector();
-    static void cover( sf::RenderWindow& window, const std::string& backName);
-    static sf::Texture *getTexture(int index) { return &m_textures[index]; }
+   // Manage();
+    static Manage* getInstance();
+    void playMusic();
+    void fillSoundVector();
+    void fillTexturVector();
+    void cover( sf::RenderWindow& window, const std::string& backName);
+    sf::Texture *getTexture(int index) { return &m_textures[index]; }
     //static sf::Sound *getSound(int index) { return &m_sounds[index]; }
-    static sf::Sound* getSound(int index);
-    static sf::Music& getMusic() { return m_music; }
-    static void stopMusic() { m_music.pause(); }
-    static void startMusic() { m_music.play(); }
-    static sf::SoundBuffer* getSoundBuffer(int index);
+    sf::Sound* getSound(int index);
+    sf::Music& getMusic() { return m_music; }
+    void stopMusic() { m_music.pause(); }
+    void startMusic() { m_music.play(); }
+    sf::SoundBuffer* getSoundBuffer(int index);
 
-    static void load();
-    static void load1();
-    static sf::Texture* buttonTexture();
-    static sf::Font* getFont();
-    static sf::Texture* infoTexture();
-    static const std::string m_names[7];
-    static const std::string m_soundNames[9];
+    void load();
+    void load1();
+    sf::Texture* buttonTexture();
+    sf::Font* getFont();
+    sf::Texture* infoTexture();
+   
+    ~Manage() { delete m_instance; }
+
 
 private:
 
-    static std::vector<sf::Texture> m_textures;
+    Manage();
+    std::vector<sf::Texture> m_textures;
     //static std::vector<sf::Sound> m_sounds;
-    static sf::Sound m_sound;
-    static std::vector<sf::SoundBuffer> m_soundBuffers;
-    static sf::Texture m_menuBack;
-    static sf::Texture m_gameBack;
-    static sf::Texture m_helpBack;
-    static sf::Texture m_buttonBack;
-    static sf::Texture m_infoBack;
-    static sf::Texture m_muteButton;
-    static sf::Font m_font;
-    static sf::Music m_music;
+    sf::Sound m_sound;
+    std::vector<sf::SoundBuffer> m_soundBuffers;
+
+    std::string m_names[7];
+    std::string m_soundNames[9];
+
+    sf::Texture m_menuBack;
+    sf::Texture m_gameBack;
+    sf::Texture m_helpBack;
+    sf::Texture m_buttonBack;
+    sf::Texture m_infoBack;
+    sf::Texture m_muteButton;
+    sf::Font m_font;
+    sf::Music m_music;
+
+    static Manage* m_instance;
     
 };

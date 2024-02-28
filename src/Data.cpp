@@ -7,9 +7,9 @@ void Data::printData(sf::RenderWindow& window)
 {
 	//GameControl::getLevel();
 
-	Manage::load1();
+	Manage::getInstance()->load1();
 
-	m_info.setTexture(Manage::infoTexture());
+	m_info.setTexture(Manage::getInstance()->infoTexture());
 
 	m_info.setSize({ 350, 550 });
 	m_info.setPosition({ 1330, 5 });
@@ -51,7 +51,7 @@ void Data::updateTime(float time)
 void Data::draw(sf::RenderWindow& window)
 {
 	//updateTime(0);
-	m_timeText.setFont(*(Manage::getFont()));
+	m_timeText.setFont(*(Manage::getInstance()->getFont()));
 	m_timeText.setCharacterSize({ 80 });
 	m_timeText.setPosition({ 1350, 600 });
 	m_timeText.setFillColor(sf::Color::Black);

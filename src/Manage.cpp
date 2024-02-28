@@ -1,40 +1,22 @@
 #include "Manage.h"
  #include <iostream>
 
-const std::string Manage::m_names[7] = { "Wall", "Door", "Key", "Present", "Cheese", "Mouse", "Cat" };
-const std::string Manage::m_soundNames[9] = { "catWithMouse", "eatCheese", "gameOver", "levelComplite", "loseLevel", "openDoor", "present", "win", "timeOut"};
-std::vector<sf::Texture> Manage::m_textures;
-//std::vector<sf::Sound> Manage::m_sounds;
-sf::Sound Manage::m_sound;
-std::vector<sf::SoundBuffer> Manage::m_soundBuffers;
-sf::Texture Manage::m_menuBack;
-sf::Texture Manage::m_gameBack;
-sf::Texture Manage::m_helpBack;
-sf::Texture Manage::m_buttonBack;
-sf::Texture Manage::m_infoBack;
-sf::Texture Manage::m_muteButton;
-sf::Font Manage::m_font;
-sf::Music Manage::m_music;
-
-//void Manage::fillSoundVector()
-//{
-//    for (int i = 0; i < 8; i++)
-//    {
-//        sf::SoundBuffer soundBuff;
-//        sf::Sound sound;
-//
-//        if (!soundBuff.loadFromFile(m_soundNames[i] + ".wav"))
-//            exit(EXIT_FAILURE);
-//
-//        //sound.setBuffer(soundBuff);
-//       // sound.setVolume(20);
-//
-//        m_sounds.push_back(sound);
-//    }
-//}
 
 Manage::Manage()
+    : m_names{ "Wall", "Door", "Key", "Present", "Cheese", "Mouse", "Cat" },
+    m_soundNames{ "catWithMouse", "eatCheese", "gameOver", "levelComplite", "loseLevel", "openDoor", "present", "win", "timeOut" }
+{}
+
+Manage* Manage::m_instance = nullptr;
+
+
+Manage* Manage::getInstance()
 {
+    if (m_instance == nullptr)
+    {
+        m_instance = new Manage();
+    }
+    return m_instance;
 }
 
 void Manage::playMusic()
@@ -74,7 +56,7 @@ sf::SoundBuffer* Manage:: getSoundBuffer(int index)
 sf::Sound* Manage::getSound(int soundIndex)
 {
 
-    const sf::SoundBuffer* soundBuffer = Manage::getSoundBuffer(soundIndex);
+    const sf::SoundBuffer* soundBuffer = Manage::Manage::getSoundBuffer(soundIndex);
     //static sf::Sound sound;
     m_sound.setBuffer(*soundBuffer);
     m_sound.play();

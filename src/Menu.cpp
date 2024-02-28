@@ -5,19 +5,19 @@ Menu::Menu()
 {
     sf::Vector2f position = { 700, 100 };
 
-    sf::Text text = makeButton("New Game", Manage::getFont());
+    sf::Text text = makeButton("New Game", Manage::getInstance()->getFont());
     m_menu.push_back(std::make_unique<StartButton>(text, position));
 
     position.y += m_menu[0]->getSize() + 20;
-    text = makeButton("Help", Manage::getFont());
+    text = makeButton("Help", Manage::getInstance()->getFont());
     m_menu.push_back(std::make_unique<HelpButton>(text, position));
 
 	position.y += m_menu[0]->getSize() + 20;
-	text = makeButton("Exit", Manage::getFont());
+	text = makeButton("Exit", Manage::getInstance()->getFont());
 	m_menu.push_back(std::make_unique<ExitButton>(text, position));
 
 	position = { 20,40 };
-	text = makeButton("Music", Manage::getFont());
+	text = makeButton("Music", Manage::getInstance()->getFont());
 	m_menu.push_back(std::make_unique<ExitButton>(text, position));
 
 }

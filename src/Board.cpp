@@ -112,20 +112,20 @@ void Board::getStills(std::ifstream& boardFile)
 			{
 			case WALL:
 			{
-				m_stills.push_back(std::make_unique<Wall>(tileSize,currentPosition, Manage::getTexture(O_WALL)));
+				m_stills.push_back(std::make_unique<Wall>(tileSize,currentPosition, Manage::getInstance()->getTexture(O_WALL)));
 				break;
 			}
 			case CHEESE:
 			{
 				m_initCheeseCount++;
 				m_cheeseCount++;
-				m_stills.push_back(std::make_unique<Cheese>(tileSize,currentPosition, Manage::getTexture(O_CHEESE)));
+				m_stills.push_back(std::make_unique<Cheese>(tileSize,currentPosition, Manage::getInstance()->getTexture(O_CHEESE)));
 				break;
 			}
 			case KEY:
 			{
 				m_initKeyCount++;
-				m_stills.push_back(std::make_unique<Key>(tileSize,currentPosition, Manage::getTexture(O_KEY)));
+				m_stills.push_back(std::make_unique<Key>(tileSize,currentPosition, Manage::getInstance()->getTexture(O_KEY)));
 				break;
 			}
 			case PRESENT:
@@ -138,7 +138,7 @@ void Board::getStills(std::ifstream& boardFile)
 			}
 			case DOOR:
 			{
-				m_stills.push_back(std::make_unique<Door>(tileSize,currentPosition, Manage::getTexture(O_DOOR)));
+				m_stills.push_back(std::make_unique<Door>(tileSize,currentPosition, Manage::getInstance()->getTexture(O_DOOR)));
 				break;
 			}
 
@@ -248,7 +248,7 @@ void Board::fillPresents(const sf::Vector2f &tileSize, const sf::Vector2f &curre
 {
 	if (!m_firstPresent)
 	{
-		m_presents.push_back(std::make_unique<KillCatPresent>(tileSize, currentPosition, Manage::getTexture(O_PRESENT)));
+		m_presents.push_back(std::make_unique<KillCatPresent>(tileSize, currentPosition, Manage::getInstance()->getTexture(O_PRESENT)));
 		m_firstPresent = true;
 	}
 	else
@@ -257,17 +257,17 @@ void Board::fillPresents(const sf::Vector2f &tileSize, const sf::Vector2f &curre
 		{
 		case 0:
 		{
-			m_presents.push_back(std::make_unique<MoreLifePresent>(tileSize, currentPosition, Manage::getTexture(O_PRESENT)));
+			m_presents.push_back(std::make_unique<MoreLifePresent>(tileSize, currentPosition, Manage::getInstance()->getTexture(O_PRESENT)));
 			break;
 		}
 		case 1:
 		{
-			m_presents.push_back(std::make_unique<FreezePresent>(tileSize, currentPosition, Manage::getTexture(O_PRESENT)));
+			m_presents.push_back(std::make_unique<FreezePresent>(tileSize, currentPosition, Manage::getInstance()->getTexture(O_PRESENT)));
 			break;
 		}
 		case 2:
 		{
-			m_presents.push_back(std::make_unique<IncreaseTimePresent>(tileSize, currentPosition, Manage::getTexture(O_PRESENT)));
+			m_presents.push_back(std::make_unique<IncreaseTimePresent>(tileSize, currentPosition, Manage::getInstance()->getTexture(O_PRESENT)));
 			break;
 		}
 
@@ -323,13 +323,13 @@ void Board:: printBoardData(sf::RenderWindow& window)
 	int down = 140;
 
 	std::string str= std::to_string(m_level);
-	text = make(str, Manage::getFont(), down);
+	text = make(str, Manage::getInstance()->getFont(), down);
 	
 	window.draw(text);
 
 	str = std::to_string(m_keyCount);
 	down += 280;
-	text= make(str, Manage::getFont(), down);
+	text= make(str, Manage::getInstance()->getFont(), down);
 	window.draw(text);
 
 	

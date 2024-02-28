@@ -10,13 +10,13 @@ void Mouse::printMouseData(sf::RenderWindow& window)
 	int down = 220;
 
 	std::string str = std::to_string(m_score);
-	text = make(str, Manage::getFont(), down);
+	text = make(str, Manage::getInstance()->getFont(), down);
 
 	window.draw(text);
 
 	str = std::to_string(m_life);
 	down += 90;
-	text = make(str, Manage::getFont(), down);
+	text = make(str, Manage::getInstance()->getFont(), down);
 	window.draw(text);
 
 }

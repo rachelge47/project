@@ -10,8 +10,8 @@ Button::Button(const sf::Text& text, const sf::Vector2f& position)
     float scaleY = 0.4f; // Adjust this value based on your preference
     m_button.setScale({ 1.f, scaleY });
 
-    Manage::load();
-    m_button.setTexture(Manage::buttonTexture());
+    Manage::getInstance()->load();
+    m_button.setTexture(Manage::getInstance()->buttonTexture());
 }
 
 void Button::drawButton(sf::RenderWindow& window, const sf::Vector2f& mousePosition)
