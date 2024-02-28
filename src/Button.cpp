@@ -5,11 +5,8 @@
 Button::Button(const sf::Text& text, const sf::Vector2f& position)
     : m_text(text), m_position(position), m_hovered(false)
 {
-    m_button.setSize({ 200, 250 });
-  
-    float scaleY = 0.4f; // Adjust this value based on your preference
-    m_button.setScale({ 1.f, scaleY });
-
+    m_button.setSize(BUTTON_SIZE);
+    m_button.setScale(SCALE_BUTTON);
     Manage::getInstance()->load();
     m_button.setTexture(Manage::getInstance()->buttonTexture());
 }
@@ -40,7 +37,7 @@ void Button::updateHover(const sf::Vector2f& mousePosition)
     m_hovered = m_button.getGlobalBounds().contains(mousePosition);
 
     // Adjust the size when the button is hovered
-    m_button.setSize(m_hovered ? sf::Vector2f(320, 370) : sf::Vector2f(300, 350));
+    m_button.setSize(m_hovered ? sf::Vector2f(HOVERD) : sf::Vector2f(NOT_HOVERD));
 }
 
 bool Button::isClick(const sf::Vector2f& location) const

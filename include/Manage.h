@@ -2,62 +2,14 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-
-const int WIDTH = 1700;
-const int LENGTH = 900;
-
-const sf::Vector2f UP = { 0 , -1 };
-
-const sf::Vector2f DOWN = { 0 , 1 };
-
-const sf::Vector2f RIGHT = { 1 , 0 };
-
-const sf::Vector2f LEFT = { -1 , 0 };
-const sf::Vector2f STAY = { 0 , 0 };
-
-const char MOUSE = '%';
-const char CAT = '^';
-const char KEY = 'F';
-const char PRESENT = '$';
-const char DOOR = 'D';
-const char CHEESE = '*';
-const char WALL = '#';
-const char EMPTY = ' ';
-const int NUMOFLEVELS = 3;
-
-
-enum ObjectType {
-    O_WALL,
-    O_DOOR,
-    O_KEY,
-    O_PRESENT,
-    O_CHEESE,
-    O_MOUSE,
-    O_CAT,
-    O_OVER,
-    O_WIN
-};
-
-enum soundType {
-    O_CATMOUSE,
-    O_EATCHEESE,
-    O_GAMEOVER,
-    O_PASSLEVEL,
-    O_LOST,
-    O_OPENDOOR,
-    O_GETPRESENT,
-    O_WON,
-    O_TIMEOUT
-};
-
-
+#include "Macros.h"
 
 class Manage {
 public:
    // Manage();
     static Manage* getInstance();
     void playMusic();
-    void fillSoundVector();
+    void fillSoundBufVector();
     void fillTexturVector();
     void cover( sf::RenderWindow& window, const std::string& backName);
     sf::Texture *getTexture(int index) { return &m_textures[index]; }
@@ -69,7 +21,7 @@ public:
     sf::SoundBuffer* getSoundBuffer(int index);
 
     void load();
-    void load1();
+    void loadBar();
     sf::Texture* buttonTexture();
     sf::Font* getFont();
     sf::Texture* infoTexture();

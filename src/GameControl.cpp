@@ -9,11 +9,11 @@ GameControl::GameControl()
 void GameControl::run()
 {
     Manage::getInstance()->getInstance()->playMusic();
-    Manage::getInstance()->playMusic(); //??
+    Manage::getInstance()->playMusic(); 
     bool startOver = false;
    
     Manage::getInstance()->fillTexturVector();
-    Manage::getInstance()->fillSoundVector();
+    Manage::getInstance()->fillSoundBufVector();
     Manage::getInstance()->load();
     m_board.setController(this);
     mainMenu();
@@ -121,7 +121,7 @@ void GameControl::startGame()
         sf::Clock timer;
         sf::Time elapsedTime = sf::Time::Zero;
 
-        while (elapsedTime < sf::seconds(5.f))
+        while (elapsedTime < sf::seconds(TIME))
         {
             m_window.clear();
             elapsedTime += timer.restart();
@@ -142,7 +142,7 @@ void GameControl::startGame()
         sf::Clock timer;
         sf::Time elapsedTime = sf::Time::Zero;
 
-        while (elapsedTime < sf::seconds(5.f))
+        while (elapsedTime < sf::seconds(TIME))
         {
             m_window.clear();
             elapsedTime += timer.restart();
@@ -164,7 +164,7 @@ void GameControl::startGame()
 
 int GameControl::levelRun(std::ifstream& boardFile)
 {
-    m_window.setFramerateLimit(60);
+    m_window.setFramerateLimit(FRAME_LIMIT);
     sf::Clock clock;
 
     bool mouseMoved = false;
@@ -287,8 +287,8 @@ void GameControl::setDirection(const sf::Keyboard::Key& key)
 void GameControl::helpScreen()
 {
 
-    sf::RenderWindow helpWindow(sf::VideoMode(1063, 597), "Help Screen");
-    helpWindow.setFramerateLimit(60);
+    sf::RenderWindow helpWindow(sf::VideoMode(HELP_WIDTH, HELP_HEIGHT), "Help Screen");
+    helpWindow.setFramerateLimit(FRAME_LIMIT);
 
     while (helpWindow.isOpen())
     {

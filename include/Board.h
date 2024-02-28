@@ -52,7 +52,7 @@ public:
 	//void startOver(bool toDo) { m_startOver = toDo; }
 
 private:
-	sf::Text make(const std::string& str, const sf::Font* font, int down);
+	sf::Text make(const std::string& str, const sf::Font* font, float down);
 
 	//void findInitCount();
 	std::streampos m_filePos;

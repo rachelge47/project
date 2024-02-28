@@ -12,7 +12,7 @@ public:
 	int getLife() { return m_life; }
 
 private:
-	sf::Text make(const std::string& str, const sf::Font* font, int down);
+	sf::Text make(const std::string& str, const sf::Font* font, float down);
 
 	int m_score;
 	int m_life;

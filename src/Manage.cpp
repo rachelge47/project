@@ -22,22 +22,18 @@ Manage* Manage::getInstance()
 void Manage::playMusic()
 {
     m_music.openFromFile("music.wav");
-    m_music.setVolume(30);
+    m_music.setVolume(VOLUME);
     m_music.setLoop(true);
     m_music.play();
 }
 
-void Manage::fillSoundVector()
+void Manage::fillSoundBufVector()
 {
-    m_soundBuffers.resize(9);
-    //m_sounds.resize(8);
-    for (int i = 0; i < 9; i++)
+    m_soundBuffers.resize(NUM_OF_NAMES);
+    for (int i = 0; i < m_soundBuffers.size(); i++)
     {
         if (!m_soundBuffers[i].loadFromFile(m_soundNames[i] + ".wav"))
             exit(EXIT_FAILURE);
-
-        //m_sounds[i].setBuffer(m_soundBuffers[i]);
-        //m_sounds[i].setVolume(30);
     }
 }
 
@@ -48,32 +44,22 @@ sf::SoundBuffer* Manage:: getSoundBuffer(int index)
         std::cerr << "Invalid sound index" << std::endl;
         return nullptr; // Indicate failure
     }
-
     return &m_soundBuffers[index];
 }
 
 
 sf::Sound* Manage::getSound(int soundIndex)
 {
-
     const sf::SoundBuffer* soundBuffer = Manage::Manage::getSoundBuffer(soundIndex);
-    //static sf::Sound sound;
     m_sound.setBuffer(*soundBuffer);
     m_sound.play();
-    
-    //sf::sleep(sf::milliseconds(100)); // Adjust the delay time as needed
-
-
-    /*sf::Time offset = sf::seconds(0.2f);
-    sound.setPlayingOffset(offset);*/
-    //sf::sleep(sf::milliseconds(500)); // Adjust the delay time as needed
-
+  
     return &m_sound;
 }
 
 void Manage::fillTexturVector()
 {
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < NUM_OF_NAMES; i++)
     {
         sf::Texture texture;
         texture.loadFromFile(m_names[i] + ".png");
@@ -117,12 +103,9 @@ void Manage::fillTexturVector()
      m_muteButton.loadFromFile("mute.png");
      m_gameOver.loadFromFile("OVER.png");
      m_youWin.loadFromFile("youWin.png");
-
  }
 
-
-
- void Manage::load1()
+ void Manage::loadBar()
  {    
      m_infoBack.loadFromFile("bar.png");
  }

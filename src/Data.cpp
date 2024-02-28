@@ -7,12 +7,12 @@ void Data::printData(sf::RenderWindow& window)
 {
 	//GameControl::getLevel();
 
-	Manage::getInstance()->load1();
+	Manage::getInstance()->loadBar();
 
 	m_info.setTexture(Manage::getInstance()->infoTexture());
 
-	m_info.setSize({ 350, 550 });
-	m_info.setPosition({ 1330, 5 });
+	m_info.setSize(INFO_SIZE);
+	m_info.setPosition(INFO_POS);
 
 	window.draw(m_info);
 
@@ -52,23 +52,23 @@ void Data::draw(sf::RenderWindow& window)
 {
 	//updateTime(0);
 	m_timeText.setFont(*(Manage::getInstance()->getFont()));
-	m_timeText.setCharacterSize({ 80 });
-	m_timeText.setPosition({ 1350, 600 });
+	m_timeText.setCharacterSize(TEXT_SIZE);
+	m_timeText.setPosition(TIME_TEXT_POS);
 	m_timeText.setFillColor(sf::Color::Black);
 
 	window.draw(m_timeText);
 }
 
 
-sf::Text Data::make(const std::string& str, const sf::Font* font)
-{
-	sf::Text text(str, *font);
-	text.setPosition({ 1550, 20 });
-	text.setFillColor(sf::Color::Black);
-	text.setCharacterSize(80);
-
-	return text;
-}
+//sf::Text Data::make(const std::string& str, const sf::Font* font)
+//{
+//	sf::Text text(str, *font);
+//	text.setPosition(TEXT_POS);
+//	text.setFillColor(sf::Color::Black);
+//	text.setCharacterSize(TEXT_SIZE);
+//
+//	return text;
+//}
 
 void Data::setTime()
 {

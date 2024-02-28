@@ -2,9 +2,6 @@
 #include "GameControl.h"
 #include "collisions.h"
 
-const int BOARD_WIDTH = 1300;
-const int BOARD_HEIGHT = 800;
-
 
 Board::Board()
 	:m_level(0), m_firstPresent(false)
@@ -99,14 +96,14 @@ void Board::getStills(std::ifstream& boardFile)
 	sf::Vector2f tileSize = { tileWidth,tileHeight };
 	m_boardSize = { tileWidth * cols,tileHeight * rows };
 
-	sf::Vector2f currentPosition(70, 70);
+	sf::Vector2f currentPosition(CUR_POS);
 
 	for (int i = 0; i < fileContent.size(); i++)
 	{
 		for (int j = 0; j < fileContent[i].size(); j++)
 		{
-			currentPosition.x = 70 + (j * tileWidth);
-			currentPosition.y = 70 + (i * tileHeight);
+			currentPosition.x = CUR_POS.x + (j * tileWidth);
+			currentPosition.y = CUR_POS.y + (i * tileHeight);
 			
 			switch (fileContent[i][j])
 			{
@@ -236,7 +233,7 @@ void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vect
 	m_controller->resetMovingPos();
 	//m_controller->freezeCat();
 
-	if (m_freezeTimer.getElapsedTime().asSeconds()>=5.0f)
+	if (m_freezeTimer.getElapsedTime().asSeconds()>=TIME)
 	{
 		Cat::needFreeze(false);
 	}
@@ -303,7 +300,7 @@ sf::FloatRect Board::getGlobalBounds() const
 	//sf::Vector2f boardStartPoint = { m_position.x - float(0.5) * m_width,
 								//	m_position.y - float(0.5) * m_height };
 
-	return sf::FloatRect(1.f * 20, 1.f * 20, BOARD_WIDTH, BOARD_HEIGHT);
+	return sf::FloatRect(START_POINT.x, START_POINT.y, BOARD_WIDTH, BOARD_HEIGHT);
 }
 
 bool Board::inBounds(sf::FloatRect rect) const
@@ -320,7 +317,7 @@ bool Board::inBounds(sf::FloatRect rect) const
 void Board:: printBoardData(sf::RenderWindow& window)
 {
 	sf::Text text;
-	int down = 140;
+	float down = DOWN_B;
 
 	std::string str= std::to_string(m_level);
 	text = make(str, Manage::getInstance()->getFont(), down);
@@ -328,7 +325,7 @@ void Board:: printBoardData(sf::RenderWindow& window)
 	window.draw(text);
 
 	str = std::to_string(m_keyCount);
-	down += 280;
+	down += DOWN_B*2;
 	text= make(str, Manage::getInstance()->getFont(), down);
 	window.draw(text);
 
@@ -336,12 +333,12 @@ void Board:: printBoardData(sf::RenderWindow& window)
 }
 
 
-sf::Text Board::make(const std::string& str, const sf::Font* font, int down)
+sf::Text Board::make(const std::string& str, const sf::Font* font, float down)
 {
 	sf::Text text(str, *font);
-	text.setPosition({ 1550, down*1.f });
+	text.setPosition({ POS_X, down });
 	text.setFillColor(sf::Color::Black);
-	text.setCharacterSize(80);
+	text.setCharacterSize(TEXT_SIZE);
 
 	return text;
 }
