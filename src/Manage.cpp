@@ -3,7 +3,7 @@
 
 
 Manage::Manage()
-    : m_names{ "Wall", "Door", "Key", "Present", "Cheese", "Mouse", "Cat" },
+    : m_names{ "Wall", "Door", "Key", "Present", "Cheese", "Mouse", "Cat", "OVER", "youWin" },
     m_soundNames{ "catWithMouse", "eatCheese", "gameOver", "levelComplite", "loseLevel", "openDoor", "present", "win", "timeOut" }
 {}
 
@@ -73,7 +73,7 @@ sf::Sound* Manage::getSound(int soundIndex)
 
 void Manage::fillTexturVector()
 {
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < 9; i++)
     {
         sf::Texture texture;
         texture.loadFromFile(m_names[i] + ".png");
@@ -115,6 +115,8 @@ void Manage::fillTexturVector()
      m_helpBack.loadFromFile("HELP.png");
      m_buttonBack.loadFromFile("cheesebutton.png");
      m_muteButton.loadFromFile("mute.png");
+     m_gameOver.loadFromFile("OVER.png");
+     m_youWin.loadFromFile("youWin.png");
 
  }
 

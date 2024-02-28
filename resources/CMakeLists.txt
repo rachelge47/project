@@ -28,4 +28,5 @@ configure_file ("timeOut.wav" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("win.wav" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("music.wav" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("mute.png" ${CMAKE_BINARY_DIR} COPYONLY)
-
+configure_file ("OVER.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("youWin.png" ${CMAKE_BINARY_DIR} COPYONLY)

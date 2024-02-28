@@ -86,13 +86,14 @@ void GameControl::startGame()
 {
     auto boardFile = std::ifstream("Board.txt");
     m_board.loadFromFile(boardFile);
-
+    int life = 3;
 
 
     while (m_board.getLevel() < NUMOFLEVELS || (m_mouse && m_mouse->getLife() > 0))
     {
         if (m_board.getLevel()>= NUMOFLEVELS || (m_mouse && m_mouse->getLife() == 0))
         {
+            life = 0;
             break;
         }
 
@@ -113,6 +114,49 @@ void GameControl::startGame()
         }
     }
     
+  
+
+    if (m_board.getLevel() >= NUMOFLEVELS)
+    {
+        sf::Clock timer;
+        sf::Time elapsedTime = sf::Time::Zero;
+
+        while (elapsedTime < sf::seconds(5.f))
+        {
+            m_window.clear();
+            elapsedTime += timer.restart();
+            sf::Sprite screen;
+            screen.setTexture(*Manage::getInstance()->getTexture(O_WIN));
+            screen.setScale(WIDTH, LENGTH);
+            m_window.draw(screen);
+            m_window.display();
+        }
+
+        // Clear the window after 5 seconds to remove the victory screen
+      //  m_window.clear();
+        //m_window.display();
+    }
+
+    else if (life==0)
+    {
+        sf::Clock timer;
+        sf::Time elapsedTime = sf::Time::Zero;
+
+        while (elapsedTime < sf::seconds(5.f))
+        {
+            m_window.clear();
+            elapsedTime += timer.restart();
+            sf::Sprite screen;
+            screen.setTexture(*Manage::getInstance()->getTexture(O_OVER));
+            m_window.draw(screen);
+            m_window.display();
+        }
+
+        // Clear the window after 5 seconds to remove the victory screen
+      //  m_window.clear();
+        //m_window.display();
+    }
+
     m_mouse.reset();
     m_board.setLevel(0);
 }
@@ -120,13 +164,6 @@ void GameControl::startGame()
 
 int GameControl::levelRun(std::ifstream& boardFile)
 {
-    std::cout << "in start of level run\n";
-
-    if (m_data.timeOut())
-    {
-        std::cout << "time out\n";
-
-    }
     m_window.setFramerateLimit(60);
     sf::Clock clock;
 

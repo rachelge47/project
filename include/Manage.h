@@ -33,7 +33,9 @@ enum ObjectType {
     O_PRESENT,
     O_CHEESE,
     O_MOUSE,
-    O_CAT
+    O_CAT,
+    O_OVER,
+    O_WIN
 };
 
 enum soundType {
@@ -83,7 +85,7 @@ private:
     sf::Sound m_sound;
     std::vector<sf::SoundBuffer> m_soundBuffers;
 
-    std::string m_names[7];
+    std::string m_names[9];
     std::string m_soundNames[9];
 
     sf::Texture m_menuBack;
@@ -92,6 +94,8 @@ private:
     sf::Texture m_buttonBack;
     sf::Texture m_infoBack;
     sf::Texture m_muteButton;
+    sf::Texture m_gameOver;
+    sf::Texture m_youWin;
     sf::Font m_font;
     sf::Music m_music;
 
