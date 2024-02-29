@@ -193,6 +193,7 @@ void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vect
 			if (Cat::isFrozen())   //if need to freeze cat, reset clock
 			{
 				m_freezeTimer.restart();
+				m_controller->makeCatBlue(true);
 			}
 		}
 	}
@@ -207,9 +208,10 @@ void Board::checkCollisions(const std::unique_ptr<Mouse>& mouse, const std::vect
 
 	m_controller->resetMovingPos();  //check if need to move mouse and cat to init position becouse of mouse cat collision
 
-	if (m_freezeTimer.getElapsedTime().asSeconds()>=TIME)   //freeze the cat
+	if (m_freezeTimer.getElapsedTime().asSeconds()>=TIME)
 	{
 		Cat::needFreeze(false);
+		m_controller->makeCatBlue(false);
 	}
 
 }

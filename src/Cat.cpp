@@ -49,3 +49,12 @@ double Cat::distance(const sf::Vector2f& v1, const sf::Vector2f& v2)
 }
 
 
+void Cat::makeBlue(bool stillFrozen)
+{
+	if (stillFrozen)
+		m_object.setFillColor(sf::Color::Blue);
+	
+	else
+		m_object.setFillColor(sf::Color::White);
+
+}

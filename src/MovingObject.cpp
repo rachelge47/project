@@ -1,5 +1,5 @@
 #include "MovingObject.h"
-
+#include "Cat.h"
 
 MovingObject::MovingObject(const sf::Vector2f& tileSize, const sf::Vector2f& position, const sf::Texture* texture, float speedPerSecond)
 	: GameObject(tileSize, position, texture) , m_resetLoc(false), m_speedPerSecond(speedPerSecond), m_inter(false)
@@ -41,3 +41,4 @@ void MovingObject::move(float time)
 	m_prevPos = getLoc();  //save the previouse location
 	m_object.move(m_speedPerSecond * m_direction * time); 	
 }
+

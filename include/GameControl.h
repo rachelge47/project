@@ -19,6 +19,7 @@ public:
 	void saveMouse(const sf::Vector2f& tileSize,const sf::Vector2f &position);
 	void addCat(const sf::Vector2f& tileSize,const sf::Vector2f& position);
 	void resetMovingPos();
+	void makeCatBlue(bool stillFrozen);
 
 private:
 	//------functions-----

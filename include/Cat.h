@@ -13,6 +13,7 @@ public:
 	static void setDead() { m_catDead = false; }
 	static bool isFrozen()  { return m_cantMove; }
 	static void needFreeze(bool toFreeze) { m_cantMove = toFreeze; }
+	void makeBlue(bool stillFrozen);
 
 
 private:

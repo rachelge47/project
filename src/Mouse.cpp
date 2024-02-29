@@ -1,7 +1,7 @@
 #include "Mouse.h"
 
 Mouse::Mouse(const sf::Vector2f& tileSize, const sf::Vector2f& position, const sf::Texture* texture)
-	: MovingObject(tileSize, position, texture, 150.f), m_score(0), m_life(3)
+	: MovingObject(tileSize, position, texture, 200.f), m_score(0), m_life(3)
 {}
 
 void Mouse::printMouseData(sf::RenderWindow& window)

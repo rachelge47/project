@@ -381,3 +381,10 @@ void GameControl::resetMovingPos()  //if mouse bean eaten, reset to init positio
     }
 }
 
+void GameControl::makeCatBlue(bool stillFrozen)
+{
+    for (auto &cat : m_cats)
+    {
+        cat->makeBlue(stillFrozen);
+    }
+}

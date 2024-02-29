@@ -22,7 +22,6 @@ public:
 	Board();
 
 	void startOver(bool toDo);
-	//int getm_numOfLevels();
 	void loadFromFile(std::ifstream& boardFile);
 	int getLevel() const;
 	void setLevel(int toAdd) { m_level =toAdd; }
