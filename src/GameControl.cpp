@@ -188,10 +188,11 @@ int GameControl::levelRun(std::ifstream& boardFile)
 
             case sf::Event::KeyPressed:
             {
-                mouseMoved = true;   //the mouse start moving
+                mouseMoved = true;   //the mouse start moving              
                 setDirection(event.key.code);
                 break;
             }
+            
             case sf::Event::KeyReleased:
                 setDirection(sf::Keyboard::Space);
                 break;
@@ -199,7 +200,6 @@ int GameControl::levelRun(std::ifstream& boardFile)
             default:
                 break;
             }
-           
         }
 
         catsTurn(mouseMoved, deltaTime);   //move cat
@@ -279,8 +279,10 @@ void GameControl::setDirection(const sf::Keyboard::Key& key)
         break;
     }
     case sf::Keyboard::Space:
+    {
         direction = STAY;
         break;
+    }
     }
  
     m_mouse->setDirection(direction);

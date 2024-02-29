@@ -41,7 +41,7 @@ public:
 	void getStills(std::ifstream& boardFile);
 	void clearBoard();
 	void printBoardData(sf::RenderWindow& window);
-	float getInitLevelTime() { return std::stof(m_initLevelTime); }
+	float getInitLevelTime() const { return std::stof(m_initLevelTime); }
 
 private:
 	//-----functions----

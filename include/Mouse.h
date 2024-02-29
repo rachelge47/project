@@ -9,6 +9,7 @@ public:
 	void addPoints(int toAdd) {m_score += toAdd; }
 	void addLife(int toAdd) {m_life += toAdd; }
 	int getLife() { return m_life; }
+	int getScore() { return m_score; }
 
 private:
 	//------functions------

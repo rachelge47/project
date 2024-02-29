@@ -2,6 +2,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "Manage.h"
 
 class GameControl; 
 
@@ -17,12 +18,16 @@ public:
     sf::Text getText() { return m_text; }
 
 private:
-    sf::RectangleShape m_button; 
+    //----functions------
+    void updateHover(const sf::Vector2f& mousePosition);
+
+    //----members--------
     sf::Vector2f m_position;     
     sf::Text m_text;            
     bool m_hovered;            
 
-    void updateHover(const sf::Vector2f& mousePosition);
+protected:
+    sf::RectangleShape m_button;
 };
 
 // Derived class for HelpButton
@@ -53,4 +58,5 @@ class MusicButton : public Button
 {
 public:
 	using Button::Button;
+ 
 };

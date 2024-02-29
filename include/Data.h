@@ -9,7 +9,6 @@ public:
 	Data();
 
 	void printData(sf::RenderWindow& window);
-
 	void updateTime(float time);
 	bool timeOut() const { return m_isTimeEnd; }
 	void restartTime() { m_timer.restart(); }
@@ -26,7 +25,5 @@ private:
 	float m_timeAsSec;
 	bool m_isTimeEnd = false;
 	static bool m_toAddTime;
-
-
 
 };

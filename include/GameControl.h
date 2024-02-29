@@ -23,7 +23,6 @@ public:
 
 private:
 	//------functions-----
-
 	void mainMenu();
 	void startGame();
 	bool shouldContinueGame();
@@ -48,5 +47,4 @@ private:
 	std::vector <std::unique_ptr <Cat>> m_cats;
 	Data m_data;
 	int m_numOfLevels;
-
 };

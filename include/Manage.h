@@ -33,7 +33,7 @@ private:
     std::vector<sf::Texture> m_textures;
     sf::Sound m_sound;
     std::vector<sf::SoundBuffer> m_soundBuffers;
-    std::string m_names[9];
+    std::string m_names[10];
     std::string m_soundNames[9];
     sf::Texture m_menuBack;
     sf::Texture m_gameBack;
@@ -41,6 +41,7 @@ private:
     sf::Texture m_buttonBack;
     sf::Texture m_infoBack;
     sf::Texture m_muteButton;
+    sf::Texture m_musicButton;
     sf::Texture m_gameOver;
     sf::Texture m_youWin;
     sf::Font m_font;

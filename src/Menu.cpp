@@ -18,7 +18,7 @@ Menu::Menu()
 
 	position = { MUTE_POS };
 	text = makeButton("Music", Manage::getInstance().getFont());
-	m_menu.push_back(std::make_unique<ExitButton>(text, position));
+	m_menu.push_back(std::make_unique<MusicButton>(text, position));
 }
 
 sf::Text Menu::makeButton(const std::string& str, const sf::Font* font)

@@ -33,7 +33,8 @@ enum ObjectType {
     O_MOUSE,
     O_CAT,
     O_OVER,
-    O_WIN
+    O_WIN,
+    O_MUSIC
 };
 
 enum soundType {

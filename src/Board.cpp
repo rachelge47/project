@@ -124,8 +124,8 @@ void Board::createBoardObject(char symbol, const sf::Vector2f& tileSize, const s
 	case CAT:
 	{
 		sf::Vector2f tempSize;   //make cats size a bit smaller so can pass in narrow spaces
-		tempSize.x = tileSize.x / 1.2f;
-		tempSize.y = tileSize.y / 1.2f;
+		tempSize.x = tileSize.x / 1.4f;
+		tempSize.y = tileSize.y / 1.4f;
 
 		m_controller->addCat(tempSize, position);
 		break;
