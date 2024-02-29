@@ -8,10 +8,10 @@ GameControl::GameControl()
 
 void GameControl::run()
 {
-    Manage::getInstance()->playMusic();    
-    Manage::getInstance()->fillTexturVector();
-    Manage::getInstance()->fillSoundBufVector();
-    Manage::getInstance()->load();
+    Manage::getInstance().playMusic();    
+    Manage::getInstance().fillTexturVector();
+    Manage::getInstance().fillSoundBufVector();
+    Manage::getInstance().load();
     m_board.setController(this);
     mainMenu();
 }
@@ -22,7 +22,7 @@ void GameControl::mainMenu()
     while (m_window.isOpen())
     {
         m_window.clear();
-        Manage::getInstance()->cover(m_window, "backCatMouse");
+        Manage::getInstance().cover(m_window, "backCatMouse");
 
         sf::Vector2f mousePosition = static_cast<sf::Vector2f>(sf::Mouse::getPosition(m_window));
 
@@ -57,10 +57,10 @@ void GameControl::mainMenu()
                 }
                 else if (m_menu.isClickMenu(location) == "Music")
                 {
-                    if (Manage::getInstance()->getMusic().getStatus() == Manage::getInstance()->getMusic().Playing)
-                        Manage::getInstance()->stopMusic();
+                    if (Manage::getInstance().getMusic().getStatus() == Manage::getInstance().getMusic().Playing)
+                        Manage::getInstance().stopMusic();
                     else
-                        Manage::getInstance()->startMusic();
+                        Manage::getInstance().startMusic();
                 }
 
                 break;
@@ -83,6 +83,10 @@ void GameControl::startGame()
 {
     auto boardFile = std::ifstream("Board.txt");
     m_board.loadFromFile(boardFile);
+
+    std::string emptyLine;
+    boardFile >> m_numOfLevels;
+    std::getline(boardFile, emptyLine);
 
     while (shouldContinueGame())  //game loop
     {
@@ -108,12 +112,12 @@ void GameControl::startGame()
 
 bool GameControl::shouldContinueGame()
 {
-    return m_board.getLevel() < NUMOFLEVELS || (m_mouse && m_mouse->getLife() > 0);
+    return m_board.getLevel() < m_numOfLevels || (m_mouse && m_mouse->getLife() > 0);
 }
 
 bool GameControl::shouldEndGame()
 {
-    return m_board.getLevel() >= NUMOFLEVELS || (m_mouse && m_mouse->getLife() == 0);
+    return m_board.getLevel() >= m_numOfLevels || (m_mouse && m_mouse->getLife() == 0);
 }
 
 void GameControl::setupNextLevel(std::ifstream& boardFile)
@@ -131,7 +135,7 @@ void GameControl::handleEndGame()
     {
         displayEndScreen(O_OVER);  //if game ended because the user lost
     }
-    else if (m_board.getLevel() >= NUMOFLEVELS&& m_mouse->getLife() > 0)
+    else if (m_board.getLevel() >= m_numOfLevels&& m_mouse->getLife() > 0)
     {
         displayEndScreen(O_WIN);  //if game ended because the user won
     }
@@ -150,7 +154,7 @@ void GameControl::displayEndScreen(int textureKey)
         m_window.clear();
         elapsedTime += timer.restart();
         sf::Sprite screen;
-        screen.setTexture(*Manage::getInstance()->getTexture(textureKey));
+        screen.setTexture(*Manage::getInstance().getTexture(textureKey));
         m_window.draw(screen);
         m_window.display();
     } 
@@ -211,7 +215,7 @@ int GameControl::levelRun(std::ifstream& boardFile)
 
         if (m_data.timeOut())  //lost because time out
         {
-            sf::Sound* sound = Manage::getInstance()->getSound(O_TIMEOUT);
+            sf::Sound* sound = Manage::getInstance().getSound(O_TIMEOUT);
             resetBoardAfterTimeOut(boardFile);
 
             return 2;
@@ -290,7 +294,7 @@ void GameControl::helpScreen()
 
     while (helpWindow.isOpen())
     {
-        Manage::getInstance()->cover(helpWindow, "HELP");
+        Manage::getInstance().cover(helpWindow, "HELP");
         helpWindow.display();
 
         const auto deltaTime = sf::seconds(1.0f / 60.0f);
@@ -317,7 +321,7 @@ void GameControl::exitGame()
 void GameControl::drawGame()
 {
     m_window.clear();
-    Manage::getInstance()->cover(m_window, "garssBack");
+    Manage::getInstance().cover(m_window, "garssBack");
     m_board.draw(m_window);
     m_data.printData(m_window);
     m_board.printBoardData(m_window);
@@ -340,14 +344,14 @@ void GameControl::removeCat()   //remove one cat from the vector
 
 void GameControl::addCat(const sf::Vector2f& tileSize, const sf::Vector2f& position)
 {
-    m_cats.push_back(std::make_unique<Cat>(tileSize, position, Manage::getInstance()->getTexture(O_CAT)));
+    m_cats.push_back(std::make_unique<Cat>(tileSize, position, Manage::getInstance().getTexture(O_CAT)));
 }
 
 void GameControl::saveMouse(const sf::Vector2f& tileSize,const sf::Vector2f& position)
 {
     if (!m_mouse)  //if mouse didnt created yet
     {
-        m_mouse = std::make_unique<Mouse>(tileSize, position, Manage::getInstance()->getTexture(O_MOUSE));
+        m_mouse = std::make_unique<Mouse>(tileSize, position, Manage::getInstance().getTexture(O_MOUSE));
     }
     else
     {

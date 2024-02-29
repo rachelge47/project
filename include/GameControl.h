@@ -6,6 +6,8 @@
 #include "Data.h"
 #include "Macros.h"
 #include <iostream>
+#include <string>
+
 
 
 class GameControl {
@@ -44,5 +46,6 @@ private:
 	sf::RenderWindow m_window;
 	std::vector <std::unique_ptr <Cat>> m_cats;
 	Data m_data;
+	int m_numOfLevels;
 
 };

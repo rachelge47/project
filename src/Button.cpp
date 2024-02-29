@@ -7,8 +7,8 @@ Button::Button(const sf::Text& text, const sf::Vector2f& position)
 {
     m_button.setSize(BUTTON_SIZE);
     m_button.setScale(SCALE_BUTTON);
-    Manage::getInstance()->load();
-    m_button.setTexture(Manage::getInstance()->buttonTexture());
+    Manage::getInstance().load();
+    m_button.setTexture(Manage::getInstance().buttonTexture());
 }
 
 void Button::drawButton(sf::RenderWindow& window, const sf::Vector2f& mousePosition)

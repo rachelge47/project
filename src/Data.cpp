@@ -5,9 +5,9 @@ bool Data::m_toAddTime = false;
 
 void Data::printData(sf::RenderWindow& window)
 {
-	Manage::getInstance()->loadBar();
+	Manage::getInstance().loadBar();
 
-	m_info.setTexture(Manage::getInstance()->infoTexture());
+	m_info.setTexture(Manage::getInstance().infoTexture());
 
 	m_info.setSize(INFO_SIZE);
 	m_info.setPosition(INFO_POS);
@@ -41,7 +41,7 @@ void Data::updateTime(float time)
 
 void Data::draw(sf::RenderWindow& window)
 {
-	m_timeText.setFont(*(Manage::getInstance()->getFont()));
+	m_timeText.setFont(*(Manage::getInstance().getFont()));
 	m_timeText.setCharacterSize(TEXT_SIZE);
 	m_timeText.setPosition(TIME_TEXT_POS);
 	m_timeText.setFillColor(sf::Color::Black);

@@ -7,15 +7,12 @@ Manage::Manage()
     m_soundNames{ "catWithMouse", "eatCheese", "gameOver", "levelComplite", "loseLevel", "openDoor", "present", "win", "timeOut" }
 {}
 
-Manage* Manage::m_instance = nullptr;
+//Manage* Manage::m_instance = nullptr;
 
-Manage* Manage::getInstance()
+Manage& Manage::getInstance()
 {
-    if (m_instance == nullptr)
-    {
-        m_instance = new Manage();
-    }
-    return m_instance;
+    static Manage instance;
+    return instance;
 }
 
 void Manage::playMusic()

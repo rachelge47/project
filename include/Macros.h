@@ -22,7 +22,6 @@ const char DOOR = 'D';
 const char CHEESE = '*';
 const char WALL = '#';
 const char EMPTY = ' ';
-const int NUMOFLEVELS = 3;
 
 
 enum ObjectType {

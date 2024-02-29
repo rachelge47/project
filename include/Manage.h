@@ -9,7 +9,7 @@
 class Manage {
 public:
 
-    static Manage* getInstance();
+    static Manage& getInstance();
     void playMusic();
     void fillSoundBufVector();
     void fillTexturVector();
@@ -26,7 +26,7 @@ public:
     sf::Font* getFont();
     sf::Texture* infoTexture();
    
-    ~Manage() { delete m_instance; }
+    //~Manage() { delete m_instance; }
 
 private:
     Manage();
@@ -45,7 +45,5 @@ private:
     sf::Texture m_youWin;
     sf::Font m_font;
     sf::Music m_music;
-
-    static Manage* m_instance;
     
 };

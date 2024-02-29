@@ -104,22 +104,22 @@ void Board::createBoardObject(char symbol, const sf::Vector2f& tileSize, const s
 	switch (symbol)
 	{
 	case WALL:
-		m_stills.push_back(std::make_unique<Wall>(tileSize, position, Manage::getInstance()->getTexture(O_WALL)));
+		m_stills.push_back(std::make_unique<Wall>(tileSize, position, Manage::getInstance().getTexture(O_WALL)));
 		break;
 	case CHEESE:
 		m_initCheeseCount++;
 		m_cheeseCount++;
-		m_stills.push_back(std::make_unique<Cheese>(tileSize, position, Manage::getInstance()->getTexture(O_CHEESE)));
+		m_stills.push_back(std::make_unique<Cheese>(tileSize, position, Manage::getInstance().getTexture(O_CHEESE)));
 		break;
 	case KEY:
 		m_initKeyCount++;
-		m_stills.push_back(std::make_unique<Key>(tileSize, position, Manage::getInstance()->getTexture(O_KEY)));
+		m_stills.push_back(std::make_unique<Key>(tileSize, position, Manage::getInstance().getTexture(O_KEY)));
 		break;
 	case PRESENT:
 		fillPresents(tileSize, position);
 		break;
 	case DOOR:
-		m_stills.push_back(std::make_unique<Door>(tileSize, position, Manage::getInstance()->getTexture(O_DOOR)));
+		m_stills.push_back(std::make_unique<Door>(tileSize, position, Manage::getInstance().getTexture(O_DOOR)));
 		break;
 	case CAT:
 	{
@@ -219,7 +219,7 @@ void Board::fillPresents(const sf::Vector2f &tileSize, const sf::Vector2f &curre
 {
 	if (!m_firstPresent)   //first present in vector is kiil cat
 	{
-		m_presents.push_back(std::make_unique<KillCatPresent>(tileSize, currentPosition, Manage::getInstance()->getTexture(O_PRESENT)));
+		m_presents.push_back(std::make_unique<KillCatPresent>(tileSize, currentPosition, Manage::getInstance().getTexture(O_PRESENT)));
 		m_firstPresent = true;
 	}
 	else
@@ -228,17 +228,17 @@ void Board::fillPresents(const sf::Vector2f &tileSize, const sf::Vector2f &curre
 		{
 		case 0:  //third present in vector is more life
 		{
-			m_presents.push_back(std::make_unique<MoreLifePresent>(tileSize, currentPosition, Manage::getInstance()->getTexture(O_PRESENT)));
+			m_presents.push_back(std::make_unique<MoreLifePresent>(tileSize, currentPosition, Manage::getInstance().getTexture(O_PRESENT)));
 			break;
 		}
 		case 1: //second present in vector is freeze cats
 		{
-			m_presents.push_back(std::make_unique<FreezePresent>(tileSize, currentPosition, Manage::getInstance()->getTexture(O_PRESENT)));
+			m_presents.push_back(std::make_unique<FreezePresent>(tileSize, currentPosition, Manage::getInstance().getTexture(O_PRESENT)));
 			break;
 		}
 		case 2: //forth present in vector is increace time
 		{
-			m_presents.push_back(std::make_unique<IncreaseTimePresent>(tileSize, currentPosition, Manage::getInstance()->getTexture(O_PRESENT)));
+			m_presents.push_back(std::make_unique<IncreaseTimePresent>(tileSize, currentPosition, Manage::getInstance().getTexture(O_PRESENT)));
 			break;
 		}
 
@@ -291,13 +291,13 @@ void Board:: printBoardData(sf::RenderWindow& window)
 	float down = DOWN_B;
 
 	std::string str= std::to_string(m_level);
-	text = make(str, Manage::getInstance()->getFont(), down);
+	text = make(str, Manage::getInstance().getFont(), down);
 	
 	window.draw(text);
 
 	str = std::to_string(m_keyCount);
 	down += DOWN_B*2;
-	text= make(str, Manage::getInstance()->getFont(), down);
+	text= make(str, Manage::getInstance().getFont(), down);
 	window.draw(text);
 }
 
