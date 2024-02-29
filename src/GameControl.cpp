@@ -2,7 +2,7 @@
 
 
 GameControl::GameControl()
-	:m_window(sf::VideoMode(WIDTH,LENGTH), "Mouse and Cat")
+	:m_window(sf::VideoMode(WIDTH,LENGTH), "Mouse and Cat"), m_numOfLevels(0)
 {}
 
 

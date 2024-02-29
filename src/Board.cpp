@@ -88,11 +88,11 @@ void Board::parseFileContent(std::ifstream& boardFile, std::vector<std::string>&
 
 void Board::calculateTileAndBoardSize(const std::vector<std::string>& fileContent)
 {
-	int rows = fileContent.size();
-	int cols = fileContent[0].size();
+	size_t rows = fileContent.size();
+	size_t cols = fileContent[0].size();
 
-	float tileWidth = (BOARD_WIDTH) / cols;  
-	float tileHeight = (BOARD_HEIGHT) / rows;
+	float tileWidth = (BOARD_WIDTH) / cols*1.f;  
+	float tileHeight = (BOARD_HEIGHT) / rows*1.f;
 
 	m_tileSize = { tileWidth, tileHeight };   //calculate the tile size to the board size and the rows and cols
 	m_boardSize = { tileWidth * cols, tileHeight * rows };
@@ -124,8 +124,8 @@ void Board::createBoardObject(char symbol, const sf::Vector2f& tileSize, const s
 	case CAT:
 	{
 		sf::Vector2f tempSize;   //make cats size a bit smaller so can pass in narrow spaces
-		tempSize.x = tileSize.x / 1.2;
-		tempSize.y = tileSize.y / 1.2;
+		tempSize.x = tileSize.x / 1.2f;
+		tempSize.y = tileSize.y / 1.2f;
 
 		m_controller->addCat(tempSize, position);
 		break;
@@ -133,8 +133,8 @@ void Board::createBoardObject(char symbol, const sf::Vector2f& tileSize, const s
 	case MOUSE:
 	{
 		sf::Vector2f tempSize;     //make mouse size a bit smaller so can pass in narrow spaces
-		tempSize.x = tileSize.x / 1.4;
-		tempSize.y = tileSize.y / 1.4;
+		tempSize.x = tileSize.x / 1.4f;
+		tempSize.y = tileSize.y / 1.4f;
 
 		m_controller->saveMouse(tempSize, position);
 		break;

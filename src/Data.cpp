@@ -1,6 +1,10 @@
 #include "Data.h"
 #include "GameControl.h"
 
+Data::Data()
+	:m_timeAsSec(0)
+{}
+
 bool Data::m_toAddTime = false;
 
 void Data::printData(sf::RenderWindow& window)

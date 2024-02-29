@@ -10,9 +10,9 @@ class Button {
 public:
     Button(const sf::Text& text, const sf::Vector2f& position);
     void drawButton(sf::RenderWindow& window, const sf::Vector2f& mousePosition);
-    virtual int getSize() { return m_button.getSize().x; }
-    virtual void setPosition(const sf::Vector2f& position);
-    virtual bool isClick(const sf::Vector2f& location) const;
+    float getSize() { return m_button.getSize().x; }
+    void setPosition(const sf::Vector2f& position);
+    bool isClick(const sf::Vector2f& location) const;
     virtual ~Button() = default;
     sf::Text getText() { return m_text; }
 

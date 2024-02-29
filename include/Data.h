@@ -6,6 +6,8 @@ class GameControl;
 class Data {
 public:
 
+	Data();
+
 	void printData(sf::RenderWindow& window);
 
 	void updateTime(float time);
