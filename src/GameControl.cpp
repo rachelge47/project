@@ -110,12 +110,12 @@ void GameControl::startGame()
     handleEndGame();
 }
 
-bool GameControl::shouldContinueGame()
+bool GameControl::shouldContinueGame() const
 {
     return m_board.getLevel() < m_numOfLevels || (m_mouse && m_mouse->getLife() > 0);
 }
 
-bool GameControl::shouldEndGame()
+bool GameControl::shouldEndGame() const
 {
     return m_board.getLevel() >= m_numOfLevels || (m_mouse && m_mouse->getLife() == 0);
 }
@@ -215,7 +215,7 @@ int GameControl::levelRun(std::ifstream& boardFile)
 
         if (m_data.timeOut())  //lost because time out
         {
-            sf::Sound* sound = Manage::getInstance().getSound(O_TIMEOUT);
+            Manage::getInstance().getSound(O_TIMEOUT);
             resetBoardAfterTimeOut(boardFile);
 
             return 2;

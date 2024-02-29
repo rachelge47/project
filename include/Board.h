@@ -13,7 +13,6 @@
 #include "Data.h"
 
 class collisions;
-
 class GameControl;
 
 class Board {
@@ -46,7 +45,7 @@ public:
 private:
 	//-----functions----
 	sf::Text make(const std::string& str, const sf::Font* font, float down);
-	void resetFileAndContent(std::ifstream& boardFile, std::vector<std::string>& fileContent);
+	void resetFileAndContent(std::ifstream& boardFile, std::vector<std::string>& fileContent) const;
 	void parseFileContent(std::ifstream& boardFile, std::vector<std::string>& fileContent);
 	void calculateTileAndBoardSize(const std::vector<std::string>& fileContent);
 	void createBoardObject(char symbol, const sf::Vector2f& tileSize, const sf::Vector2f& position);

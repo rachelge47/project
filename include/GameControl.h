@@ -25,8 +25,8 @@ private:
 	//------functions-----
 	void mainMenu();
 	void startGame();
-	bool shouldContinueGame();
-	bool shouldEndGame();
+	bool shouldContinueGame() const;
+	bool shouldEndGame() const;
 	void setupNextLevel(std::ifstream& boardFile);
 	void handleEndGame();
 	void displayEndScreen( int textureKey);

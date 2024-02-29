@@ -12,7 +12,6 @@ void Data::printData(sf::RenderWindow& window)
 	Manage::getInstance().loadBar();
 
 	m_info.setTexture(Manage::getInstance().infoTexture());
-
 	m_info.setSize(INFO_SIZE);
 	m_info.setPosition(INFO_POS);
 

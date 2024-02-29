@@ -7,8 +7,6 @@ Manage::Manage()
     m_soundNames{ "catWithMouse", "eatCheese", "gameOver", "levelComplite", "loseLevel", "openDoor", "present", "win", "timeOut" }
 {}
 
-//Manage* Manage::m_instance = nullptr;
-
 Manage& Manage::getInstance()
 {
     static Manage instance;
@@ -64,7 +62,7 @@ void Manage::fillTexturVector()
 }
 
 
-void Manage::cover(sf::RenderWindow &window, const std ::string& backName)
+void Manage::cover(sf::RenderWindow &window, const std ::string& backName) const
 {    
     sf::Sprite background;
     
@@ -106,12 +104,12 @@ void Manage::cover(sf::RenderWindow &window, const std ::string& backName)
  }
 
 
- sf::Texture* Manage::buttonTexture()
+ sf::Texture* Manage::buttonTexture() 
  {
      return &m_buttonBack;
  }
 
- sf::Font* Manage::getFont()
+ sf::Font* Manage::getFont() 
  {
      if (!m_font.loadFromFile("Font.otf"))
      {
@@ -120,7 +118,7 @@ void Manage::cover(sf::RenderWindow &window, const std ::string& backName)
      return &m_font;
  }
 
- sf::Texture* Manage::infoTexture()
+ sf::Texture* Manage::infoTexture() 
  {
      return &m_infoBack;
  }

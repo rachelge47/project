@@ -4,7 +4,7 @@
 
 
 Board::Board()
-	:m_level(0), m_firstPresent(false)
+	:m_level(0), m_firstPresent(false), m_controller(nullptr)
 {}
 
 //initiat static members
@@ -70,7 +70,7 @@ void Board::getStills(std::ifstream& boardFile)
 	}
 }
 
-void Board::resetFileAndContent(std::ifstream& boardFile, std::vector<std::string>& fileContent)
+void Board::resetFileAndContent(std::ifstream& boardFile, std::vector<std::string>& fileContent) const
 {
 	boardFile.clear();
 	fileContent.clear();
@@ -91,8 +91,8 @@ void Board::calculateTileAndBoardSize(const std::vector<std::string>& fileConten
 	size_t rows = fileContent.size();
 	size_t cols = fileContent[0].size();
 
-	float tileWidth = (BOARD_WIDTH) / cols*1.f;  
-	float tileHeight = (BOARD_HEIGHT) / rows*1.f;
+	float tileWidth = (BOARD_WIDTH)*1.f / cols*1.f;  
+	float tileHeight = (BOARD_HEIGHT)*1.f / rows*1.f;
 
 	m_tileSize = { tileWidth, tileHeight };   //calculate the tile size to the board size and the rows and cols
 	m_boardSize = { tileWidth * cols, tileHeight * rows };

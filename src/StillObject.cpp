@@ -1,3 +1,0 @@
-#include "StillObject.h"
-
-

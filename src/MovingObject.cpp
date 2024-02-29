@@ -12,7 +12,7 @@ void MovingObject::setDirection(const sf::Vector2f& direction)
 	m_direction = direction;
 }
 
-sf::Vector2f MovingObject::getLoc()
+sf::Vector2f MovingObject::getLoc() const
 {
 	return m_object.getPosition();
 }

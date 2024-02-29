@@ -1,7 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-
 const int WIDTH = 1700;
 const int LENGTH = 900;
 
@@ -63,7 +62,7 @@ const sf::Vector2f CUR_POS = { 70.f,70.f };
 const float TIME = 5.0f;
 const sf::Vector2f START_POINT = { 20.f,20.f }; 
 const float DOWN_B = 140.f; 
-const float POS_X = 1550.f; //line 342 int int mouse line 29
+const float POS_X = 1550.f;
 const int TEXT_SIZE = 80;
 
 //button
@@ -77,9 +76,7 @@ const sf::Vector2f NOT_HOVERD = { 300.f, 350.f };
 
 const sf::Vector2f INFO_SIZE = { 350.f, 550.f }; 
 const sf::Vector2f INFO_POS = { 1330.f, 5.f }; 
-//const sf::Vector2f TEXT_SIZE = { 1330.f, 5.f }; //line 55,68
 const sf::Vector2f TIME_TEXT_POS = { 1350.f, 600.f }; 
-//const sf::Vector2f TEXT_POS = { 1550.f, 20.f }; //line 66
 
 //mange
 

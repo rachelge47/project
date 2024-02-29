@@ -8,8 +8,8 @@ public:
 	void printMouseData(sf::RenderWindow& window);
 	void addPoints(int toAdd) {m_score += toAdd; }
 	void addLife(int toAdd) {m_life += toAdd; }
-	int getLife() { return m_life; }
-	int getScore() { return m_score; }
+	int getLife() const { return m_life; }
+	int getScore() const { return m_score; }
 
 private:
 	//------functions------

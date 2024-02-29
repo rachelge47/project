@@ -5,11 +5,11 @@
 class GameObject {
 public:
 	GameObject(const sf::Vector2f& tileSize, const sf::Vector2f & position, const sf::Texture *texture);
-	void draw(sf::RenderWindow& window);
-	int getSize() {return m_size;}
+	void draw(sf::RenderWindow& window) const;
+	int getSize() const {return m_size;}
 	sf::Vector2f getPosition() const { return m_object.getPosition(); }
 	void setPosition(const sf::Vector2f& position) { m_object.setPosition(position); }
-	sf::Vector2f getInitPos() { return m_initPos; }
+	sf::Vector2f getInitPos() const { return m_initPos; }
 	void setInitPos(const sf::Vector2f& position) { m_initPos = position; }
 	void setSize(const sf::Vector2f& size) { m_object.setSize(size); }
 	sf::FloatRect getGlobalBounds() const;

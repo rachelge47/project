@@ -13,7 +13,7 @@ public:
     void playMusic();
     void fillSoundBufVector();
     void fillTexturVector();
-    void cover( sf::RenderWindow& window, const std::string& backName);
+    void cover( sf::RenderWindow& window, const std::string& backName) const;
     sf::Texture *getTexture(int index) { return &m_textures[index]; }
     sf::Sound* getSound(int index);
     sf::Music& getMusic() { return m_music; }

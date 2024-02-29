@@ -6,7 +6,7 @@ public:
 	using GameObject::GameObject;
 
 	void gotEaten() { m_beenEaten = true; }
-	bool beenEaten() { return m_beenEaten; }
+	bool beenEaten() const { return m_beenEaten; }
 
 private:
 	bool m_beenEaten=false;
